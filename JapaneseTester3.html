@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+
+<html>
+<!--global styles-->
+<style>
+    .Hidden {
+        display: none;
+    }
+
+    button {
+        padding: 1em;
+        font-size: 15pt;
+        border: 0px;
+        background-color: lightgrey;
+        margin: 0.5em;
+    }
+
+
+    button:hover {
+        background-color: lightblue;
+    }
+
+    .RadioButtonList {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid black;
+        background-color: darkgrey;
+        padding: 0.5em;
+        gap: 0.5em;
+        font-size: 15pt;
+    }
+
+    .RadioButtonList>div {
+        border-bottom: 2px solid black;
+        text-align: center;
+        user-select: none;
+    }
+
+    .RadioButtonList>label>input {
+        display: none;
+    }
+
+    .RadioButtonList>label>span {
+        background-color: lightgray;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding: 0.5em;
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    .RadioButtonList>label>input:hover~span {
+        background-color: lightblue;
+    }
+
+    .RadioButtonList>label>input:checked~span {
+        background-color: #00ffff;
+    }
+
+
+
+
+    .CheckBoxList {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid black;
+        background-color: darkgrey;
+        padding: 0.5em;
+        gap: 0.5em;
+        font-size: 15pt;
+        max-height: calc(100% - 1em);
+        width: fit-content;
+    }
+
+    .CheckBoxList>div {
+        border-bottom: 2px solid black;
+        text-align: center;
+        user-select: none;
+    }
+
+    .CheckBoxList>.CheckBoxListContainer{
+        display: flex;
+        border: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5em;
+        max-height: calc(100% - 2em);
+    }
+
+    .CheckBoxList>.CheckBoxListContainer>label>input {
+        display: none;
+    }
+
+    .CheckBoxList>.CheckBoxListContainer>label>span {
+        background-color: lightgray;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding: 0.5em;
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    .CheckBoxList>.CheckBoxListContainer>label>input:hover~span {
+        background-color: lightblue;
+    }
+
+    .CheckBoxList>.CheckBoxListContainer>label>input:checked~span {
+        background-color: #00ffff;
+    }
+
+    .CheckBoxList>#lessonFilterContainer{
+        flex-direction: column;
+    }
+</style>
+
+
+<!--upper section style-->
+<style>
+    #upperSection {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 5em;
+        background-color: darkgrey;
+        z-index: 1;
+        display: flex;
+    }
+</style>
+
+<!--lower section style-->
+<style>
+    #lowerSection {
+        background-color: grey;
+        position: absolute;
+        top: 5em;
+        left: 0px;
+        width: 100%;
+        min-height: calc(100% - 5em);
+    }
+
+    #lowerSection>div {
+        display: flex;
+        align-items: flex-start;
+        padding: 1em;
+        box-sizing: border-box;
+        gap: 1em;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    #lowerSection>div.Hidden {
+        display: none;
+    }
+
+</style>
+
+<!--flash card style-->
+<style>
+    #flashCardMenu {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 1em;
+        perspective: 75em;
+    }
+
+    #flashCardMenu.Hidden {
+        display: none
+    }
+
+    #flashCardMenu>button {
+        background-color: lightgrey;
+        font-size: 15pt;
+        padding: 0.5em;
+    }
+
+    #flashCardMenu>button:hover {
+        background-color: lightblue;
+    }
+
+    #flashCardMenu>#flashCard {
+        background-color: lightgrey;
+        padding: 1em;
+        font-size: 30pt;
+        user-select: none;
+        transition-duration: 0.25s;
+        box-shadow: 10px 10px;
+        /*animation: flipCard1 1s forwards;*/
+    }
+
+
+    #flashCardMenu>#flashCard:hover {
+        transform: rotate3d(0, -1, 0, 15deg);
+    }
+
+    @keyframes flipCard1 {
+        from {
+            transform: rotate3d(0, -1, 0, 20deg);
+        }
+
+        to {
+            transform: rotate3d(0, -1, 0, 90deg);
+            box-shadow: 0px 10px;
+        }
+    }
+
+    @keyframes flipCard2 {
+        from {
+            transform: rotate3d(0, -1, 0, -90deg);
+            box-shadow: 0px 10px;
+        }
+
+        to {
+            transform: rotate3d(0, -1, 0, 0deg);
+            box-shadow: 10px 10px;
+        }
+    }
+</style>
+
+<!--multiple choice style-->
+<style>
+    #multipleChoiceMenu.Hidden {
+        display: none;
+    }
+
+    #multipleChoiceMenu {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 2em;
+        perspective: 75em;
+    }
+
+    #multipleChoiceMenu>#multipleChoiceQuestion {
+        padding: 1em;
+        font-size: 30pt;
+        background-color: lightgrey;
+    }
+
+    #multipleChoiceMenu>#multipleChoiceQuestion.Correct {
+        background-color: #00ff00;
+    }
+
+    #multipleChoiceMenu>#multipleChoiceQuestion.Incorrect {
+        background-color: red;
+    }
+
+
+    #multipleChoiceMenu>#multipleChoiceAnswers {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    #multipleChoiceMenu>#multipleChoiceAnswers>button {
+        padding: 0.75em;
+        font-size: 20pt;
+        background-color: lightgrey;
+        margin: 0px;
+    }
+
+    #multipleChoiceMenu>#multipleChoiceAnswers>button:hover {
+        background-color: lightblue;
+    }
+
+
+    #multipleChoiceMenu>button {
+        padding: 0.5em;
+        font-size: 15pt;
+        background-color: lightgrey;
+        margin: 0px;
+    }
+
+    #multipleChoiceMenu>button:hover {
+        background-color: lightblue;
+    }
+</style>
+
+
+</head>
+
+<body>
+    <div id="upperSection">
+        <button id="questionStyleButton">Question Style</button>
+        <button id="wordListButton">Word Selection</button>
+    </div>
+    <div id="lowerSection">
+        <!--Tester Menu-->
+        <div id="testerMenu" class="Hidden">
+            <div id="flashCardMenu" class="Hidden">
+                <div id="flashCard">hi</div>
+                <button id="flashCardNextCardButton">Next Card</button>
+            </div>
+            <div id="multipleChoiceMenu" class="Hidden">
+                <div id="multipleChoiceQuestion">question prompt</div>
+                <div id="multipleChoiceAnswers">
+                    <button id="multipleChoiceAnswer0" value="0">a0</button>
+                    <button id="multipleChoiceAnswer1" value="1">a1</button>
+                    <button id="multipleChoiceAnswer2" value="2">a2</button>
+                    <button id="multipleChoiceAnswer3" value="3">a3</button>
+                </div>
+                <button id="multipleChoiceNextButton">Next Question</button>
+            </div>
+            <div id="infoDumpMenu" class="Hidden">
+                info dump is not implemented
+            </div>
+        </div>
+
+
+
+        <!--Question Style-->
+        <div id="questionStyleMenu" class="Hidden">
+            <!--Text Style-->
+            <div class="RadioButtonList">
+                <div>
+                    Text Style
+                </div>
+                <label>
+                    <input type="radio" name="textStyle" value="Hiragana Only">
+                    <span>Hiragana Only</span>
+                </label>
+                <label>
+                    <input type="radio" name="textStyle" value="Hiragana and Katakana" checked="true">
+                    <span>Hiragana and Katakana</span>
+                </label>
+                <label>
+                    <input type="radio" name="textStyle" value="Kana and Kanji">
+                    <span>Kana and Kanji</span>
+                </label>
+            </div>
+
+            <!--Question Style-->
+            <div class="RadioButtonList">
+                <div>
+                    Question Style
+                </div>
+                <label>
+                    <input type="radio" name="questionStyle" value="Flash Card" checked="true">
+                    <span>Flash Card</span>
+                </label>
+                <label>
+                    <input type="radio" name="questionStyle" value="Multiple Choice">
+                    <span>Multiple Choice</span>
+                </label>
+                <label>
+                    <input type="radio" name="questionStyle" value="Info Dump">
+                    <span>Info Dump</span>
+                </label>
+            </div>
+
+            <!--Translation Direction-->
+            <div class="RadioButtonList">
+                <div>
+                    Translation Direction
+                </div>
+                <label>
+                    <input type="radio" name="translationDirection" value="Japanese to English" checked="true">
+                    <span>Japanese to English</span>
+                </label>
+                <label>
+                    <input type="radio" name="translationDirection" value="English to Japanese">
+                    <span>English to Japanese</span>
+                </label>
+            </div>
+        </div>
+
+
+        <!--Word List-->
+        <div id="wordListMenu" class="Hidden">
+            <!--Lesson Filter-->
+            <div class="CheckBoxList">
+                <div>
+                    Lesson Filters
+                </div>
+                <div class="CheckBoxListContainer" id="lessonFilterContainer">
+                    <label>
+                        <input type="checkbox" name="lessonFilter" value="1" checked="true">
+                        <span>Lesson 1</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="lessonFilter" value="2" checked="true">
+                        <span>Lesson 2</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="lessonFilter" value="3" checked="true">
+                        <span>Lesson 3</span>
+                    </label>
+                </div>
+                
+            </div>
+
+            <!--Miscellaneous Filters-->
+            <div class="CheckBoxList" id="miscellaneousFilters">
+                <div>
+                    Miscellaneous Filters
+                </div>
+                <div class="CheckBoxListContainer">
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsMisc" checked="true">
+                        <span>Miscellaneous</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsCountry" checked="true">
+                        <span>Is a country</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsOccupation" checked="true">
+                        <span>Is an occupation</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsMajor" checked="true">
+                        <span>Is a major</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsFood" checked="true">
+                        <span>Is food</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsLocation" checked="true">
+                        <span>Is a location</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsObject" checked="true">
+                        <span>Is an object</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsEntertainment" checked="true">
+                        <span>Is entertainment</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsDrink" checked="true">
+                        <span>Is a drink</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsTime" checked="true">
+                        <span>Is a time</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsVerb" checked="true">
+                        <span>Is a verb</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsUVerb" checked="true">
+                        <span>Is a U-verb</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsRuVerb" checked="true">
+                        <span>Is a Ru-verb</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsIrregularVerb" checked="true">
+                        <span>Is an irregular</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsAdjective" checked="true">
+                        <span>Is an adjective</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="miscFilter" value="IsAdverb" checked="true">
+                        <span>Is an adverb</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!--Just words-->
+<script>
+    var words = [{"English":"High School Student","Hiragana":"こうこうせい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Computer","Hiragana":"こんぴゅうたあ","Kana":"コンピューター","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Britain","Hiragana":"いぎりす","Kana":"イギリス","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"India","Hiragana":"いんど","Kana":"インド","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"House Wife","Hiragana":"しゅふ","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Docter","Hiragana":"いしゃ","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Asian Studies","Hiragana":"あじあけんきゅう","Kana":"アジアけんきゅう","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Family","Hiragana":"かぞく","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Biology","Hiragana":"せいぶつがく","Kana":"","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Nurse","Hiragana":"かんごし","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Literature","Hiragana":"ぶんがく","Kana":"","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Politics","Hiragana":"せいじ","Kana":"","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Lawyer","Hiragana":"べんごし","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Myself","Hiragana":"わたし","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"... O'Clock","Hiragana":"～じ","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Telephone","Hiragana":"でんわ","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Number","Hiragana":"ばんごう","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Half Past 2 O'Clock","Hiragana":"にじはん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"... Year Student","Hiragana":"～ねんせい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"International Student","Hiragana":"りゅうがくせい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Major","Hiragana":"せんこう","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"PM","Hiragana":"ごご","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Number ...","Hiragana":"～ばん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Yes","Hiragana":"はい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"AM","Hiragana":"ごぜん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"That is right","Hiragana":"そうです","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Is that so","Hiragana":"そうですか","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Half Past","Hiragana":"はん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"... Years Old","Hiragana":"～さい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Student","Hiragana":"がくせい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"... Language","Hiragana":"～ご","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"College Student","Hiragana":"だいがくせい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Name","Hiragana":"なまえ","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"What","Hiragana":"なん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Um...","Hiragana":"あのう","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Friend","Hiragana":"ともだち","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Mr. / Mrs.","Hiragana":"～さん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"... People","Hiragana":"～じん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Now","Hiragana":"いま","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Teacher","Hiragana":"せんせい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"College","Hiragana":"だいがく","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Younger Brother","Hiragana":"おとうと","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Engineering","Hiragana":"こうがく","Kana":"","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"History","Hiragana":"れきし","Kana":"","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Economics","Hiragana":"けえざい","Kana":"","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"China","Hiragana":"ちゅうごく","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"International Relations","Hiragana":"こくさいかんけい","Kana":"","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Younger Sister","Hiragana":"いもうと","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Business","Hiragana":"びじねす","Kana":"ビジネス","Kanji":"","Lesson":1,"IsMajor":true,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Mother","Hiragana":"おかあさん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"USA","Hiragana":"あめりか","Kana":"アメリカ","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Older Brother","Hiragana":"おにいさん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Country","Hiragana":"くに","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Egypt","Hiragana":"えじぷと","Kana":"エジプト","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Korea","Hiragana":"かんこく","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Older Sister","Hiragana":"おねえさん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Graduate Student","Hiragana":"だいがくいんせい","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Office Worker","Hiragana":"かいしゃいん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":true,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Father","Hiragana":"おとうさん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"High School","Hiragana":"こうこう","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Canada","Hiragana":"かなだ","Kana":"カナダ","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Australia","Hiragana":"おおすとらりあ","Kana":"オーストラリア","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Japan","Hiragana":"にほん","Kana":"","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Philippines","Hiragana":"","Kana":"フィリピン","Kanji":"","Lesson":1,"IsMajor":false,"IsOccupation":false,"IsCountry":true,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Desk","Hiragana":"つくえ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Chair","Hiragana":"いす","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Fish","Hiragana":"さかな","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Bag","Hiragana":"かばん","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Shoes","Hiragana":"くつ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"... Please","Hiragana":"(～を)おねがいします","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Please say it again","Hiragana":"もういちどいってください","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"How much","Hiragana":"いくら","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Door","Hiragana":"どあ","Kana":"ドア","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Please listen","Hiragana":"きいてください","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"English","Hiragana":"えいご","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Please say it slowly","Hiragana":"ゆっくりいってください","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Please wait a moment","Hiragana":"ちょっとまってください","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Bank","Hiragana":"ぎんこう","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Menu","Hiragana":"めにゅう","Kana":"メニュー","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Pencil","Hiragana":"えんぴつ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"In that case ...","Hiragana":"じゃあ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Light","Hiragana":"でんき","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Please look at page 10","Hiragana":"じゅうぺえじをみてください","Kana":"じゅうページをみてください","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Umbrella","Hiragana":"かさ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Jeans","Hiragana":"じいんず","Kana":"ジーンズ","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Delicious","Hiragana":"おいしい","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Wallet","Hiragana":"さいふ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Hat","Hiragana":"ぼうし","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Book","Hiragana":"ほん","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Meat","Hiragana":"にく","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Bicycle","Hiragana":"じてんしゃ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"I don't understand","Hiragana":"わかりません","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Yen","Hiragana":"～えん","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"T Shirt","Hiragana":"てぃいしゃつ","Kana":"Ｔシャツ","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Smartphone","Hiragana":"すまほ","Kana":"スマホ","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Notebook","Hiragana":"のおと","Kana":"ノート","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"I understand","Hiragana":"わかりました","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Window","Hiragana":"まど","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Do you understand?","Hiragana":"わかりましたか","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Curtain","Hiragana":"かあてん","Kana":"カーテン","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Toilet","Hiragana":"といれ","Kana":"トイレ","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Pen","Hiragana":"ぺん","Kana":"ペン","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Vegetable","Hiragana":"やさい","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Please give me ...","Hiragana":"(～を)ください","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Pork Cutlet","Hiragana":"とんかつ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Thank you","Hiragana":"どうも","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Welcome (to our store)","Hiragana":"いらっしゃいませ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Expensive","Hiragana":"たかい","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Convenience Store","Hiragana":"こんびに","Kana":"コンビニ","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Please have this","Hiragana":"どうぞ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Watch","Hiragana":"とけい","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Eraser","Hiragana":"けしごむ","Kana":"けしゴム","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Blackboard","Hiragana":"こくばん","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Dictionary","Hiragana":"じしょ","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Post Office","Hiragana":"ゆうびんきょく","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Library","Hiragana":"としょかん","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Newspaper","Hiragana":"しんぶん","Kana":"","Kanji":"","Lesson":2,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Movie","Hiragana":"えいが","Kana":"","Kanji":"映画","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Music","Hiragana":"おんがく","Kana":"","Kanji":"音楽","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Magazine","Hiragana":"ざっし","Kana":"","Kanji":"雑誌","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Sports","Hiragana":"すぽうつ","Kana":"スポーツ","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Date (Romance)","Hiragana":"でいと","Kana":"デート","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Tennis","Hiragana":"てにす","Kana":"テニス","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"TV","Hiragana":"てれび","Kana":"テレビ","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":true,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Ice Cream","Hiragana":"あいすくりいむ","Kana":"アイスクリーム","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Hamburger","Hiragana":"はんばあかあ","Kana":"ハンバーガー","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Sake","Hiragana":"おさけ","Kana":"","Kanji":"お酒","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":true,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Green Tea","Hiragana":"おちゃ","Kana":"","Kanji":"お茶","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":true,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Coffee","Hiragana":"こうひい","Kana":"コーヒー","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":true,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Water","Hiragana":"みず","Kana":"","Kanji":"水","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":true,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Breakfast","Hiragana":"あさごはん","Kana":"","Kanji":"朝ご飯","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Lunch","Hiragana":"ひるごはん","Kana":"","Kanji":"昼ご飯","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Dinner","Hiragana":"ばんごはん","Kana":"","Kanji":"晩ご飯","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":true,"IsLocation":false,"IsObject":true,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Home / House","Hiragana":"いえ","Kana":"","Kanji":"家","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Home / House / My Place","Hiragana":"うち","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"School","Hiragana":"がっこう","Kana":"","Kanji":"学校","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Cafe","Hiragana":"かふぇ","Kana":"カフェ","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":true,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Tomorrow","Hiragana":"あした","Kana":"","Kanji":"明日","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Today","Hiragana":"きょう","Kana":"","Kanji":"今日","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Morning","Hiragana":"あさ","Kana":"","Kanji":"朝","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Tonight","Hiragana":"こんばん","Kana":"","Kanji":"今晩","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Every Day","Hiragana":"まいにち","Kana":"","Kanji":"毎日","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Every Night","Hiragana":"まいばん","Kana":"","Kanji":"毎晩","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Weekend","Hiragana":"しゅうまつ","Kana":"","Kanji":"週末","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Saturday","Hiragana":"どようび","Kana":"","Kanji":"土曜日","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Sunday","Hiragana":"にちとうび","Kana":"","Kanji":"日曜日","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"When","Hiragana":"いつ","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"At about ...","Hiragana":"～ごろ","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":true,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To go","Hiragana":"いく","Kana":"","Kanji":"行く","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":true,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To go back / To return","Hiragana":"かえる","Kana":"","Kanji":"帰る","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":true,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To listen / To hear","Hiragana":"きく","Kana":"","Kanji":"聞く","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":true,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To drink","Hiragana":"のむ","Kana":"","Kanji":"飲む","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":true,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To speak / To talk","Hiragana":"はなす","Kana":"","Kanji":"話す","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":true,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To read","Hiragana":"よむ","Kana":"","Kanji":"読む","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":true,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To get up","Hiragana":"おきる","Kana":"","Kanji":"起きる","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":false,"IsRuVerb":true,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To eat","Hiragana":"たべる","Kana":"","Kanji":"食べる","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":false,"IsRuVerb":true,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To sleep / To go to sleep","Hiragana":"ねる","Kana":"","Kanji":"寝る","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":false,"IsRuVerb":true,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To see / To look at / To watch","Hiragana":"みる","Kana":"","Kanji":"見る","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":false,"IsRuVerb":true,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To come","Hiragana":"くる","Kana":"","Kanji":"来る","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"To do","Hiragana":"する","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":true,"IsAdjective":false,"IsAdverb":false},{"English":"To study","Hiragana":"べんきょうする","Kana":"","Kanji":"勉強する","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":true,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":true,"IsAdjective":false,"IsAdverb":false},{"English":"Good","Hiragana":"いい","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":true,"IsAdverb":false},{"English":"Early","Hiragana":"はやい","Kana":"","Kanji":"早い","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":true,"IsAdverb":false},{"English":"Not Much","Hiragana":"あまり","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":true},{"English":"Not at All","Hiragana":"ぜんぜん","Kana":"","Kanji":"全然","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":true},{"English":"Usually","Hiragana":"たいてい","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":true},{"English":"A Little","Hiragana":"ちょっと","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":true},{"English":"Sometimes","Hiragana":"ときどき","Kana":"","Kanji":"時々","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":true},{"English":"Often / Much","Hiragana":"よく","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":true},{"English":"That's right / Let me see","Hiragana":"そうですね","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"But","Hiragana":"でも","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"How about ...? / How is ...?","Hiragana":"どうですか","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false},{"English":"Yes (Informal)","Hiragana":"ええ","Kana":"","Kanji":"","Lesson":3,"IsMajor":false,"IsOccupation":false,"IsCountry":false,"IsFood":false,"IsLocation":false,"IsObject":false,"IsEntertainment":false,"IsDrink":false,"IsTime":false,"IsVerb":false,"IsUVerb":false,"IsRuVerb":false,"IsIrregularVerb":false,"IsAdjective":false,"IsAdverb":false}]
+    //gets the spellings
+    function getEnglish(word) {
+        return word.English;
+    }
+
+    function getHiragana(word) {
+        if (word.Hiragana != "") {
+            return word.Hiragana;
+        }
+        return "Incompatible Text Style";
+    }
+
+    function getKana(word) {
+        if (word.Kana != "") {
+            return word.Kana;
+        }
+        return getHiragana(word);
+    }
+
+    function getKanji(word) {
+        if (word.Kanji != "") {
+            return word.Kanji;
+        }
+        return getKana(word);
+    }
+
+
+
+
+    //getters
+    function getWordByEnglish(wordList, english) {
+        return wordList.find(word => {
+            return getEnglish(word) == english;
+        });
+    }
+
+    function getWordByHiragana(wordList, hiragana) {
+        return wordList.find(word => {
+            return getHiragana(word) == hiragana;
+        });
+    }
+
+    function getWordByKana(wordList, kana) {
+        return wordList.find(word => {
+            return getKana(word) == kana;
+        });
+    }
+
+    function getWordByKanji(wordList, kanji) {
+        return wordList.find(word => {
+            return getKanji(word) == kanji;
+        });
+    }
+
+
+    //filters
+    function filterByLesson(wordList, lessonNumber) {
+        return wordList.filter(word => {
+            return word.Lesson == lessonNumber;
+        });
+    }
+
+    function negativeFilterByLesson(wordList, lessonNumber) {
+        return wordList.filter(word => {
+            return word.Lesson != lessonNumber;
+        });
+    }
+
+
+    function isWordMisc(word) {
+        return !(word.IsObject || word.IsCountry || word.IsFood 
+        || word.IsLocation || word.IsOccupation || word.IsMajor 
+        || word.IsEntertainment || word.IsDrink || word.IsTime 
+        || word.IsVerb || word.IsUVerb || word.IsRuVerb
+        || word.IsIrregularVerb || word.IsAdjective || word.IsAdverb);
+    }
+
+    function multiMiscFilter(wordList, filterSet) {
+        let isMisc = filterSet.has("IsMisc");
+
+        let isMajor = filterSet.has("IsMajor");
+        let isOccupation = filterSet.has("IsOccupation");
+        let isCountry = filterSet.has("IsCountry");
+        let isFood = filterSet.has("IsFood");
+        let isLocation = filterSet.has("IsLocation");
+        let isObject = filterSet.has("IsObject");
+        let IsEntertainment = filterSet.has("IsEntertainment");
+        let IsDrink = filterSet.has("IsDrink");
+        let IsTime = filterSet.has("IsTime");
+        let IsVerb = filterSet.has("IsVerb");
+        let IsUVerb = filterSet.has("IsUVerb");
+        let IsRuVerb = filterSet.has("IsRuVerb");
+        let IsIrregularVerb = filterSet.has("IsIrregularVerb");
+        let IsAdjective = filterSet.has("IsAdjective");
+        let IsAdverb = filterSet.has("IsAdverb");
+
+
+
+        return wordList.filter(word => {
+            if (isMisc && isWordMisc(word))
+                return true
+
+            if (isMajor && word.IsMajor)
+                return true;
+
+            if (isOccupation && word.IsOccupation)
+                return true;
+
+            if (isCountry && word.IsCountry)
+                return true;
+
+            if (isFood && word.IsFood)
+                return true;
+
+            if (isLocation && word.IsLocation)
+                return true;
+
+            if (isObject && word.IsObject)
+                return true;
+
+            if (IsEntertainment && word.IsEntertainment)
+                return true;
+
+            if (IsDrink && word.IsDrink)
+                return true;
+
+            if (IsTime && word.IsTime)
+                return true;
+
+            if (IsVerb && word.IsVerb)
+                return true;
+
+            if (IsUVerb && word.IsUVerb)
+                return true;
+
+            if (IsRuVerb && word.IsRuVerb)
+                return true;
+
+            if (IsIrregularVerb && word.IsIrregularVerb)
+                return true;
+
+            if (IsAdjective && word.IsAdjective)
+                return true;
+
+            if (IsAdverb && word.IsAdverb)
+                return true;
+
+            return false;
+        });
+    }
+
+</script>
+
+<!--Enumerations-->
+<script>
+    var lowerMenuSelectorEnum = {
+        "tester": 0,
+        "question style": 1,
+        "word list": 2
+    };
+
+    var testerMenuSelectorEnum = {
+        "Flash Card": 0,
+        "Multiple Choice": 1,
+        "Info Dump": 2
+    };
+</script>
+
+<script>
+    class DivSelector {
+        constructor(htmlContainer) {
+            this.parent = htmlContainer;
+        }
+
+        //selects the nth child of the parent
+        selectElement(n) {
+            let children = this.parent.children;
+
+            if (n >= children.length) {
+                console.log("unable to select child, selection is out of range")
+                return;
+            }
+
+            for (let i = 0; i < children.length; i++) {
+                children.item(i).classList.add("Hidden");
+            }
+            //document.body.classList.
+            children.item(n).classList.remove("Hidden");
+        }
+    }
+</script>
+
+<!--This contains the program state-->
+<script>
+    var lowerMenuSelector = new DivSelector(document.getElementById("lowerSection"));
+    var testerMenuSelector = new DivSelector(document.getElementById("testerMenu"));
+    var questionStyleMenuSelector = new DivSelector(document.getElementById("questionStyleMenu"));
+
+    var questionStyle = {
+        textStyle: document.querySelector('input[name="textStyle"]:checked').value,
+        format: document.querySelector('input[name="questionStyle"]:checked').value,//"Flash Card" "Multiple Choice" "Info Dump"
+        direction: document.querySelector('input[name="translationDirection"]:checked').value
+    };
+
+    var shownMenu = "tester";//"question style" "word list"
+
+    var validWords = [];
+
+    function updateProgramState() {
+        //get the program state from the various elements
+        updateQuestionStyle();
+        updateValidWords();
+        console.log(validWords);
+
+        //update the buffers in the tester classes
+        FlashCard.refreshWordBuffer();
+        FlashCard.newCard();
+        MultipleChoice.refreshWordBuffer();
+        MultipleChoice.newQuestion();
+
+        forceRefresh();
+    }
+
+    function updateQuestionStyle() {
+        questionStyle = {
+            textStyle: document.querySelector('input[name="textStyle"]:checked').value,
+            format: document.querySelector('input[name="questionStyle"]:checked').value,
+            direction: document.querySelector('input[name="translationDirection"]:checked').value
+        };
+    }
+
+    //returns an array of valid lessons
+    function getLessonFilters() {
+        let lessons = document.querySelectorAll('input[name="lessonFilter"]');
+        let out = []
+        lessons.forEach(lesson => {
+            if (!lesson.checked)
+                out.push(Number(lesson.value))
+        })
+        return out;
+    }
+
+    function getMiscFilters() {
+        let filters = document.querySelectorAll('input[name="miscFilter"]');
+        let out = []
+        filters.forEach(filter => {
+            if (filter.checked)
+                out.push(filter.value)
+        })
+        return new Set(out);
+    }
+
+    function updateValidWords() {
+        let lessonFilters = getLessonFilters();
+        //console.log(lessonFilters);
+        validWords = words;
+        lessonFilters.forEach(filter => {
+            validWords = negativeFilterByLesson(validWords, filter);
+        })
+
+        let miscFilters = getMiscFilters();
+        validWords = multiMiscFilter(validWords, miscFilters);
+    }
+
+    function forceRefresh() {
+        lowerMenuSelector.selectElement(lowerMenuSelectorEnum[shownMenu]);
+        testerMenuSelector.selectElement(testerMenuSelectorEnum[questionStyle.format]);
+        FlashCard.forceRefresh();
+    }
+
+    function getJapanese(word) {
+        if (questionStyle.textStyle == "Kana and Kanji") {
+            return getKanji(word);
+        } else if (questionStyle.textStyle == "Hiragana and Katakana") {
+            return getKana(word);
+        } else if (questionStyle.textStyle == "Hiragana Only") {
+            return getHiragana(word);
+        }
+        return "Error when getting japanese text.";
+    }
+</script>
+
+<script>
+    class FlashCard {
+        static wordBuffer = [];
+        static frontText = "";
+        static backText = "";
+        static isFlipping = false;
+        static isShowingFront = true;
+
+        static refreshWordBuffer() {
+            FlashCard.wordBuffer = [...validWords];
+        }
+
+        static newCard() {
+            FlashCard.frontText = "";
+            FlashCard.backText = "";
+
+            FlashCard.isFlipping = false;
+            FlashCard.isShowingFront = true;
+
+            if (validWords.length == 0) {
+                FlashCard.frontText = "No valid words";
+                FlashCard.backText = "No valid words";
+                FlashCard.forceRefresh();
+                return;
+            }
+
+            //if the word buffer is empty, fill it if possible
+            if (FlashCard.wordBuffer.length == 0 && validWords.length != 0) {
+                FlashCard.refreshWordBuffer();
+            }
+
+            //select one word from the word buffer
+            let i = Math.floor(FlashCard.wordBuffer.length * Math.random());
+            let word = FlashCard.wordBuffer[i];
+            FlashCard.wordBuffer.splice(i, 1);
+
+
+            //place the text on the correct side of the card
+
+            let japaneseText = getJapanese(word);
+
+            if (questionStyle.direction == "Japanese to English") {
+                FlashCard.frontText = japaneseText;
+                FlashCard.backText = getEnglish(word);
+            } else {
+                FlashCard.frontText = getEnglish(word);
+                FlashCard.backText = japaneseText;
+            }
+
+
+
+            //after making the new card refresh the card to is changes
+            FlashCard.forceRefresh();
+
+
+        }
+
+        static flip() {
+            if (!FlashCard.isFlipping) {
+                FlashCard.isFlipping = true;
+                let flashCard = document.getElementById("flashCard");
+                flashCard.style.animation = "flipCard1 0.25s ease-in forwards";
+                setTimeout(() => {
+                    flashCard.style.animation = "flipCard2 0.25s ease-out forwards";
+                    FlashCard.isShowingFront = !FlashCard.isShowingFront;
+
+                    if (FlashCard.isShowingFront) {
+                        flashCard.innerText = FlashCard.frontText;
+                    } else {
+                        flashCard.innerText = FlashCard.backText;
+                    }
+
+                    FlashCard.isFlipping = false;
+                    setTimeout(() => {
+                        flashCard.style.animation = "";
+                    }, 250);
+                }, 250);
+            }
+        }
+
+        static forceRefresh() {
+            let flashCard = document.getElementById("flashCard");
+            if (FlashCard.isShowingFront) {
+                flashCard.innerText = FlashCard.frontText;
+            } else {
+                flashCard.innerText = FlashCard.backText;
+            }
+        }
+
+    }
+
+    class MultipleChoice {
+        static wordBuffer = [];
+        static question = "";
+        static correctAnswer = 0;
+        static answers = ["", "", "", ""];
+
+        static isPlayingAnimation = 0;
+
+
+        static refreshWordBuffer() {
+            MultipleChoice.wordBuffer = [...validWords];
+        }
+
+        static newQuestion() {
+
+            if (validWords.length == 0) {
+                MultipleChoice.question = "No valid words";
+                MultipleChoice.answers = ["", "", "", ""];
+                MultipleChoice.forceRefresh();
+                MultipleChoice.correctAnswer = -1;
+                return;
+            }
+
+            //if the word buffer is empty, fill it if possible
+            if (MultipleChoice.wordBuffer.length == 0 && validWords.length != 0) {
+                MultipleChoice.refreshWordBuffer();
+            }
+
+            //select one word from the word buffer
+            let i = Math.floor(MultipleChoice.wordBuffer.length * Math.random());
+            let word = MultipleChoice.wordBuffer[i];
+            MultipleChoice.wordBuffer.splice(i, 1);
+
+            MultipleChoice.correctAnswer = Math.floor(Math.random() * 4);
+
+            if (questionStyle.direction == "Japanese to English") {
+                MultipleChoice.question = getJapanese(word);
+            } else {
+                MultipleChoice.question = getEnglish(word);
+            }
+
+
+            MultipleChoice.answers = ["", "", "", ""];
+
+            if (questionStyle.direction == "Japanese to English") {
+                MultipleChoice.answers[MultipleChoice.correctAnswer] = getEnglish(word);
+            } else {
+                MultipleChoice.answers[MultipleChoice.correctAnswer] = getJapanese(word);
+            }
+
+            for (let i = 0; i < 4; i++) {
+                if (i != MultipleChoice.correctAnswer) {
+                    if (questionStyle.direction == "Japanese to English") {
+                        let notTheAnswers = validWords.filter(value => { return !MultipleChoice.answers.includes(getEnglish(value)); });
+                        if (notTheAnswers.length <= i) {
+                            MultipleChoice.answers[i] = "";
+                        } else {
+                            let notTheAnswer = notTheAnswers[Math.floor(notTheAnswers.length * Math.random())];
+                            MultipleChoice.answers[i] = getEnglish(notTheAnswer);
+                        }
+                    } else {
+                        let notTheAnswers = validWords.filter(value => { return !MultipleChoice.answers.includes(getJapanese(value)); });
+                        if (notTheAnswers.length <= i) {
+                            MultipleChoice.answers[i] = "";
+                        } else {
+                            let notTheAnswer = notTheAnswers[Math.floor(notTheAnswers.length * Math.random())];
+                            MultipleChoice.answers[i] = getJapanese(notTheAnswer);
+                        }
+
+                    }
+                }
+            }
+
+
+
+            MultipleChoice.forceRefresh();
+        }
+
+        static forceRefresh() {
+            let questionPrompt = document.getElementById("multipleChoiceQuestion");
+            questionPrompt.innerText = MultipleChoice.question;
+
+            let a0 = document.getElementById("multipleChoiceAnswer0");
+            let a1 = document.getElementById("multipleChoiceAnswer1");
+            let a2 = document.getElementById("multipleChoiceAnswer2");
+            let a3 = document.getElementById("multipleChoiceAnswer3");
+            a0.innerText = MultipleChoice.answers[0];
+            a1.innerText = MultipleChoice.answers[1];
+            a2.innerText = MultipleChoice.answers[2];
+            a3.innerText = MultipleChoice.answers[3];
+        }
+
+        static submitAnswer(value) {
+            console.log(value);
+            if (value == MultipleChoice.correctAnswer) {
+                MultipleChoice.playCorrect();
+            } else {
+                MultipleChoice.playIncorrect();
+            }
+        }
+
+        static playCorrect() {
+            let questionPrompt = document.getElementById("multipleChoiceQuestion");
+            MultipleChoice.isPlayingAnimation += 1;
+            //set apearance
+            questionPrompt.classList.remove("Incorrect");
+            questionPrompt.classList.add("Correct");
+
+            //when time runs out cleat appearance if it is the last animation
+            setTimeout(() => {
+                if (MultipleChoice.isPlayingAnimation == 1)
+                    questionPrompt.classList.remove("Correct");
+                MultipleChoice.isPlayingAnimation -= 1;
+                MultipleChoice.newQuestion();
+            }, 1000);
+        }
+
+        static playIncorrect() {
+            let questionPrompt = document.getElementById("multipleChoiceQuestion");
+            MultipleChoice.isPlayingAnimation += 1;
+            //set apearance
+            questionPrompt.classList.remove("Correct");
+            questionPrompt.classList.add("Incorrect");
+
+            //when time runs out cleat appearance if it is the last animation
+            setTimeout(() => {
+                if (MultipleChoice.isPlayingAnimation == 1)
+                    questionPrompt.classList.remove("Incorrect");
+                MultipleChoice.isPlayingAnimation -= 1;
+            }, 1000);
+        }
+    }
+</script>
+
+<script>
+
+
+
+    document.getElementById("wordListButton").onclick = () => {
+        if (shownMenu == "word list") {
+            shownMenu = "tester";
+            lowerMenuSelector.selectElement(0);
+            updateProgramState();
+        } else {
+            shownMenu = "word list";
+            lowerMenuSelector.selectElement(2);
+        }
+    }
+
+    document.getElementById("questionStyleButton").onclick = () => {
+        if (shownMenu == "question style") {
+            shownMenu = "tester";
+            updateProgramState();
+            lowerMenuSelector.selectElement(0);
+        } else {
+            shownMenu = "question style";
+            lowerMenuSelector.selectElement(1);
+        }
+    }
+
+    document.getElementById("flashCard").onclick = FlashCard.flip;
+
+    document.getElementById("flashCardNextCardButton").onclick = FlashCard.newCard;
+
+
+
+    document.getElementById("multipleChoiceNextButton").onclick = MultipleChoice.newQuestion;
+
+    document.getElementById("multipleChoiceAnswer0").onclick = (event) => {
+        MultipleChoice.submitAnswer(event.target.value);
+    }
+    document.getElementById("multipleChoiceAnswer1").onclick = (event) => {
+        MultipleChoice.submitAnswer(event.target.value);
+    }
+    document.getElementById("multipleChoiceAnswer2").onclick = (event) => {
+        MultipleChoice.submitAnswer(event.target.value);
+    }
+    document.getElementById("multipleChoiceAnswer3").onclick = (event) => {
+        MultipleChoice.submitAnswer(event.target.value);
+    }
+
+    updateProgramState();
+    FlashCard.newCard();
+    MultipleChoice.newQuestion();
+</script>
+
+</html>
