@@ -991,34 +991,38 @@
 
 <script>
 
-
-
-    document.getElementById("wordListButton").onclick = () => {
+    function updateButtonText(){
         document.getElementById("questionStyleButton").innerText = "Question Style";
-        if (shownMenu == "word list") {
-            shownMenu = "tester";
-            lowerMenuSelector.selectElement(0);
-            document.getElementById("wordListButton").innerText = "Word Selection";
-            updateProgramState();
-        } else {
-            shownMenu = "word list";
-            document.getElementById("wordListButton").innerText = "Close";
-            lowerMenuSelector.selectElement(2);
+        document.getElementById("wordListButton").innerText = "Word Selection";
+        if(shownMenu == "question style"){
+            document.getElementById("questionStyleButton").innerHTML = "&nbsp&nbsp &nbsp&nbsp&nbsp Close &nbsp&nbsp &nbsp&nbsp&nbsp";
+        }else if(shownMenu == "word list"){
+            document.getElementById("wordListButton").innerHTML = "&nbsp&nbsp&nbsp&emsp; Close &emsp;&nbsp&nbsp&nbsp";
         }
     }
 
+    document.getElementById("wordListButton").onclick = () => {
+        if (shownMenu == "word list") {
+            shownMenu = "tester";
+            lowerMenuSelector.selectElement(0);
+            updateProgramState();
+        } else {
+            shownMenu = "word list";
+            lowerMenuSelector.selectElement(2);
+        }
+        updateButtonText();
+    }
+
     document.getElementById("questionStyleButton").onclick = () => {
-        document.getElementById("wordListButton").innerText = "Word Selection";
         if (shownMenu == "question style") {
             shownMenu = "tester";
             updateProgramState();
-            document.getElementById("questionStyleButton").innerText = "Question Style";
             lowerMenuSelector.selectElement(0);
         } else {
             shownMenu = "question style";
-            document.getElementById("questionStyleButton").innerText = "Close";
             lowerMenuSelector.selectElement(1);
         }
+        updateButtonText();
     }
 
     document.getElementById("flashCard").onclick = FlashCard.flip;
