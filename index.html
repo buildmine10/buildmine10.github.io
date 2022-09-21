@@ -409,6 +409,10 @@
                 </div>
                 <div class="CheckBoxListContainer">
                     <label>
+                        <input type="checkbox" id="miscellaneousFiltersToggle" value="" checked="true">
+                        <span>Toggle</span>
+                    </label>
+                    <label>
                         <input type="checkbox" name="miscFilter" value="IsMisc" checked="true">
                         <span>Miscellaneous</span>
                     </label>
@@ -1044,6 +1048,14 @@
     }
     document.getElementById("multipleChoiceAnswer3").onclick = (event) => {
         MultipleChoice.submitAnswer(event.target.value);
+    }
+
+
+    document.getElementById("miscellaneousFiltersToggle").onclick = (event)=>{
+        let filters = document.getElementsByName("miscFilter");
+        filters.forEach(element=>{
+            element.checked = event.target.checked;
+        })
     }
 
     updateProgramState();
