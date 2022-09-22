@@ -538,25 +538,25 @@
 
     //getters
     function getWordByEnglish(wordList, english) {
-        return words.find(word => {
+        return wordList.find(word => {
             return getEnglish(word) == english;
         });
     }
 
     function getWordByHiragana(wordList, hiragana) {
-        return words.find(word => {
+        return wordList.find(word => {
             return getHiragana(word) == hiragana;
         });
     }
 
     function getWordByKana(wordList, kana) {
-        return words.find(word => {
+        return wordList.find(word => {
             return getKana(word) == kana;
         });
     }
 
     function getWordByKanji(wordList, kanji) {
-        return words.find(word => {
+        return wordList.find(word => {
             return getKanji(word) == kanji;
         });
     }
@@ -564,13 +564,13 @@
 
     //filters
     function filterByLesson(wordList, lessonNumber) {
-        return words.filter(word => {
+        return wordList.filter(word => {
             return word.Lesson == lessonNumber;
         });
     }
 
     function negativeFilterByLesson(wordList, lessonNumber) {
-        return words.filter(word => {
+        return wordList.filter(word => {
             return word.Lesson != lessonNumber;
         });
     }
@@ -743,6 +743,7 @@
         let lessons = document.querySelectorAll('input[name="lessonFilter"]');
         let out = []
         lessons.forEach(lesson => {
+            
             if (!lesson.checked)
                 out.push(Number(lesson.value))
         })
@@ -762,10 +763,11 @@
     function updateValidWords() {
         let lessonFilters = getLessonFilters();
         //console.log(lessonFilters);
-        validWords = words;
+        validWords = [...words];
         lessonFilters.forEach(filter => {
             validWords = negativeFilterByLesson(validWords, filter);
         })
+        
 
         let miscFilters = getMiscFilters();
         validWords = multiMiscFilter(validWords, miscFilters);
