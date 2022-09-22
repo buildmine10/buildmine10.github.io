@@ -16,12 +16,12 @@
     }
 
 
-    @media(hover: hover){
+    @media(hover: hover) {
         button:hover {
             background-color: lightblue;
         }
     }
-    
+
 
     .RadioButtonList {
         display: flex;
@@ -54,9 +54,13 @@
         user-select: none;
     }
 
-    .RadioButtonList>label>input:hover~span {
-        background-color: lightblue;
+    @media(hover: hover) {
+        .RadioButtonList>label>input:hover~span {
+            background-color: lightblue;
+        }
     }
+
+
 
     .RadioButtonList>label>input:checked~span {
         background-color: #00ffff;
@@ -107,9 +111,12 @@
         user-select: none;
     }
 
-    .CheckBoxList>.CheckBoxListContainer>label>input:hover~span {
-        background-color: lightblue;
+    @media(hover: hover) {
+        .CheckBoxList>.CheckBoxListContainer>label>input:hover~span {
+            background-color: lightblue;
+        }
     }
+
 
     .CheckBoxList>.CheckBoxListContainer>label>input:checked~span {
         background-color: #00ffff;
@@ -185,9 +192,12 @@
         padding: 0.5em;
     }
 
-    #flashCardMenu>button:hover {
-        background-color: lightblue;
+    @media(hover: hover) {
+        #flashCardMenu>button:hover {
+            background-color: lightblue;
+        }
     }
+
 
     #flashCardMenu>#flashCard {
         background-color: lightgrey;
@@ -200,9 +210,12 @@
     }
 
 
-    #flashCardMenu>#flashCard:hover {
-        transform: rotate3d(0, -1, 0, 15deg);
+    @media(hover: hover) {
+        #flashCardMenu>#flashCard:hover {
+            transform: rotate3d(0, -1, 0, 15deg);
+        }
     }
+
 
     @keyframes flipCard1 {
         from {
@@ -274,9 +287,12 @@
         margin: 0px;
     }
 
-    #multipleChoiceMenu>#multipleChoiceAnswers>button:hover {
-        background-color: lightblue;
+    @media(hover: hover) {
+        #multipleChoiceMenu>#multipleChoiceAnswers>button:hover {
+            background-color: lightblue;
+        }
     }
+
 
 
     #multipleChoiceMenu>button {
@@ -286,8 +302,10 @@
         margin: 0px;
     }
 
-    #multipleChoiceMenu>button:hover {
-        background-color: lightblue;
+    @media(hover: hover) {
+        #multipleChoiceMenu>button:hover {
+            background-color: lightblue;
+        }
     }
 </style>
 
@@ -904,10 +922,10 @@
             let word = adjustedWordBuffer[i];
 
 
-            let removeIndex = MultipleChoice.wordBuffer.findIndex(word1=>{return word == word1;});
-            if(removeIndex != -1)
+            let removeIndex = MultipleChoice.wordBuffer.findIndex(word1 => { return word == word1; });
+            if (removeIndex != -1)
                 MultipleChoice.wordBuffer.splice(removeIndex, 1);
-                
+
             MultipleChoice.questionAsked += 1;
             MultipleChoice.currentWord = word;
 
@@ -1027,7 +1045,7 @@
             for (const missedWord in MultipleChoice.missedWords) {
                 //console.log(`${missedWord}: ${MultipleChoice.missedWords[missedWord]}`);
                 let word = getWordByEnglish(validWords, missedWord);
-                for(let i = 0; i < MultipleChoice.missedWords[missedWord]; i++){
+                for (let i = 0; i < MultipleChoice.missedWords[missedWord]; i++) {
                     out.push(word);
                 }
             }
