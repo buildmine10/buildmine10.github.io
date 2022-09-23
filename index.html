@@ -126,6 +126,7 @@
     .CheckBoxList>#lessonFilterContainer {
         flex-direction: column;
     }
+
 </style>
 
 
@@ -344,57 +345,19 @@
 
         <!--Question Style-->
         <div id="questionStyleMenu" class="Hidden">
-            <!--Text Style-->
-            <div class="RadioButtonList">
-                <div>
-                    Text Style
-                </div>
-                <label>
-                    <input type="radio" name="textStyle" value="Hiragana Only">
-                    <span>Hiragana Only</span>
-                </label>
-                <label>
-                    <input type="radio" name="textStyle" value="Hiragana and Katakana" checked="true">
-                    <span>Hiragana and Katakana</span>
-                </label>
-                <label>
-                    <input type="radio" name="textStyle" value="Kana and Kanji">
-                    <span>Kana and Kanji</span>
-                </label>
-            </div>
+            <!--Text Style (Defined in Javascript)-->
+            <div id="textStyleOptions"></div>
 
-            <!--Question Style-->
-            <div class="RadioButtonList">
-                <div>
-                    Question Style
-                </div>
-                <label>
-                    <input type="radio" name="questionStyle" value="Flash Card" checked="true">
-                    <span>Flash Card</span>
-                </label>
-                <label>
-                    <input type="radio" name="questionStyle" value="Multiple Choice">
-                    <span>Multiple Choice</span>
-                </label>
-                <label>
-                    <input type="radio" name="questionStyle" value="Info Dump">
-                    <span>Info Dump</span>
-                </label>
+
+            <!--Question Style (Defined in Javascript)-->
+            <div id="questionStyleOptions">
+                
             </div>
+            
 
             <!--Translation Direction-->
-            <div class="RadioButtonList">
-                <div>
-                    Translation Direction
-                </div>
-                <label>
-                    <input type="radio" name="translationDirection" value="Japanese to English" checked="true">
-                    <span>Japanese to English</span>
-                </label>
-                <label>
-                    <input type="radio" name="translationDirection" value="English to Japanese">
-                    <span>English to Japanese</span>
-                </label>
+            <div id="translationDirectionOptions">
+                
             </div>
         </div>
 
@@ -675,6 +638,7 @@
     };
 </script>
 
+<!--Display Classes-->
 <script>
     class DivSelector {
         constructor(htmlContainer) {
@@ -695,6 +659,45 @@
             }
             //document.body.classList.
             children.item(n).classList.remove("Hidden");
+        }
+    }
+
+    class RadioButtonGroup {
+        constructor(groupContainerElement, title, groupName) {
+            this.parent = groupContainerElement;
+            this.title = document.createElement("div");
+            this.options = [];
+            this.groupName = groupName;
+
+            this.parent.classList.add("RadioButtonList");
+        
+            this.title.innerHTML = title;
+            this.parent.appendChild(this.title);
+        }
+        
+        addOption(optionName){
+            let childLabel = document.createElement("label");
+            let childInput = document.createElement("input");
+            let childSpan = document.createElement("span");
+
+
+            childInput.name = this.groupName;
+            childInput.type = "radio";
+            childInput.value = optionName;
+
+            childSpan.innerHTML = optionName;
+
+
+            childLabel.appendChild(childInput);
+            childLabel.appendChild(childSpan);
+
+            this.parent.appendChild(childLabel);
+
+            this.options.push(childLabel);
+        }
+    
+        setDefaultSelection(optionIndex){
+            this.options[optionIndex].firstChild.checked = "true";
         }
     }
 </script>
@@ -743,7 +746,7 @@
         let lessons = document.querySelectorAll('input[name="lessonFilter"]');
         let out = []
         lessons.forEach(lesson => {
-            
+
             if (!lesson.checked)
                 out.push(Number(lesson.value))
         })
@@ -767,7 +770,7 @@
         lessonFilters.forEach(filter => {
             validWords = negativeFilterByLesson(validWords, filter);
         })
-        
+
 
         let miscFilters = getMiscFilters();
         validWords = multiMiscFilter(validWords, miscFilters);
@@ -791,6 +794,7 @@
     }
 </script>
 
+<!--Tester Classes-->
 <script>
     class FlashCard {
         static wordBuffer = [];
@@ -1059,6 +1063,27 @@
     class InfoDump {
 
     }
+</script>
+
+<!--Menu Setup-->
+<script>
+    var textStyleOptions = new RadioButtonGroup(document.getElementById("textStyleOptions"), "Text Style", "textStyle");
+    textStyleOptions.addOption("Hiragana Only");
+    textStyleOptions.addOption("Hiragana and Katakana");
+    textStyleOptions.addOption("Kana and Kanji");
+    textStyleOptions.setDefaultSelection(1);
+
+    var questionStyleOptions = new RadioButtonGroup(document.getElementById("questionStyleOptions"), "Question Style", "questionStyle");
+    questionStyleOptions.addOption("Flash Card");
+    questionStyleOptions.addOption("Multiple Choice");
+    questionStyleOptions.addOption("Info Dump");
+    questionStyleOptions.setDefaultSelection(0);
+
+    var translationDirectionOptions = new RadioButtonGroup(document.getElementById("translationDirectionOptions"), "Translation Direction", "translationDirection");
+    translationDirectionOptions.addOption("Japanese to English");
+    translationDirectionOptions.addOption("English to Japanese");
+    translationDirectionOptions.setDefaultSelection(0);
+
 </script>
 
 <script>
