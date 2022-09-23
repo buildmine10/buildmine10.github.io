@@ -126,7 +126,6 @@
     .CheckBoxList>#lessonFilterContainer {
         flex-direction: column;
     }
-
 </style>
 
 
@@ -351,13 +350,13 @@
 
             <!--Question Style (Defined in Javascript)-->
             <div id="questionStyleOptions">
-                
+
             </div>
-            
+
 
             <!--Translation Direction-->
             <div id="translationDirectionOptions">
-                
+
             </div>
         </div>
 
@@ -670,12 +669,15 @@
             this.groupName = groupName;
 
             this.parent.classList.add("RadioButtonList");
-        
+
             this.title.innerHTML = title;
             this.parent.appendChild(this.title);
+
+            this.onRefresh = () => { };
+            this.onClick = () => { };
         }
-        
-        addOption(optionName){
+
+        addOption(optionName) {
             let childLabel = document.createElement("label");
             let childInput = document.createElement("input");
             let childSpan = document.createElement("span");
@@ -693,13 +695,72 @@
 
             this.parent.appendChild(childLabel);
 
+            childInput.onclick = () => { this.onClick() };
+
             this.options.push(childLabel);
         }
-    
-        setDefaultSelection(optionIndex){
-            this.options[optionIndex].firstChild.checked = "true";
+
+        select(optionValue) {
+            this.options.forEach(option => {
+                option.firstChild.checked = false;
+                if (option.firstChild.value == optionValue) {
+                    option.firstChild.checked = true;
+                }
+            })
+        }
+
+        refresh() {
+            this.onRefresh();
+        }
+
+        getValue() {
+            return document.querySelector(`input[name="${this.groupName}"]:checked`).value;
+        }
+
+    }
+</script>
+
+<!--Menu Setup-->
+<script>
+    var textStyleOptions = new RadioButtonGroup(document.getElementById("textStyleOptions"), "Text Style", "textStyle");
+    textStyleOptions.addOption("Hiragana Only");
+    textStyleOptions.addOption("Hiragana and Katakana");
+    textStyleOptions.addOption("Kana and Kanji");
+    textStyleOptions.select("Hiragana and Katakana");
+
+    var questionStyleOptions = new RadioButtonGroup(document.getElementById("questionStyleOptions"), "Question Style", "questionStyle");
+    questionStyleOptions.addOption("Flash Card");
+    questionStyleOptions.addOption("Multiple Choice");
+    questionStyleOptions.addOption("Info Dump");
+    questionStyleOptions.select("Flash Card");
+
+    var translationDirectionOptions = new RadioButtonGroup(document.getElementById("translationDirectionOptions"), "Translation Direction", "translationDirection");
+    translationDirectionOptions.addOption("Japanese to English");
+    translationDirectionOptions.addOption("English to Japanese");
+    translationDirectionOptions.addOption("Kana to Kanji");
+    translationDirectionOptions.addOption("Kanji to Kana");
+    translationDirectionOptions.select("Japanese to English");
+
+    textStyleOptions.onClick = () => {
+        translationDirectionOptions.refresh();
+    }
+
+
+    translationDirectionOptions.onRefresh = () => {
+        if (textStyleOptions.getValue() == "Kana and Kanji") {
+            translationDirectionOptions.options[2].style.display = "unset";
+            translationDirectionOptions.options[3].style.display = "unset";
+        } else {
+            translationDirectionOptions.options[2].style.display = "none";
+            translationDirectionOptions.options[3].style.display = "none";
+
+            let direction = translationDirectionOptions.getValue();
+            if (direction == "Kana to Kanji" || direction == "Kanji to Kana") {
+                translationDirectionOptions.select("Japanese to English");
+            }
         }
     }
+
 </script>
 
 <!--This contains the program state-->
@@ -729,6 +790,9 @@
         FlashCard.newCard();
         MultipleChoice.refreshWordBuffer();
         MultipleChoice.newQuestion();
+
+
+        translationDirectionOptions.refresh();
 
         forceRefresh();
     }
@@ -770,6 +834,12 @@
         lessonFilters.forEach(filter => {
             validWords = negativeFilterByLesson(validWords, filter);
         })
+
+        if (questionStyle.direction == "Kana to Kanji" || questionStyle.direction == "Kanji to Kana") {
+            validWords = validWords.filter(word => {
+                return getKana(word) != getKanji(word);
+            });
+        }
 
 
         let miscFilters = getMiscFilters();
@@ -834,14 +904,18 @@
 
             //place the text on the correct side of the card
 
-            let japaneseText = getJapanese(word);
-
             if (questionStyle.direction == "Japanese to English") {
-                FlashCard.frontText = japaneseText;
+                FlashCard.frontText = getJapanese(word);
                 FlashCard.backText = getEnglish(word);
-            } else {
+            } else if (questionStyle.direction == "English to Japanese") {
                 FlashCard.frontText = getEnglish(word);
-                FlashCard.backText = japaneseText;
+                FlashCard.backText = getJapanese(word);
+            } else if (questionStyle.direction == "Kana to Kanji") {
+                FlashCard.frontText = getKana(word);
+                FlashCard.backText = getKanji(word);
+            } else if (questionStyle.direction == "Kanji to Kana") {
+                FlashCard.frontText = getKanji(word);
+                FlashCard.backText = getKana(word);
             }
 
 
@@ -940,39 +1014,53 @@
 
             if (questionStyle.direction == "Japanese to English") {
                 MultipleChoice.question = getJapanese(word);
-            } else {
+            } else if (questionStyle.direction == "English to Japanese") {
                 MultipleChoice.question = getEnglish(word);
+            } else if (questionStyle.direction == "Kana to Kanji") {
+                MultipleChoice.question = getKana(word);
+            } else if (questionStyle.direction == "Kanji to Kana") {
+                MultipleChoice.question = getKanji(word);
             }
+
 
 
             MultipleChoice.answers = ["", "", "", ""];
+            let usedWords = [];//this stores the english values for the answer options that have been used
 
             if (questionStyle.direction == "Japanese to English") {
                 MultipleChoice.answers[MultipleChoice.correctAnswer] = getEnglish(word);
-            } else {
+            } else if (questionStyle.direction == "English to Japanese") {
                 MultipleChoice.answers[MultipleChoice.correctAnswer] = getJapanese(word);
+            } else if (questionStyle.direction == "Kana to Kanji") {
+                MultipleChoice.answers[MultipleChoice.correctAnswer] = getKanji(word);
+            } else if (questionStyle.direction == "Kanji to Kana") {
+                MultipleChoice.answers[MultipleChoice.correctAnswer] = getKana(word);
             }
+            usedWords.push(getEnglish(word));
+
+
 
             for (let i = 0; i < 4; i++) {
                 if (i != MultipleChoice.correctAnswer) {
-                    if (questionStyle.direction == "Japanese to English") {
-                        let notTheAnswers = validWords.filter(value => { return !MultipleChoice.answers.includes(getEnglish(value)); });
-                        if (notTheAnswers.length <= 0) {
-                            MultipleChoice.answers[i] = "";
-                        } else {
-                            let notTheAnswer = notTheAnswers[Math.floor(notTheAnswers.length * Math.random())];
-                            MultipleChoice.answers[i] = getEnglish(notTheAnswer);
-                        }
+                    let notTheAnswers = validWords.filter(value => { return !usedWords.includes(getEnglish(value)); });
+                    if (notTheAnswers.length <= 0) {
+                        MultipleChoice.answers[i] = "";
                     } else {
-                        let notTheAnswers = validWords.filter(value => { return !MultipleChoice.answers.includes(getJapanese(value)); });
-                        if (notTheAnswers.length <= 0) {
-                            MultipleChoice.answers[i] = "";
-                        } else {
-                            let notTheAnswer = notTheAnswers[Math.floor(notTheAnswers.length * Math.random())];
-                            MultipleChoice.answers[i] = getJapanese(notTheAnswer);
-                        }
+                        let notTheAnswer = notTheAnswers[Math.floor(notTheAnswers.length * Math.random())];
+                        usedWords.push(getEnglish(notTheAnswer));
 
+                        if (questionStyle.direction == "Japanese to English") {
+                            MultipleChoice.answers[i] = getEnglish(notTheAnswer);
+                        } else if (questionStyle.direction == "English to Japanese") {
+                            MultipleChoice.answers[i] = getJapanese(notTheAnswer);
+                        } else if (questionStyle.direction == "Kana to Kanji") {
+                            MultipleChoice.answers[i] = getKanji(notTheAnswer);
+                        } else if (questionStyle.direction == "Kanji to Kana") {
+                            MultipleChoice.answers[i] = getKana(notTheAnswer);
+                        }
                     }
+
+
                 }
             }
 
@@ -1065,26 +1153,7 @@
     }
 </script>
 
-<!--Menu Setup-->
-<script>
-    var textStyleOptions = new RadioButtonGroup(document.getElementById("textStyleOptions"), "Text Style", "textStyle");
-    textStyleOptions.addOption("Hiragana Only");
-    textStyleOptions.addOption("Hiragana and Katakana");
-    textStyleOptions.addOption("Kana and Kanji");
-    textStyleOptions.setDefaultSelection(1);
 
-    var questionStyleOptions = new RadioButtonGroup(document.getElementById("questionStyleOptions"), "Question Style", "questionStyle");
-    questionStyleOptions.addOption("Flash Card");
-    questionStyleOptions.addOption("Multiple Choice");
-    questionStyleOptions.addOption("Info Dump");
-    questionStyleOptions.setDefaultSelection(0);
-
-    var translationDirectionOptions = new RadioButtonGroup(document.getElementById("translationDirectionOptions"), "Translation Direction", "translationDirection");
-    translationDirectionOptions.addOption("Japanese to English");
-    translationDirectionOptions.addOption("English to Japanese");
-    translationDirectionOptions.setDefaultSelection(0);
-
-</script>
 
 <script>
 
