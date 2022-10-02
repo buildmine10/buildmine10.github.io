@@ -310,6 +310,147 @@
     }
 </style>
 
+<!--info dump style-->
+<style>
+    #infoDumpMenu {
+        width: 100%;
+        height: 100%;
+    }
+
+    #infoDumpWordMenu.Initializing {
+        display: flex;
+        grid-template-columns: unset;
+    }
+
+    #infoDumpWordMenu.Hidden {
+        display: none;
+    }
+
+    #infoDumpWordMenu {
+        --number-of-columns: 11;
+        width: 100%;
+        height: 100%;
+        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(var(--number-of-columns), calc(100% / var(--number-of-columns)));
+
+        background-color: darkgrey;
+        border: 2px solid black;
+
+        overflow-y: auto;
+        overflow-x: visible;
+    }
+
+
+    #infoDumpWordMenu>.InfoDumpButtonContainer>button {
+        padding: 1em;
+        font-size: 15pt;
+        background-color: lightgrey;
+        color: #000;
+        white-space: nowrap;
+        text-align: center;
+        justify-content: center;
+        box-sizing: border-box;
+        margin: 0px;
+        flex-grow: 1;
+    }
+
+    .InfoDumpButtonContainer.Initializing {
+        width: fit-content;
+        justify-content: center;
+        align-content: center;
+        padding: 0.5em;
+    }
+
+    .InfoDumpButtonContainer {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        padding: 0.5em;
+    }
+
+    @media(hover: hover) {
+        #infoDumpWordMenu>.InfoDumpButtonContainer>button:hover {
+            background-color: lightblue;
+        }
+    }
+
+    #infoDumpWordScreen.Hidden {
+        display: none;
+    }
+
+    #infoDumpWordScreen {
+        --number-of-columns: 11;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        background-color: darkgrey;
+        border: 2px solid black;
+    }
+
+
+
+
+
+
+    #infoDumpBottomMenu {
+        display: flex;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    #infoDumpWordTagsContainer {
+        background-color: grey;
+        border: 2px solid black;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5em;
+        flex-grow: 1;
+        margin: 1em;
+        flex-wrap: wrap;
+        overflow-y: auto;
+        padding: 0.5em;
+    }
+
+
+    #infoDumpWordTagsContainer>div {
+        background-color: lightgrey;
+        padding: 1em;
+        font-size: 15pt;
+    }
+
+
+    #infoDumpWordVersionsContainer {
+        width: fit-content;
+        background-color: grey;
+        border: 2px solid black;
+        margin: 1em;
+        margin-right: 0px;
+    }
+
+    #infoDumpWordVersionsContainer>div {
+        background-color: lightgrey;
+        margin: 0.5em;
+        font-size: 15pt;
+        width: fit-content;
+        white-space: nowrap;
+    }
+
+    #infoDumpWordVersionsContainer>div>span {
+        display: inline-flex;
+        background-color: lightblue;
+        border-right: 2px solid black;
+        padding: 1em;
+    }
+
+    #infoDumpWordVersionsContainer>div>div {
+        display: inline-flex;
+        padding-right: 1em;
+        padding-left: 1em;
+    }
+</style>
 
 </head>
 
@@ -336,7 +477,40 @@
                 <button id="multipleChoiceNextButton">Next Question</button>
             </div>
             <div id="infoDumpMenu" class="Hidden">
-                info dump is not implemented
+                <div id="infoDumpWordMenu"></div>
+                <div id="infoDumpWordScreen">
+                    <button id="infoDumpWordScreenCloseButton">Close</button>
+
+                    <div id="infoDumpBottomMenu">
+                        <div id="infoDumpWordVersionsContainer">
+                            <div id="infoDumpEnglish">
+                                <span>English</span>
+                                <div></div>
+                            </div>
+                            <div id="infoDumpHiragana">
+                                <span>Hiragana</span>
+                                <div></div>
+                            </div>
+                            <div id="infoDumpKana">
+                                <span>Kana</span>
+                                <div></div>
+                            </div>
+                            <div id="infoDumpKanji">
+                                <span>Kanji</span>
+                                <div></div>
+                            </div>
+                            <div id="infoDumpLesson">
+                                <span>Lesson</span>
+                                <div></div>
+                            </div>
+                        </div>
+
+                        <div id="infoDumpWordTagsContainer">
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -767,8 +941,20 @@
             let direction = translationDirectionOptions.getValue();
             if (direction == "Kana to Kanji" || direction == "Kanji to Kana") {
                 translationDirectionOptions.select("Japanese to English");
+                /*
+                if(questionStyleOptions.getValue() == "Info Dump"){
+                    translationDirectionOptions.select("English to Japanese");
+                }else{
+                    translationDirectionOptions.select("Japanese to English");
+                }
+                */
             }
         }
+    }
+
+    questionStyleOptions.onClick = () => {
+        translationDirectionOptions.select("English to Japanese");
+        //translationDirectionOptions.refresh();
     }
 
 </script>
@@ -778,6 +964,7 @@
     var lowerMenuSelector = new DivSelector(document.getElementById("lowerSection"));
     var testerMenuSelector = new DivSelector(document.getElementById("testerMenu"));
     var questionStyleMenuSelector = new DivSelector(document.getElementById("questionStyleMenu"));
+    var infoDumpMenuSelector = new DivSelector(document.getElementById("infoDumpMenu"));
 
     var questionStyle = {
         textStyle: document.querySelector('input[name="textStyle"]:checked').value,
@@ -800,6 +987,11 @@
         FlashCard.newCard();
         MultipleChoice.refreshWordBuffer();
         MultipleChoice.newQuestion();
+        InfoDump.generateMenu();
+
+        if (questionStyle.format == "Info Dump") {
+            InfoDump.loadWordList();
+        }
 
 
         translationDirectionOptions.refresh();
@@ -1177,7 +1369,92 @@
     }
 
     class InfoDump {
+        static menuContainer = document.getElementById("infoDumpMenu");
+        static wordMenu = document.getElementById("infoDumpWordMenu");
+        static infoDumpEnglish = document.getElementById("infoDumpEnglish");
+        static infoDumpHiragana = document.getElementById("infoDumpHiragana");
+        static infoDumpKana = document.getElementById("infoDumpKana");
+        static infoDumpKanji = document.getElementById("infoDumpKanji");
+        static infoDumpLesson = document.getElementById("infoDumpLesson");
+        static infoDumpTags = document.getElementById("infoDumpWordTagsContainer");
 
+        static resizeElements() {
+            let gridColumns = window.getComputedStyle(InfoDump.wordMenu).getPropertyValue("--number-of-columns");
+
+            //this makes the elements show with their minimum needed size
+            InfoDump.wordMenu.classList.add("Initializing");
+            for (let i = 0; i < InfoDump.wordMenu.children.length; i++) {
+                let child = InfoDump.wordMenu.children.item(i);
+                child.classList.add("Initializing");
+            }
+
+            //After letting the elements resize. Immediately place them into the grid correctly.
+            setTimeout(() => {
+                let gridWidth = InfoDump.wordMenu.clientWidth;
+                let gridRight = InfoDump.wordMenu.clientLeft + gridWidth;
+
+                for (let i = 0; i < InfoDump.wordMenu.children.length; i++) {
+                    let child = InfoDump.wordMenu.children.item(i);
+
+                    child.style.gridColumnEnd = `span ${Math.ceil((child.clientWidth / gridWidth) / (1 / gridColumns))}`;
+                    child.classList.remove("Initializing");
+                }
+
+                InfoDump.wordMenu.classList.remove("Initializing");
+            });
+        }
+
+        static generateMenu() {
+            InfoDump.wordMenu.innerHTML = "";
+            validWords.forEach(word => {
+                let button = document.createElement("button");
+                let buttonContainer = document.createElement("div");
+                buttonContainer.classList.add("InfoDumpButtonContainer");
+
+                if (questionStyle.direction == "Japanese to English") {
+                    button.innerHTML = getJapanese(word);
+                } else if (questionStyle.direction == "English to Japanese") {
+                    button.innerHTML = getEnglish(word);
+                } else if (questionStyle.direction == "Kanji to Kana") {
+                    button.innerHTML = getKanji(word);
+                } else if (questionStyle.direction == "Kana to Kanji") {
+                    button.innerHTML = getKana(word);
+                }
+
+                buttonContainer.appendChild(button);
+                InfoDump.wordMenu.appendChild(buttonContainer);
+                button.onclick = () => {
+                    InfoDump.loadWordScreen(word);
+                }
+            });
+
+            InfoDump.resizeElements();
+        }
+
+        static loadWordList(word) {
+            infoDumpMenuSelector.selectElement(0);
+        }
+
+        static loadWordScreen(word) {
+            infoDumpMenuSelector.selectElement(1);
+            InfoDump.infoDumpEnglish.children.item(1).innerText = word.English;
+            InfoDump.infoDumpHiragana.children.item(1).innerText = word.Hiragana;
+            InfoDump.infoDumpKana.children.item(1).innerText = word.Kana;
+            InfoDump.infoDumpKanji.children.item(1).innerText = word.Kanji;
+            InfoDump.infoDumpLesson.children.item(1).innerText = word.Lesson;
+
+            InfoDump.infoDumpTags.innerHTML = "";
+            for (var propt in word) {
+                if (propt != "English" && propt != "Hiragana" && propt != "Kana" && propt != "Kanji" && propt != "Lesson") {
+                    if (word[propt]) {
+                        let element = document.createElement("div");
+                        element.innerHTML = propt;
+                        InfoDump.infoDumpTags.appendChild(element);
+                    }
+                }
+
+            }
+        }
     }
 </script>
 
@@ -1257,17 +1534,37 @@
                 element.checked = event.target.checked;
             }
 
-            element.parentElement.classList.toggle("Hidden");
+            if (!element.checked) {
+                element.parentElement.classList.add("Hidden");
+            } else {
+                element.parentElement.classList.remove("Hidden");
+            }
+
         });
 
         if (event.target.checked) {
-            textStyleOptions.select("Kana and Kanji");
-            textStyleOptions.onClick();
-            translationDirectionOptions.select("Kanji to Kana");
+            if (questionStyleOptions.getValue() != "Info Dump") {
+                textStyleOptions.select("Kana and Kanji");
+                textStyleOptions.onClick();
+                translationDirectionOptions.select("Kanji to Kana");
+            }
         } else {
-            translationDirectionOptions.select("Japanese to English");
+            if (questionStyleOptions.getValue() == "Info Dump") {
+                translationDirectionOptions.select("English to Japanese");
+            } else {
+                translationDirectionOptions.select("Japanese to English");
+            }
         }
     }
+
+    window.onresize = () => {
+        InfoDump.resizeElements();
+    }
+
+    document.getElementById("infoDumpWordScreenCloseButton").onclick = () => {
+        InfoDump.loadWordList();
+    };
+
 
     updateProgramState();
     FlashCard.newCard();
