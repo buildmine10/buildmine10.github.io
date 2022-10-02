@@ -317,7 +317,7 @@
         height: 100%;
     }
 
-    #infoDumpWordMenu.Initializing{
+    #infoDumpWordMenu.Initializing {
         display: flex;
         grid-template-columns: unset;
     }
@@ -355,14 +355,14 @@
         flex-grow: 1;
     }
 
-    .InfoDumpButtonContainer.Initializing{
+    .InfoDumpButtonContainer.Initializing {
         width: fit-content;
         justify-content: center;
         align-content: center;
         padding: 0.5em;
     }
 
-    .InfoDumpButtonContainer{
+    .InfoDumpButtonContainer {
         display: flex;
         justify-content: center;
         align-content: center;
@@ -395,13 +395,13 @@
 
 
 
-    #infoDumpBottomMenu{
+    #infoDumpBottomMenu {
         display: flex;
         overflow: hidden;
         height: 100%;
     }
 
-    #infoDumpWordTagsContainer{
+    #infoDumpWordTagsContainer {
         background-color: grey;
         border: 2px solid black;
         display: flex;
@@ -415,14 +415,14 @@
     }
 
 
-    #infoDumpWordTagsContainer>div{
+    #infoDumpWordTagsContainer>div {
         background-color: lightgrey;
         padding: 1em;
         font-size: 15pt;
     }
 
 
-    #infoDumpWordVersionsContainer{
+    #infoDumpWordVersionsContainer {
         width: fit-content;
         background-color: grey;
         border: 2px solid black;
@@ -430,7 +430,7 @@
         margin-right: 0px;
     }
 
-    #infoDumpWordVersionsContainer>div{
+    #infoDumpWordVersionsContainer>div {
         background-color: lightgrey;
         margin: 0.5em;
         font-size: 15pt;
@@ -438,14 +438,14 @@
         white-space: nowrap;
     }
 
-    #infoDumpWordVersionsContainer>div>span{
+    #infoDumpWordVersionsContainer>div>span {
         display: inline-flex;
         background-color: lightblue;
         border-right: 2px solid black;
         padding: 1em;
     }
 
-    #infoDumpWordVersionsContainer>div>div{
+    #infoDumpWordVersionsContainer>div>div {
         display: inline-flex;
         padding-right: 1em;
         padding-left: 1em;
@@ -509,7 +509,7 @@
 
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -941,16 +941,20 @@
             let direction = translationDirectionOptions.getValue();
             if (direction == "Kana to Kanji" || direction == "Kanji to Kana") {
                 translationDirectionOptions.select("Japanese to English");
+                /*
+                if(questionStyleOptions.getValue() == "Info Dump"){
+                    translationDirectionOptions.select("English to Japanese");
+                }else{
+                    translationDirectionOptions.select("Japanese to English");
+                }
+                */
             }
-        }
-
-        if(questionStyleOptions.getValue() == "Info Dump"){
-            translationDirectionOptions.select("English to Japanese");
         }
     }
 
-    questionStyleOptions.onClick = ()=>{
-        translationDirectionOptions.refresh();
+    questionStyleOptions.onClick = () => {
+        translationDirectionOptions.select("English to Japanese");
+        //translationDirectionOptions.refresh();
     }
 
 </script>
@@ -985,7 +989,7 @@
         MultipleChoice.newQuestion();
         InfoDump.generateMenu();
 
-        if(questionStyle.format == "Info Dump"){
+        if (questionStyle.format == "Info Dump") {
             InfoDump.loadWordList();
         }
 
@@ -1374,22 +1378,22 @@
         static infoDumpLesson = document.getElementById("infoDumpLesson");
         static infoDumpTags = document.getElementById("infoDumpWordTagsContainer");
 
-        static resizeElements(){
+        static resizeElements() {
             let gridColumns = window.getComputedStyle(InfoDump.wordMenu).getPropertyValue("--number-of-columns");
 
             //this makes the elements show with their minimum needed size
             InfoDump.wordMenu.classList.add("Initializing");
-            for(let i = 0; i < InfoDump.wordMenu.children.length; i++){
+            for (let i = 0; i < InfoDump.wordMenu.children.length; i++) {
                 let child = InfoDump.wordMenu.children.item(i);
                 child.classList.add("Initializing");
             }
-            
+
             //After letting the elements resize. Immediately place them into the grid correctly.
-            setTimeout(()=>{
+            setTimeout(() => {
                 let gridWidth = InfoDump.wordMenu.clientWidth;
                 let gridRight = InfoDump.wordMenu.clientLeft + gridWidth;
 
-                for(let i = 0; i < InfoDump.wordMenu.children.length; i++){
+                for (let i = 0; i < InfoDump.wordMenu.children.length; i++) {
                     let child = InfoDump.wordMenu.children.item(i);
 
                     child.style.gridColumnEnd = `span ${Math.ceil((child.clientWidth / gridWidth) / (1 / gridColumns))}`;
@@ -1400,38 +1404,38 @@
             });
         }
 
-        static generateMenu(){
+        static generateMenu() {
             InfoDump.wordMenu.innerHTML = "";
-            validWords.forEach(word=>{
+            validWords.forEach(word => {
                 let button = document.createElement("button");
                 let buttonContainer = document.createElement("div");
                 buttonContainer.classList.add("InfoDumpButtonContainer");
 
-                if(questionStyle.direction == "Japanese to English"){
+                if (questionStyle.direction == "Japanese to English") {
                     button.innerHTML = getJapanese(word);
-                }else if(questionStyle.direction == "English to Japanese"){
+                } else if (questionStyle.direction == "English to Japanese") {
                     button.innerHTML = getEnglish(word);
-                }else if(questionStyle.direction == "Kanji to Kana"){
+                } else if (questionStyle.direction == "Kanji to Kana") {
                     button.innerHTML = getKanji(word);
-                }else if(questionStyle.direction == "Kana to Kanji"){
+                } else if (questionStyle.direction == "Kana to Kanji") {
                     button.innerHTML = getKana(word);
                 }
 
                 buttonContainer.appendChild(button);
                 InfoDump.wordMenu.appendChild(buttonContainer);
-                button.onclick = ()=>{
+                button.onclick = () => {
                     InfoDump.loadWordScreen(word);
-                }           
+                }
             });
 
             InfoDump.resizeElements();
         }
 
-        static loadWordList(word){
+        static loadWordList(word) {
             infoDumpMenuSelector.selectElement(0);
         }
 
-        static loadWordScreen(word){
+        static loadWordScreen(word) {
             infoDumpMenuSelector.selectElement(1);
             InfoDump.infoDumpEnglish.children.item(1).innerText = word.English;
             InfoDump.infoDumpHiragana.children.item(1).innerText = word.Hiragana;
@@ -1440,15 +1444,15 @@
             InfoDump.infoDumpLesson.children.item(1).innerText = word.Lesson;
 
             InfoDump.infoDumpTags.innerHTML = "";
-            for(var propt in word){
-                if(propt != "English" && propt != "Hiragana" && propt != "Kana" && propt != "Kanji" && propt != "Lesson"){
-                    if(word[propt]){
+            for (var propt in word) {
+                if (propt != "English" && propt != "Hiragana" && propt != "Kana" && propt != "Kanji" && propt != "Lesson") {
+                    if (word[propt]) {
                         let element = document.createElement("div");
                         element.innerHTML = propt;
                         InfoDump.infoDumpTags.appendChild(element);
                     }
                 }
-                
+
             }
         }
     }
@@ -1529,31 +1533,35 @@
             } else {
                 element.checked = event.target.checked;
             }
-            
-            if(!element.checked){
+
+            if (!element.checked) {
                 element.parentElement.classList.add("Hidden");
-            }else{
+            } else {
                 element.parentElement.classList.remove("Hidden");
             }
-            
+
         });
 
         if (event.target.checked) {
-            if(questionStyleOptions.getValue() != "Info Dump"){
+            if (questionStyleOptions.getValue() != "Info Dump") {
                 textStyleOptions.select("Kana and Kanji");
                 textStyleOptions.onClick();
                 translationDirectionOptions.select("Kanji to Kana");
             }
         } else {
-            translationDirectionOptions.select("Japanese to English");
+            if (questionStyleOptions.getValue() == "Info Dump") {
+                translationDirectionOptions.select("English to Japanese");
+            } else {
+                translationDirectionOptions.select("Japanese to English");
+            }
         }
     }
 
-    window.onresize = ()=>{
+    window.onresize = () => {
         InfoDump.resizeElements();
     }
 
-    document.getElementById("infoDumpWordScreenCloseButton").onclick = ()=>{
+    document.getElementById("infoDumpWordScreenCloseButton").onclick = () => {
         InfoDump.loadWordList();
     };
 
