@@ -1529,14 +1529,21 @@
             } else {
                 element.checked = event.target.checked;
             }
-
-            element.parentElement.classList.toggle("Hidden");
+            
+            if(!element.checked){
+                element.parentElement.classList.add("Hidden");
+            }else{
+                element.parentElement.classList.remove("Hidden");
+            }
+            
         });
 
         if (event.target.checked) {
-            textStyleOptions.select("Kana and Kanji");
-            textStyleOptions.onClick();
-            translationDirectionOptions.select("Kanji to Kana");
+            if(questionStyleOptions.getValue() != "Info Dump"){
+                textStyleOptions.select("Kana and Kanji");
+                textStyleOptions.onClick();
+                translationDirectionOptions.select("Kanji to Kana");
+            }
         } else {
             translationDirectionOptions.select("Japanese to English");
         }
