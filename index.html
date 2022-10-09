@@ -953,7 +953,10 @@
     }
 
     questionStyleOptions.onClick = () => {
-        translationDirectionOptions.select("English to Japanese");
+        if(questionStyleOptions.getValue() == "Info Dump"){
+            translationDirectionOptions.select("English to Japanese");
+        }
+        
         //translationDirectionOptions.refresh();
     }
 
@@ -975,6 +978,18 @@
     var shownMenu = "tester";//"question style" "word list"
 
     var validWords = [];
+
+    function onQuestionStyleChange(){
+
+    }
+
+    function onTextStyleChange(){
+        
+    }
+
+    function onTranslationDirectionChange(){
+        
+    }
 
     function updateProgramState() {
         //get the program state from the various elements
