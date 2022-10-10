@@ -3,13 +3,14 @@
 <html>
 
 <head>
+    <!--Global Styles-->
     <style>
         * {
-        font-size: 100%;
-        font-family: Arial;
+            font-size: 15pt;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        body{
+        body {
             margin: 0px;
         }
 
@@ -24,8 +25,9 @@
 
         #TopSection {
             background-color: darkgrey;
-            padding: 1em;
+            padding: 0.5em;
             display: flex;
+            gap: 1em;
         }
 
         #BottomSection {
@@ -33,13 +35,102 @@
             flex-grow: 1;
             padding: 1em;
         }
-    </style>
 
-    <style>
-        #TopSection div{
+        button {
+            border: none;
             background-color: lightgrey;
             padding: 1em;
         }
+
+
+        @media(hover: hover) {
+            button:hover {
+                background-color: lightblue  !important;
+            }
+        }
+
+        
+        .Hidden{
+            display: None !important;
+            
+        }
+        
+        .RadioButtonContainer{
+            display: flex;
+            flex-direction: column;
+            background-color: darkgrey;
+            border: 2px solid black;
+            gap: 1em;
+            padding: 0.5em;
+        }
+
+        label{
+            display: flex;
+            justify-content: center;
+        }
+
+        label>span{
+            display: flex;
+            justify-content: center;
+            background-color: lightgrey;
+            padding: 0.5em;
+            width: 100%;
+            user-select: none;
+        }
+
+        @media(hover: hover) {
+            label>span:hover {
+                background-color: lightblue  !important;
+            }
+        }
+
+        label>input:checked+span{
+            background-color: #00eeff !important;
+        }
+    </style>
+
+    <style>
+        .QuestionStyleButtonClosed {
+            padding: 1em 2.9609375em;
+        }
+
+        .WordSelectionButtonClosed {
+            padding: 1em 3.09375em;
+        }
+
+
+
+
+        #QuestionStyleMenu {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            gap: 1em;
+        }
+
+        #QuestionStyleMenu>div>div {
+            text-align: center;
+            border-bottom: 2px solid black;
+        }
+
+
+
+
+        #WordSelectionMenu {
+            background-color: blue;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        #TesterMenu {
+            background-color: green;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+        
     </style>
 </head>
 
@@ -47,18 +138,275 @@
 <body>
     <div>
         <div id="TopSection">
-            <button>
+            <button id="QuestionStyleButton">
                 Question Style
             </button>
-            <div>
-                aa
-            </div>
+            <button id="WordSelectionButton">
+                Word Selection
+            </button>
         </div>
         <div id="BottomSection">
-            a
+            <div id="QuestionStyleMenu">
+                <div id="TextStyleContainer" class = "RadioButtonContainer">
+                    <div>Text Style</div>
+                </div>
+
+                <div id="QuestionStyleContainer"class = "RadioButtonContainer">
+                    <div>Question Style</div>
+                </div>
+
+                <div id="TranslationDirectionContainer"class = "RadioButtonContainer">
+                    <div>Translation Direction</div>
+                </div>
+            </div>
+
+            <div id="WordSelectionMenu">
+                
+            </div>
+
+            <div id="TesterMenu">
+                
+            </div>
         </div>
     </div>
 
 </body>
+
+<script>
+    class ElementSelector{
+        constructor(){
+            this.list = {};
+        }
+
+        addOption(id, element){
+            this.list[id] = element;
+        }
+
+        select(id){
+            for(const element in this.list){
+                this.list[element].classList.add("Hidden");
+            }
+
+            this.list[id].classList.remove("Hidden");
+        }
+    }
+</script>
+
+<script>
+    const QuestionStyle = {
+        FlashCard: "Flash Card",
+        MultipleChoice: "Multiple Choice",
+        InfoDump: "Info Dump"
+    }
+
+    const TranslationDirection = {
+        JapaneseToEnglish: "Japanese to English",
+        EnglishToJapanese: "English to Japanese",
+        KanjiToKana: "Kanji to Kana",
+        KanaToKanji: "Kana to Kanji"
+    }
+
+    const TextStyle = {
+        Hiragana: "Hiragana Only",
+        Kana: "Hiragana and Katakana",
+        Kanji: "Kana and Kanji"
+    }
+
+    const DisplayedMenu = {
+        Tester: 0,
+        QuestionStyle: 1,
+        WordSelection: 2
+    }
+
+    var programState = {
+        questionStyle: QuestionStyle.FlashCard,
+        translationDirection: TranslationDirection.JapaneseToEnglish,
+        textStyle: TextStyle.Kana,
+        displayedMenu: DisplayedMenu.Tester
+    }
+
+
+    var menuSelector = new ElementSelector();
+    menuSelector.addOption(DisplayedMenu.QuestionStyle, document.getElementById("QuestionStyleMenu"));
+    menuSelector.addOption(DisplayedMenu.WordSelection, document.getElementById("WordSelectionMenu"));
+    menuSelector.addOption(DisplayedMenu.Tester, document.getElementById("TesterMenu"));
+    
+
+    var questionStyleButton = document.getElementById("QuestionStyleButton");
+    var wordSelectionButton = document.getElementById("WordSelectionButton");
+
+    questionStyleButton.onclick = () => {
+        if (programState.displayedMenu != DisplayedMenu.QuestionStyle) {
+            programState.displayedMenu = DisplayedMenu.QuestionStyle;
+        } else {
+            programState.displayedMenu = DisplayedMenu.Tester;
+        }
+        onMenuChange();
+    }
+
+    wordSelectionButton.onclick = () => {
+        if (programState.displayedMenu != DisplayedMenu.WordSelection) {
+            programState.displayedMenu = DisplayedMenu.WordSelection;
+        } else {
+            programState.displayedMenu = DisplayedMenu.Tester;
+        }
+        onMenuChange();
+    }
+
+    function updateQuestionStyle(){
+        programState.textStyle = document.querySelector('input[name="TextStyleRadioGroup"]:checked').value;
+        programState.questionStyle = document.querySelector('input[name="QuestionStyleRadioGroup"]:checked').value;
+        programState.translationDirection = document.querySelector('input[name="TranslationDirectionRadioGroup"]:checked').value;
+    }
+
+    function updateWordSelection(){
+
+    }
+
+    function onMenuChange() {
+        menuSelector.select(programState.displayedMenu);
+
+        questionStyleButton.classList.remove("QuestionStyleButtonClosed");
+        wordSelectionButton.classList.remove("WordSelectionButtonClosed");
+        questionStyleButton.innerHTML = "Question Style";
+        wordSelectionButton.innerHTML = "Word Selection";
+
+        switch(programState.displayedMenu){
+            case DisplayedMenu.QuestionStyle:
+                questionStyleButton.classList.add("QuestionStyleButtonClosed");
+                questionStyleButton.innerHTML = "Close";
+                break;
+            case DisplayedMenu.WordSelection:
+                wordSelectionButton.classList.add("WordSelectionButtonClosed");
+                wordSelectionButton.innerHTML = "Close";
+                break;
+
+            case DisplayedMenu.Tester:
+                updateQuestionStyle();
+                updateWordSelection();
+                console.log(programState)
+                break;  
+        }
+    }
+
+    function initialize(){
+        menuSelector.select(programState.displayedMenu);
+        initializeQuestionStyleMenu();
+    }
+
+    function initializeQuestionStyleMenu(){
+        let textStyleContainer = document.getElementById("TextStyleContainer");
+
+        for(const state in TextStyle){
+            //console.log(state);
+            let label = document.createElement("label");
+            let input = document.createElement("input");
+            let span = document.createElement("span");
+            label.appendChild(input);
+            label.appendChild(span);
+            label.id = `${TextStyle[state]}Label`;
+
+            input.type = "radio";
+            input.name = "TextStyleRadioGroup";
+            input.style.display = "none";
+            input.value = TextStyle[state];
+
+            if(programState.textStyle == TextStyle[state]){
+                input.checked = true;
+            }
+
+            span.innerHTML = TextStyle[state];
+            textStyleContainer.appendChild(label);
+        }
+
+
+        let questionStyleContainer = document.getElementById("QuestionStyleContainer");
+
+        for(const state in QuestionStyle){
+            //console.log(state);
+            let label = document.createElement("label");
+            let input = document.createElement("input");
+            let span = document.createElement("span");
+            label.appendChild(input);
+            label.appendChild(span);
+
+            label.id = `${QuestionStyle[state]}Label`;
+
+            input.type = "radio";
+            input.name = "QuestionStyleRadioGroup";
+            input.style.display = "none";
+            input.value = QuestionStyle[state];
+
+            if(programState.questionStyle == QuestionStyle[state]){
+                input.checked = true;
+            }
+
+
+            span.innerHTML = QuestionStyle[state];
+            questionStyleContainer.appendChild(label);
+        }
+
+        let translationDirectionContainer = document.getElementById("TranslationDirectionContainer");
+
+        for(const state in TranslationDirection){
+            //console.log(state);
+            let label = document.createElement("label");
+            let input = document.createElement("input");
+            let span = document.createElement("span");
+            label.appendChild(input);
+            label.appendChild(span);
+            label.id = `${TranslationDirection[state]}Label`;
+
+            input.type = "radio";
+            input.name = "TranslationDirectionRadioGroup";
+            input.style.display = "none";
+            input.value = TranslationDirection[state];
+
+            if(programState.translationDirection == TranslationDirection[state]){
+                input.checked = true;
+            }
+
+            span.innerHTML = TranslationDirection[state];
+            translationDirectionContainer.appendChild(label);
+        }
+    
+        document.getElementById(TranslationDirection.KanjiToKana + "Label").classList.add("Hidden");
+        document.getElementById(TranslationDirection.KanaToKanji + "Label").classList.add("Hidden");
+
+        document.querySelector(`input[value="${QuestionStyle.InfoDump}"]`).onclick = ()=>{
+            document.querySelector(`input[value="${TranslationDirection.EnglishToJapanese}"]`).checked = true;
+        }
+
+        document.querySelector(`input[value="${TextStyle.Hiragana}"]`).onclick = ()=>{
+            document.getElementById(TranslationDirection.KanjiToKana + "Label").classList.add("Hidden");
+            document.getElementById(TranslationDirection.KanaToKanji + "Label").classList.add("Hidden");
+
+            updateQuestionStyle();
+            if(programState.translationDirection == TranslationDirection.KanjiToKana || programState.translationDirection == TranslationDirection.KanaToKanji){
+                document.querySelector(`input[value="${TranslationDirection.JapaneseToEnglish}"]`).checked = true;
+            }
+        }
+
+        document.querySelector(`input[value="${TextStyle.Kana}"]`).onclick = ()=>{
+            document.getElementById(TranslationDirection.KanjiToKana + "Label").classList.add("Hidden");
+            document.getElementById(TranslationDirection.KanaToKanji + "Label").classList.add("Hidden");
+
+            updateQuestionStyle();
+            if(programState.translationDirection == TranslationDirection.KanjiToKana || programState.translationDirection == TranslationDirection.KanaToKanji){
+                document.querySelector(`input[value="${TranslationDirection.JapaneseToEnglish}"]`).checked = true;
+            }
+        }
+
+        document.querySelector(`input[value="${TextStyle.Kanji}"]`).onclick = ()=>{
+            document.getElementById(TranslationDirection.KanjiToKana + "Label").classList.remove("Hidden");
+            document.getElementById(TranslationDirection.KanaToKanji + "Label").classList.remove("Hidden");
+        }
+    }
+
+    initialize();
+
+</script>
+
+
 
 </html>
