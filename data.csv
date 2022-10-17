@@ -1,0 +1,291 @@
+English,Kana,Kanji,Lessons,Tags
+High School Student,こうこうせい,,Lesson_1,IsOccupation 
+Computer,コンピューター,,Lesson_1,IsMajor IsObject
+Britain,イギリス,,Lesson_1,IsCountry IsLocation
+India,インド,,Lesson_1,IsCountry IsLocation
+House Wife,しゅふ,,Lesson_1,IsOccupation 
+Docter,いしゃ,,Lesson_1,IsOccupation 
+Asian Studies,アジアけんきゅう,,Lesson_1,IsMajor
+Family,かぞく,,Lesson_1,
+Biology,せいぶつがく,,Lesson_1,IsMajor
+Nurse,かんごし,,Lesson_1,IsOccupation
+Literature,ぶんがく,,Lesson_1,IsMajor
+Politics,せいじ,,Lesson_1,IsMajor
+Lawyer,べんごし,,Lesson_1,IsOccupation
+Myself,わたし,,Lesson_1,
+... O'Clock,～じ,,Lesson_1,IsTime
+Telephone,でんわ,,Lesson_1,IsObject
+Number,ばんごう,,Lesson_1,
+Half Past 2 O'Clock,にじはん,,Lesson_1,IsTime
+... Year Student,～ねんせい,,Lesson_1,IsCounter
+International Student,りゅうがくせい,,Lesson_1,IsOccupation
+Major,せんこう,,Lesson_1,
+PM,ごご,,Lesson_1,IsTime
+Number ...,～ばん,,Lesson_1,
+Yes,はい,,Lesson_1,
+AM,ごぜん,,Lesson_1,IsTime
+That is right,そうです,,Lesson_1,
+Is that so,そうですか,,Lesson_1,
+Half Past,はん,,Lesson_1,IsTime
+... Years Old,～さい,,Lesson_1,IsCounter
+Student,がくせい,,Lesson_1,IsOccupation
+... Language,～ご,,Lesson_1,
+College Student,だいがくせい,,Lesson_1,IsOccupation
+Name,なまえ,,Lesson_1,
+What,なん,,Lesson_1,
+Um...,あのう,,Lesson_1,
+Friend,ともだち,,Lesson_1,
+Mr. / Mrs.,～さん,,Lesson_1,
+... People,～じん,,Lesson_1,
+Now,いま,,Lesson_1,IsTime
+Teacher,せんせい,,Lesson_1,IsOccupation
+College,だいがく,,Lesson_1,IsLocation
+Younger Brother,おとうと,,Lesson_1,
+Engineering,こうがく,,Lesson_1,IsMajor
+History,れきし,,Lesson_1,IsMajor
+Economics,けえざい,,Lesson_1,IsMajor
+China,ちゅうごく,,Lesson_1,IsCountry IsLocation
+International Relations,こくさいかんけい,,Lesson_1,IsMajor
+Younger Sister,いもうと,,Lesson_1,
+Business,ビジネス,,Lesson_1,IsMajor
+Mother,おかあさん,,Lesson_1,
+USA,アメリカ,,Lesson_1,IsCountry IsLocation
+Older Brother,おにいさん,,Lesson_1,
+Country,くに,,Lesson_1,
+Egypt,エジプト,,Lesson_1,IsCountry IsLocation
+Korea,かんこく,,Lesson_1,IsCountry IsLocation
+Older Sister,おねえさん,,Lesson_1,
+Graduate Student,だいがくいんせい,,Lesson_1,IsOccupation
+Office Worker,かいしゃいん,,Lesson_1,IsOccupation
+Father,おとうさん,,Lesson_1,
+High School,こうこう,,Lesson_1,IsLocation
+Canada,カナダ,,Lesson_1,IsCountry IsLocation
+Australia,オーストラリア,,Lesson_1,IsCountry IsLocation
+Japan,にほん,,Lesson_1,IsCountry IsLocation
+Philippines,フィリピン,,Lesson_1,IsCountry IsLocation
+Desk,つくえ,,Lesson_2 Lesson_4,IsObject
+Chair,いす,,Lesson_2 Lesson_4,IsObject
+Fish,さかな,,Lesson_2,IsFood
+Bag,かばん,,Lesson_2,IsObject
+Shoes,くつ,,Lesson_2,IsObject
+... Please,(～を)おねがいします,,Lesson_2,
+Please say it again,もういちどいってください,,Lesson_2,
+How much,いくら,,Lesson_2,
+Door,ドア,,Lesson_2,IsObject
+Please listen,きいてください,,Lesson_2,
+English,えいご,,Lesson_2,
+Please say it slowly,ゆっくりいってください,,Lesson_2,
+Please wait a moment,ちょっとまってください,,Lesson_2,
+Bank,ぎんこう,,Lesson_2,IsLocation
+Menu,メニュー,,Lesson_2,IsObject
+Pencil,えんぴつ,,Lesson_2,IsObject
+In that case ...,じゃあ,,Lesson_2,
+Light,でんき,,Lesson_2,IsObject
+Please look at page 10,じゅうページをみてください,,Lesson_2,
+Umbrella,かさ,,Lesson_2,IsObject
+Jeans,ジーンズ,,Lesson_2,IsObject
+Delicious,おいしい,,Lesson_2,IsAdjective
+Wallet,さいふ,,Lesson_2,IsObject
+Hat,ぼうし,,Lesson_2,IsObject
+Book,ほん,,Lesson_2,IsObject
+Meat,にく,,Lesson_2,IsFood
+Bicycle,じてんしゃ,,Lesson_2,IsObject
+I don't understand,わかりません,,Lesson_2,
+Yen,～えん,,Lesson_2,
+T Shirt,Ｔシャツ,,Lesson_2,IsObject
+Smartphone,スマホ,,Lesson_2,IsObject
+Notebook,ノート,,Lesson_2,IsObject
+I understand,わかりました,,Lesson_2,
+Window,まど,,Lesson_2,IsObject
+Do you understand?,わかりましたか,,Lesson_2,
+Curtain,カーテン,,Lesson_2,IsObject
+Toilet,トイレ,,Lesson_2,IsObject IsLocation
+Pen,ペン,,Lesson_2,IsObject
+Vegetable,やさい,,Lesson_2,IsFood
+Please give me ...,(～を)ください,,Lesson_2,
+Pork Cutlet,とんかつ,,Lesson_2,IsFood
+Thank you,どうも,,Lesson_2,
+Welcome (to our store),いらっしゃいませ,,Lesson_2,
+Expensive,たかい,,Lesson_2,IsAdjective
+Convenience Store,コンビニ,,Lesson_2,IsLocation
+Please have this,どうぞ,,Lesson_2,
+Watch,とけい,,Lesson_2,IsObject
+Eraser,けしゴム,,Lesson_2,IsObject
+Blackboard,こくばん,,Lesson_2,IsObject
+Dictionary,じしょ,,Lesson_2,IsObject
+Post Office,ゆうびんきょく,,Lesson_2,IsLocation
+Library,としょかん,,Lesson_2,IsLocation
+Newspaper,しんぶん,,Lesson_2,IsObject
+Movie,えいが,映画,Lesson_3,IsEntertainment
+Music,おんがく,音楽,Lesson_3,IsEntertainment
+Magazine,ざっし,雑誌,Lesson_3,IsObject IsEntertainment
+Sports,スポーツ,,Lesson_3,IsEntertainment
+Date (Romance),デート,,Lesson_3,IsEntertainment
+Tennis,テニス,,Lesson_3,IsEntertainment
+TV,テレビ,,Lesson_3,IsObject IsEntertainment
+Ice Cream,アイスクリーム,,Lesson_3,IsFood
+Hamburger,ハンバーガー,,Lesson_3,IsFood
+Sake,おさけ,お酒,Lesson_3,IsDrink
+Green Tea,おちゃ,お茶,Lesson_3,IsDrink
+Coffee,コーヒー,,Lesson_3,IsDrink
+Water,みず,水,Lesson_3,IsDrink
+Breakfast,あさごはん,朝ご飯,Lesson_3,IsFood
+Lunch,ひるごはん,昼ご飯,Lesson_3,IsFood
+Dinner,ばんごはん,晩ご飯,Lesson_3,IsFood
+Home / House,いえ,家,Lesson_3,IsLocation
+Home / House / My Place,うち,,Lesson_3,IsLocation
+School,がっこう,学校,Lesson_3,IsLocation
+Cafe,カフェ,,Lesson_3,IsLocation
+Tomorrow,あした,明日,Lesson_3,IsTime
+Today,きょう,今日,Lesson_3,IsTime
+Morning,あさ,朝,Lesson_3,IsTime
+Tonight,こんばん,今晩,Lesson_3,IsTime
+Every Day,まいにち,毎日,Lesson_3,IsAdverb
+Every Night,まいばん,毎晩,Lesson_3,IsAdverb
+Weekend,しゅうまつ,週末,Lesson_3,IsTime
+Saturday,どようび,土曜日,Lesson_3,IsTime
+Sunday,にちようび,日曜日,Lesson_3,IsTime
+When,いつ,,Lesson_3,
+At about ...,～ごろ,,Lesson_3,
+To go,いく,行く,Lesson_3,IsVerb IsUVerb
+To go back / To return,かえる,帰る,Lesson_3,IsVerb IsUVerb
+To listen / To hear,きく,聞く,Lesson_3,IsVerb IsUVerb
+To drink,のむ,飲む,Lesson_3,IsVerb IsUVerb
+To speak / To talk,はなす,話す,Lesson_3,IsVerb IsUVerb
+To read,よむ,読む,Lesson_3,IsVerb IsUVerb
+To get up,おきる,起きる,Lesson_3,IsVerb IsRuVerb
+To eat,たべる,食べる,Lesson_3,IsVerb IsRuVerb
+To sleep / To go to sleep,ねる,寝る,Lesson_3,IsVerb IsRuVerb
+To see / To look at / To watch,みる,見る,Lesson_3,IsVerb IsRuVerb
+To come,くる,来る,Lesson_3,IsVerb IsIrregular
+To do,する,,Lesson_3,IsVerb IsIrregular
+To study,べんきょうする,勉強する,Lesson_3,IsVerb IsIrregular
+Good,いい,,Lesson_3,IsAdjective
+Early,はやい,早い,Lesson_3,IsAdjective
+Not Much,あまり,,Lesson_3,IsAdverb
+Not at All,ぜんぜん,全然,Lesson_3,IsAdverb
+Usually,たいてい,,Lesson_3,IsAdverb
+A Little,ちょっと,,Lesson_3,IsAdverb
+Sometimes,ときどき,時々,Lesson_3,IsAdverb
+Often / Much,よく,,Lesson_3,IsAdverb
+That's right / Let me see,そうですね,,Lesson_3,
+But,でも,,Lesson_3,
+How about ...? / How is ...?,どうですか,,Lesson_3,
+Yes (Informal),ええ,,Lesson_3,
+One,いち,一,Kanji_1,
+One Variant,ひとつ,一つ,Kanji_1,
+Two,に,二,Kanji_1,
+Two Variant,ふたつ,二つ,Kanji_1,
+Two Days,ふつかかん,二日間,Kanji_1,
+Three,さん,三,Kanji_1,
+Three Variant,みっつ,三つ,Kanji_1,
+Four,よん / し,四,Kanji_1,
+Four Variant,よっつ,四つ,Kanji_1,
+Five,ご,五,Kanji_1,
+Five Variant,いつつ,五つ,Kanji_1,
+Six,ろく,六,Kanji_1,
+Six Variant,むっつ,六つ,Kanji_1,
+Seven,なな / しち,七,Kanji_1,
+Seven Variant,ななつ,七つ,Kanji_1,
+Eight,はち,八,Kanji_1,
+Eight Variant,やっつ,八つ,Kanji_1,
+Nine,きゅう,九,Kanji_1,
+Nine Variant,いいのつ,九つ,Kanji_1,
+Ten,じゅう / とお,十,Kanji_1,
+Hundred,ひゃく / びゃく / ぴゃく,百,Kanji_1,
+Thousand,せん / ぜん,千,Kanji_1,
+Ten Thousand,まん,万,Kanji_1,
+Yen / Circle,えん / まる,円,Kanji_1,
+Time,じ / とき,時,Kanji_1,
+Minute,ふん / ぷん,分,Kanji_1,
+Month,～がつ,月,Kanji_1,
+Year Student,～ねんせい,年生,Kanji_1,
+Years Old,～さい,歳,Kanji_1,
+Game,ゲーム,,Lesson_4,IsEntertainment
+Part-Time Job,アルバイト,,Lesson_4,IsOccupation
+Shopping,かいもの,買い物,Lesson_4,IsEntertainment
+Class,クラス,,Lesson_4,IsLocation
+Dog,いぬ,犬,Lesson_4,
+Cat,ねこ,猫,Lesson_4,
+Person,ひと,人,Lesson_4,
+Child,こども,子供,Lesson_4,
+You,あなた,,Lesson_4,
+Picture / Photograph,しゃしん,写真,Lesson_4,IsObject
+Flower,はな,花,Lesson_4,IsObject
+(Term) Paper,レポート,,Lesson_4,IsObject
+Rice / Meal,ごはん,ご飯,Lesson_4,IsFood
+Bread,パン,,Lesson_4,IsFood
+Temple,おてら,お寺,Lesson_4,IsLocation
+Park,こうえん,公園,Lesson_4,IsLocation
+Supermarket,スーパー,,Lesson_4,IsLocation
+Bus Stop,バスてい,バス停,Lesson_4,IsLocation
+Hospital,びょういん,病院,Lesson_4,IsLocation
+Hotel,ホテル,,Lesson_4,IsLocation
+Bookstore,ほんや,本屋,Lesson_4,IsLocation
+Town / City,まち,町,Lesson_4,IsLocation
+Restaurant,レストラン,,Lesson_4,IsLocation
+Yesterday,きのう,昨日,Lesson_4,IsTime
+... Hours,～じかん,～時間,Lesson_4,IsTime
+One Hour,いちじかん,一時間,Lesson_4,IsTime
+Last Week,せんしゅう,先週,Lesson_4,IsTime
+When ... / At the time of ...,とき,時,Lesson_4,
+Monday,げつようび,月曜日,Lesson_4,IsTime
+Tuesday,かようび,火曜日,Lesson_4,IsTime
+Wednesday,すいようび,水曜日,Lesson_4,IsTime
+Thursday,もくようび,木曜日,Lesson_4,IsTime
+Friday,きんようび,金曜日,Lesson_4,IsTime
+To meet / To see (A person),あう,会う,Lesson_4,IsVerb IsUVerb
+There is ...,ある,,Lesson_4,IsVerb IsUVerb
+To buy,かう,買う,Lesson_4,IsVerb IsUVerb
+To write,かく,書く,Lesson_4,IsVerb IsUVerb
+To take,とる,撮る,Lesson_4,IsVerb IsUVerb
+To wait,まつ,待つ,Lesson_4,IsVerb IsUVerb
+To understand,わかる,,Lesson_4,IsVerb IsUVerb
+(A person) is in ... / Stays at ...,いる,,Lesson_4,IsVerb IsRuVerb
+About (approximate measurement),～ぐらい,,Lesson_4,
+I'm sorry,ごめんなさい,,Lesson_4,
+And then,それから,,Lesson_4,
+So / Therefore,だから,,Lesson_4,
+Many / A lot,たくさん,,Lesson_4,IsAdjective
+Together with (a person) / And,～と,,Lesson_4,
+Why,どうして,,Lesson_4,
+Alone,ひとりで,一人で,Lesson_4,
+Hello? (On the phone),もしもし,,Lesson_4,
+Right,みぎ,右,Lesson_4,IsPreposition
+Left,ひだり,左,Lesson_4,IsPreposition
+Front,まえ,前,Lesson_4,IsPreposition
+Back,うしろ,後ろ,Lesson_4,IsPreposition
+Inside,なか,中,Lesson_4,IsPreposition
+On,うえ,上,Lesson_4,IsPreposition
+Under,した,下,Lesson_4,IsPreposition
+Near,ちかく,近く,Lesson_4,IsPreposition
+Next,となり,隣,Lesson_4,IsPreposition
+Between,あいだ,間,Lesson_4,IsPreposition
+Day / Sun,に / にち / び,日,Kanji_2,
+Book / Basis,ほん,本,Kanji_2,
+Person,ひと / じん,人,Kanji_2,
+Moon / Month,げつ / がつ,月,Kanji_2,
+Fire,ひ / か,火,Kanji_2,
+Water,みず / すい,水,Kanji_2,
+Tree,き / もく,木,Kanji_2,
+Gold / Money,きん / かね,金,Kanji_2,
+Soil,つち / ど,土,Kanji_2,
+Weekday,よう,曜,Kanji_2,
+Up / Top / Above,うえ,上,Kanji_2,
+Down / Under,した,下,Kanji_2,
+Middle / Inside,なか,中,Kanji_2,
+Half,はん,半,Kanji_2,
+Japan,にほん,日本,Kanji_2,
+Sunday,にちようび,日曜日,Kanji_2,
+Japanese People,にほんじん,日本人,Kanji_2,
+Alone,ひとりで,一人で,Kanji_2,
+This Person,このひと,この人,Kanji_2,
+Monday,げつようび,月曜日,Kanji_2,
+January,いちがつ,一月,Kanji_2,
+Tuesday,かようび,火曜日,Kanji_2,
+Wednesday,すいようび,水曜日,Kanji_2,
+Thursday,もくようび,木曜日,Kanji_2,
+Friday,きんようび,金曜日,Kanji_2,
+Saturday,どようび,土曜日,Kanji_2,
+Sunday,にちようび,日曜日,Kanji_2,
+Half Past Three,さんじはん,三時半,Kanji_2,
