@@ -9,19 +9,24 @@
             font-size: 15pt;
             font-family: Arial, Helvetica, sans-serif;
             user-select: none;
+            color: black;
         }
 
         body {
             margin: 0px;
+            overflow: hidden;
+            height: 100vh;
         }
 
         body>div {
             display: flex;
             flex-direction: column;
-            background-color: blue;
+            background-color: grey;
+            
             margin: 0px;
+            overflow: hidden;
             width: 100%;
-            height: 100vh;
+            height: 100%;
         }
 
         #TopSection {
@@ -33,9 +38,15 @@
 
         #BottomSection {
             background-color: grey;
-            flex-grow: 1;
             padding: 1em;
+
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            flex-grow: 1;
         }
 
         button {
@@ -147,6 +158,7 @@
             max-height: 100%;
             min-width: fit-content;
             box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         #TagSelectionContainer {
@@ -178,10 +190,9 @@
     <style>
         #TesterMenu {
             background-color: none;
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
+            width: fit-content;
         }
 
 
@@ -849,6 +860,7 @@
             multipleChoicePlayingAnimation++;
             document.getElementById("MultipleChoicePrompt").classList.add("MultipleChoiceWrong");
             document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceCorrect");
+            programState.wordBuffer.push(multipleChoiceCorrect);//if you get it wrong it should show up more often
             setTimeout(() => {
                 multipleChoicePlayingAnimation--;
                 if (multipleChoicePlayingAnimation == 0) {
@@ -1289,6 +1301,12 @@
     document.getElementById("MultipleChoice3").onclick = submitMultipleChoice;
     document.getElementById("MultipleChoice4").onclick = submitMultipleChoice;
 
+
+    document.body.style.height = window.innerHeight + "px";
+// reset the height whenever the window's resized
+    window.addEventListener("resize", ()=>{
+        document.body.style.height = window.innerHeight + "px";
+    });
 </script>
 
 
