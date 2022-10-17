@@ -811,13 +811,13 @@
                 multipleChoiceCorrect = programState.wordBuffer.splice(correctWordIndex, 1)[0];
                 multipleChoiceWrong = getRandomSubarray([...new Set(programState.wordBuffer)], 3);
             }
-            console.log(multipleChoiceCorrect, ...multipleChoiceWrong)
+            //console.log(multipleChoiceCorrect, ...multipleChoiceWrong)
             //console.log(programState.wordBuffer);
 
             document.getElementById("MultipleChoicePrompt").innerHTML = getFrontText(multipleChoiceCorrect);
 
             let temp = getRandomSubarray([multipleChoiceCorrect, ...multipleChoiceWrong], 4);
-            console.log(temp);
+            //console.log(temp);
             document.getElementById("MultipleChoice1").innerHTML = getBackText(temp[0]);
             document.getElementById("MultipleChoice2").innerHTML = getBackText(temp[1]);
             document.getElementById("MultipleChoice3").innerHTML = getBackText(temp[2]);
