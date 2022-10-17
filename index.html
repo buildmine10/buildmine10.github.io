@@ -256,16 +256,77 @@
             user-select: none;
         }
 
-        .MultipleChoiceCorrect{
+        .MultipleChoiceCorrect {
             background-color: #00ff00 !important;
         }
 
-        .MultipleChoiceWrong{
+        .MultipleChoiceWrong {
             background-color: red !important;
         }
 
-        #MultipleChoiceNextButton{
+        #MultipleChoiceNextButton {
             padding: 0.5em;
+        }
+
+        /*Info Dump*/
+        #InfoDumpTester {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            overflow-y: auto;
+            background-color: darkgrey;
+            padding: 0.5em;
+            align-items: flex-start;
+            align-content: flex-start;
+            width: 100%;
+        }
+
+        #InfoDumpTester>button {
+            background-color: lightgrey;
+        }
+
+        .InfoDumpWordMenu {
+            flex-direction: column;
+            width: 100%;
+            flex-wrap: nowrap !important;
+        }
+
+        .InfoDumpWordMenu>button {
+            width: 100%;
+        }
+
+        #InfoDumpTester>div {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        #InfoDumpTester>div>div {
+            display: flex;
+        }
+
+        #InfoDumpTester>div>div>div {
+            background-color: lightgrey;
+            padding: 1em;
+        }
+
+        #InfoDumpTester>div>div>div:nth-child(1) {
+            border-right: 2px solid black;
+            background-color: lightblue;
+        }
+
+        #InfoDumpTester>div>span {
+            background-color: grey;
+            display: flex;
+            gap: 1em;
+            padding: 0.5em;
+            flex-wrap: wrap;
+        }
+
+        #InfoDumpTester>div>span>div {
+            background-color: lightgray;
+            padding: 1em;
         }
     </style>
 </head>
@@ -333,184 +394,183 @@
 </body>
 
 <script>
-    var words = [{ "english": "High School Student", "kana": "こうこうせい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Computer", "kana": "コンピューター", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor", "IsObject"] }, { "english": "Britain", "kana": "イギリス", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "India", "kana": "インド", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "House Wife", "kana": "しゅふ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Docter", "kana": "いしゃ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Asian Studies", "kana": "アジアけんきゅう", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "Family", "kana": "かぞく", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Biology", "kana": "せいぶつがく", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "Nurse", "kana": "かんごし", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Literature", "kana": "ぶんがく", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "Politics", "kana": "せいじ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "Lawyer", "kana": "べんごし", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Myself", "kana": "わたし", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "... O'Clock", "kana": "～じ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsTime"] }, { "english": "Telephone", "kana": "でんわ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsObject"] }, { "english": "Number", "kana": "ばんごう", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Half Past 2 O'Clock", "kana": "にじはん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsTime"] }, { "english": "... Year Student", "kana": "～ねんせい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCounter"] }, { "english": "International Student", "kana": "りゅうがくせい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Major", "kana": "せんこう", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "PM", "kana": "ごご", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsTime"] }, { "english": "Number ...", "kana": "～ばん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Yes", "kana": "はい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "AM", "kana": "ごぜん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsTime"] }, { "english": "That is right", "kana": "そうです", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Is that so", "kana": "そうですか", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Half Past", "kana": "はん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsTime"] }, { "english": "... Years Old", "kana": "～さい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCounter"] }, { "english": "Student", "kana": "がくせい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "... Language", "kana": "～ご", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "College Student", "kana": "だいがくせい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Name", "kana": "なまえ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "What", "kana": "なん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Um...", "kana": "あのう", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Friend", "kana": "ともだち", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Mr. / Mrs.", "kana": "～さん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "... People", "kana": "～じん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Now", "kana": "いま", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsTime"] }, { "english": "Teacher", "kana": "せんせい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "College", "kana": "だいがく", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsLocation"] }, { "english": "Younger Brother", "kana": "おとうと", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Engineering", "kana": "こうがく", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "History", "kana": "れきし", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "Economics", "kana": "けえざい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "China", "kana": "ちゅうごく", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "International Relations", "kana": "こくさいかんけい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "Younger Sister", "kana": "いもうと", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Business", "kana": "ビジネス", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMajor"] }, { "english": "Mother", "kana": "おかあさん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "USA", "kana": "アメリカ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "Older Brother", "kana": "おにいさん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Country", "kana": "くに", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Egypt", "kana": "エジプト", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "Korea", "kana": "かんこく", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "Older Sister", "kana": "おねえさん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "Graduate Student", "kana": "だいがくいんせい", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Office Worker", "kana": "かいしゃいん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsOccupation"] }, { "english": "Father", "kana": "おとうさん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsMisc"] }, { "english": "High School", "kana": "こうこう", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsLocation"] }, { "english": "Canada", "kana": "カナダ", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "Australia", "kana": "オーストラリア", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "Japan", "kana": "にほん", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "Philippines", "kana": "フィリピン", "kanji": "", "lessons": ["Lesson_1"], "tags": ["IsCountry", "IsLocation"] }, { "english": "Desk", "kana": "つくえ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Chair", "kana": "いす", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Fish", "kana": "さかな", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsFood"] }, { "english": "Bag", "kana": "かばん", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Shoes", "kana": "くつ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "... Please", "kana": "(～を)おねがいします", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Please say it again", "kana": "もういちどいってください", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "How much", "kana": "いくら", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Door", "kana": "ドア", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Please listen", "kana": "きいてください", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "English", "kana": "えいご", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Please say it slowly", "kana": "ゆっくりいってください", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Please wait a moment", "kana": "ちょっとまってください", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Bank", "kana": "ぎんこう", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsLocation"] }, { "english": "Menu", "kana": "メニュー", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Pencil", "kana": "えんぴつ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "In that case ...", "kana": "じゃあ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Light", "kana": "でんき", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Please look at page 10", "kana": "じゅうページをみてください", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Umbrella", "kana": "かさ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Jeans", "kana": "ジーンズ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Delicious", "kana": "おいしい", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsAdjective"] }, { "english": "Wallet", "kana": "さいふ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Hat", "kana": "ぼうし", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Book", "kana": "ほん", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Meat", "kana": "にく", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsFood"] }, { "english": "Bicycle", "kana": "じてんしゃ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "I don't understand", "kana": "わかりません", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Yen", "kana": "～えん", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "T Shirt", "kana": "Ｔシャツ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Smartphone", "kana": "スマホ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Notebook", "kana": "ノート", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "I understand", "kana": "わかりました", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Window", "kana": "まど", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Do you understand?", "kana": "わかりましたか", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Curtain", "kana": "カーテン", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Toilet", "kana": "トイレ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject", "IsLocation"] }, { "english": "Pen", "kana": "ペン", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Vegetable", "kana": "やさい", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsFood"] }, { "english": "Please give me ...", "kana": "(～を)ください", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Pork Cutlet", "kana": "とんかつ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsFood"] }, { "english": "Thank you", "kana": "どうも", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Welcome (to our store)", "kana": "いらっしゃいませ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Expensive", "kana": "たかい", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsAdjective"] }, { "english": "Convenience Store", "kana": "コンビニ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsLocation"] }, { "english": "Please have this", "kana": "どうぞ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsMisc"] }, { "english": "Watch", "kana": "とけい", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Eraser", "kana": "けしゴム", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Blackboard", "kana": "こくばん", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Dictionary", "kana": "じしょ", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Post Office", "kana": "ゆうびんきょく", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsLocation"] }, { "english": "Library", "kana": "としょかん", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsLocation"] }, { "english": "Newspaper", "kana": "しんぶん", "kanji": "", "lessons": ["Lesson_2"], "tags": ["IsObject"] }, { "english": "Movie", "kana": "えいが", "kanji": "映画", "lessons": ["Lesson_3"], "tags": ["IsEntertainment"] }, { "english": "Music", "kana": "おんがく", "kanji": "音楽", "lessons": ["Lesson_3"], "tags": ["IsEntertainment"] }, { "english": "Magazine", "kana": "ざっし", "kanji": "雑誌", "lessons": ["Lesson_3"], "tags": ["IsObject", "IsEntertainment"] }, { "english": "Sports", "kana": "スポーツ", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsEntertainment"] }, { "english": "Date (Romance)", "kana": "デート", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsEntertainment"] }, { "english": "Tennis", "kana": "テニス", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsEntertainment"] }, { "english": "TV", "kana": "テレビ", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsObject", "IsEntertainment"] }, { "english": "Ice Cream", "kana": "アイスクリーム", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsFood"] }, { "english": "Hamburger", "kana": "ハンバーガー", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsFood"] }, { "english": "Sake", "kana": "おさけ", "kanji": "お酒", "lessons": ["Lesson_3"], "tags": ["IsDrink"] }, { "english": "Green Tea", "kana": "おちゃ", "kanji": "お茶", "lessons": ["Lesson_3"], "tags": ["IsDrink"] }, { "english": "Coffee", "kana": "コーヒー", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsDrink"] }, { "english": "Water", "kana": "みず", "kanji": "水", "lessons": ["Lesson_3"], "tags": ["IsDrink"] }, { "english": "Breakfast", "kana": "あさごはん", "kanji": "朝ご飯", "lessons": ["Lesson_3"], "tags": ["IsFood"] }, { "english": "Lunch", "kana": "ひるごはん", "kanji": "昼ご飯", "lessons": ["Lesson_3"], "tags": ["IsFood"] }, { "english": "Dinner", "kana": "ばんごはん", "kanji": "晩ご飯", "lessons": ["Lesson_3"], "tags": ["IsFood"] }, { "english": "Home / House", "kana": "いえ", "kanji": "家", "lessons": ["Lesson_3"], "tags": ["IsLocation"] }, { "english": "Home / House / My Place", "kana": "うち", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsLocation"] }, { "english": "School", "kana": "がっこう", "kanji": "学校", "lessons": ["Lesson_3"], "tags": ["IsLocation"] }, { "english": "Cafe", "kana": "カフェ", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsLocation"] }, { "english": "Tomorrow", "kana": "あした", "kanji": "明日", "lessons": ["Lesson_3"], "tags": ["IsTime"] }, { "english": "Today", "kana": "きょう", "kanji": "今日", "lessons": ["Lesson_3"], "tags": ["IsTime"] }, { "english": "Morning", "kana": "あさ", "kanji": "朝", "lessons": ["Lesson_3"], "tags": ["IsTime"] }, { "english": "Tonight", "kana": "こんばん", "kanji": "今晩", "lessons": ["Lesson_3"], "tags": ["IsTime"] }, { "english": "Every Day", "kana": "まいにち", "kanji": "毎日", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "Every Night", "kana": "まいばん", "kanji": "毎晩", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "Weekend", "kana": "しゅうまつ", "kanji": "週末", "lessons": ["Lesson_3"], "tags": ["IsTime"] }, { "english": "Saturday", "kana": "どようび", "kanji": "土曜日", "lessons": ["Lesson_3"], "tags": ["IsTime"] }, { "english": "Sunday", "kana": "にちようび", "kanji": "日曜日", "lessons": ["Lesson_3"], "tags": ["IsTime"] }, { "english": "When", "kana": "いつ", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsMisc"] }, { "english": "At about ...", "kana": "～ごろ", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsMisc"] }, { "english": "To go", "kana": "いく", "kanji": "行く", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To go back / To return", "kana": "かえる", "kanji": "帰る", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To listen / To hear", "kana": "きく", "kanji": "聞く", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To drink", "kana": "のむ", "kanji": "飲む", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To speak / To talk", "kana": "はなす", "kanji": "話す", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To read", "kana": "よむ", "kanji": "読む", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To get up", "kana": "おきる", "kanji": "起きる", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsRuVerb"] }, { "english": "To eat", "kana": "たべる", "kanji": "食べる", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsRuVerb"] }, { "english": "To sleep / To go to sleep", "kana": "ねる", "kanji": "寝る", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsRuVerb"] }, { "english": "To see / To look at / To watch", "kana": "みる", "kanji": "見る", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsRuVerb"] }, { "english": "To come", "kana": "くる", "kanji": "来る", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsIrregular"] }, { "english": "To do", "kana": "する", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsIrregular"] }, { "english": "To study", "kana": "べんきょうする", "kanji": "勉強する", "lessons": ["Lesson_3"], "tags": ["IsVerb", "IsIrregular"] }, { "english": "Good", "kana": "いい", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsAdjective"] }, { "english": "Early", "kana": "はやい", "kanji": "早い", "lessons": ["Lesson_3"], "tags": ["IsAdjective"] }, { "english": "Not Much", "kana": "あまり", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "Not at All", "kana": "ぜんぜん", "kanji": "全然", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "Usually", "kana": "たいてい", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "A Little", "kana": "ちょっと", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "Sometimes", "kana": "ときどき", "kanji": "時々", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "Often / Much", "kana": "よく", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsAdverb"] }, { "english": "That's right / Let me see", "kana": "そうですね", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsMisc"] }, { "english": "But", "kana": "でも", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsMisc"] }, { "english": "How about ...? / How is ...?", "kana": "どうですか", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsMisc"] }, { "english": "Yes (Informal)", "kana": "ええ", "kanji": "", "lessons": ["Lesson_3"], "tags": ["IsMisc"] }, { "english": "One", "kana": "いち", "kanji": "一", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "One Variant", "kana": "ひとつ", "kanji": "一つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Two", "kana": "に", "kanji": "二", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Two Variant", "kana": "ふたつ", "kanji": "二つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Two Days", "kana": "ふつかかん", "kanji": "二日間", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Three", "kana": "さん", "kanji": "三", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Three Variant", "kana": "みっつ", "kanji": "三つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Four", "kana": "よん / し", "kanji": "四", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Four Variant", "kana": "よっつ", "kanji": "四つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Five", "kana": "ご", "kanji": "五", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Five Variant", "kana": "いつつ", "kanji": "五つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Six", "kana": "ろく", "kanji": "六", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Six Variant", "kana": "むっつ", "kanji": "六つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Seven", "kana": "なな / しち", "kanji": "七", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Seven Variant", "kana": "ななつ", "kanji": "七つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Eight", "kana": "はち", "kanji": "八", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Eight Variant", "kana": "やっつ", "kanji": "八つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Nine", "kana": "きゅう", "kanji": "九", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Nine Variant", "kana": "いいのつ", "kanji": "九つ", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Ten", "kana": "じゅう / とお", "kanji": "十", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Hundred", "kana": "ひゃく / びゃく / ぴゃく", "kanji": "百", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Thousand", "kana": "せん / ぜん", "kanji": "千", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Ten Thousand", "kana": "まん", "kanji": "万", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Yen / Circle", "kana": "えん / まる", "kanji": "円", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Time", "kana": "じ / とき", "kanji": "時", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Minute", "kana": "ふん / ぷん", "kanji": "分", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Month", "kana": "～がつ", "kanji": "月", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Year Student", "kana": "～ねんせい", "kanji": "年生", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Years Old", "kana": "～さい", "kanji": "歳", "lessons": ["Kanji_1"], "tags": ["IsMisc"] }, { "english": "Game", "kana": "ゲーム", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsEntertainment"] }, { "english": "Part-Time Job", "kana": "アルバイト", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsOccupation"] }, { "english": "Shopping", "kana": "かいもの", "kanji": "買い物", "lessons": ["Lesson_4"], "tags": ["IsEntertainment"] }, { "english": "Class", "kana": "クラス", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Dog", "kana": "いぬ", "kanji": "犬", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Cat", "kana": "ねこ", "kanji": "猫", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Person", "kana": "ひと", "kanji": "人", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Child", "kana": "こども", "kanji": "子供", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "You", "kana": "あなた", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Picture / Photograph", "kana": "しゃしん", "kanji": "写真", "lessons": ["Lesson_4"], "tags": ["IsObject"] }, { "english": "Flower", "kana": "はな", "kanji": "花", "lessons": ["Lesson_4"], "tags": ["IsObject"] }, { "english": "(Term) Paper", "kana": "レポート", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsObject"] }, { "english": "Rice / Meal", "kana": "ごはん", "kanji": "ご飯", "lessons": ["Lesson_4"], "tags": ["IsFood"] }, { "english": "Bread", "kana": "パン", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsFood"] }, { "english": "Temple", "kana": "おてら", "kanji": "お寺", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Park", "kana": "こうえん", "kanji": "公園", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Supermarket", "kana": "スーパー", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Bus Stop", "kana": "バスてい", "kanji": "バス停", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Hospital", "kana": "びょういん", "kanji": "病院", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Hotel", "kana": "ホテル", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Bookstore", "kana": "ほんや", "kanji": "本屋", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Town / City", "kana": "まち", "kanji": "町", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Restaurant", "kana": "レストラン", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsLocation"] }, { "english": "Yesterday", "kana": "きのう", "kanji": "昨日", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "... Hours", "kana": "～じかん", "kanji": "～時間", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "One Hour", "kana": "いちじかん", "kanji": "一時間", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "Last Week", "kana": "せんしゅう", "kanji": "先週", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "When ... / At the time of ...", "kana": "とき", "kanji": "時", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Monday", "kana": "げつようび", "kanji": "月曜日", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "Tuesday", "kana": "かようび", "kanji": "火曜日", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "Wednesday", "kana": "すいようび", "kanji": "水曜日", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "Thursday", "kana": "もくようび", "kanji": "木曜日", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "Friday", "kana": "きんようび", "kanji": "金曜日", "lessons": ["Lesson_4"], "tags": ["IsTime"] }, { "english": "To meet / To see (A person)", "kana": "あう", "kanji": "会う", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "There is ...", "kana": "ある", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To buy", "kana": "かう", "kanji": "買う", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To write", "kana": "かく", "kanji": "書く", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To take", "kana": "とる", "kanji": "撮る", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To wait", "kana": "まつ", "kanji": "待つ", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "To understand", "kana": "わかる", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsUVerb"] }, { "english": "(A person) is in ... / Stays at ...", "kana": "いる", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsVerb", "IsRuVerb"] }, { "english": "About (approximate measurement)", "kana": "～ぐらい", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "I'm sorry", "kana": "ごめんなさい", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "And then", "kana": "それから", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "So / Therefore", "kana": "だから", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Many / A lot", "kana": "たくさん", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsAdjective"] }, { "english": "Together with (a person) / And", "kana": "～と", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Why", "kana": "どうして", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Alone", "kana": "ひとりで", "kanji": "一人で", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Hello? (On the phone)", "kana": "もしもし", "kanji": "", "lessons": ["Lesson_4"], "tags": ["IsMisc"] }, { "english": "Right", "kana": "みぎ", "kanji": "右", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Left", "kana": "ひだり", "kanji": "左", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Front", "kana": "まえ", "kanji": "前", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Back", "kana": "うしろ", "kanji": "後ろ", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Inside", "kana": "なか", "kanji": "中", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "On", "kana": "うえ", "kanji": "上", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Under", "kana": "した", "kanji": "下", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Near", "kana": "ちかく", "kanji": "近く", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Next", "kana": "となり", "kanji": "隣", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Between", "kana": "あいだ", "kanji": "間", "lessons": ["Lesson_4"], "tags": ["IsPreposition"] }, { "english": "Day / Sun", "kana": "に / にち / び", "kanji": "日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Book / Basis", "kana": "ほん", "kanji": "本", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Person", "kana": "ひと / じん", "kanji": "人", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Moon / Month", "kana": "げつ / がつ", "kanji": "月", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Fire", "kana": "ひ / か", "kanji": "火", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Water", "kana": "みず / すい", "kanji": "水", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Tree", "kana": "き / もく", "kanji": "木", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Gold / Money", "kana": "きん / かね", "kanji": "金", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Soil", "kana": "つち / ど", "kanji": "土", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Weekday", "kana": "よう", "kanji": "曜", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Up / Top / Above", "kana": "うえ", "kanji": "上", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Down / Under", "kana": "した", "kanji": "下", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Middle / Inside", "kana": "なか", "kanji": "中", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Half", "kana": "はん", "kanji": "半", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Japan", "kana": "にほん", "kanji": "日本", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Sunday", "kana": "にちようび", "kanji": "日曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Japanese People", "kana": "にほんじん", "kanji": "日本人", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Alone", "kana": "ひとりで", "kanji": "一人で", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "This Person", "kana": "このひと", "kanji": "この人", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Monday", "kana": "げつようび", "kanji": "月曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "January", "kana": "いちがつ", "kanji": "一月", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Tuesday", "kana": "かようび", "kanji": "火曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Wednesday", "kana": "すいようび", "kanji": "水曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Thursday", "kana": "もくようび", "kanji": "木曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Friday", "kana": "きんようび", "kanji": "金曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Saturday", "kana": "どようび", "kanji": "土曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Sunday", "kana": "にちようび", "kanji": "日曜日", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }, { "english": "Half Past Three", "kana": "さんじはん", "kanji": "三時半", "lessons": ["Kanji_2"], "tags": ["IsMisc"] }]
-
+    var words = [{"english":"High School Student","kana":"こうこうせい","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Computer","kana":"コンピューター","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor", "IsObject"]},{"english":"Britain","kana":"イギリス","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"India","kana":"インド","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"House Wife","kana":"しゅふ","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Docter","kana":"いしゃ","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Asian Studies","kana":"アジアけんきゅう","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"Family","kana":"かぞく","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Biology","kana":"せいぶつがく","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"Nurse","kana":"かんごし","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Literature","kana":"ぶんがく","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"Politics","kana":"せいじ","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"Lawyer","kana":"べんごし","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Myself","kana":"わたし","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"... O'Clock","kana":"～じ","kanji":"","lessons":["Lesson_1"],"tags":["IsTime"]},{"english":"Telephone","kana":"でんわ","kanji":"","lessons":["Lesson_1"],"tags":["IsObject"]},{"english":"Number","kana":"ばんごう","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Half Past 2 O'Clock","kana":"にじはん","kanji":"","lessons":["Lesson_1"],"tags":["IsTime"]},{"english":"... Year Student","kana":"～ねんせい","kanji":"","lessons":["Lesson_1"],"tags":["IsCounter"]},{"english":"International Student","kana":"りゅうがくせい","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Major","kana":"せんこう","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"PM","kana":"ごご","kanji":"","lessons":["Lesson_1"],"tags":["IsTime"]},{"english":"Number ...","kana":"～ばん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Yes","kana":"はい","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"AM","kana":"ごぜん","kanji":"","lessons":["Lesson_1"],"tags":["IsTime"]},{"english":"That is right","kana":"そうです","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Is that so","kana":"そうですか","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Half Past","kana":"はん","kanji":"","lessons":["Lesson_1"],"tags":["IsTime"]},{"english":"... Years Old","kana":"～さい","kanji":"","lessons":["Lesson_1"],"tags":["IsCounter"]},{"english":"Student","kana":"がくせい","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"... Language","kana":"～ご","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"College Student","kana":"だいがくせい","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Name","kana":"なまえ","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"What","kana":"なん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Um...","kana":"あのう","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Friend","kana":"ともだち","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Mr. / Mrs.","kana":"～さん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"... People","kana":"～じん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Now","kana":"いま","kanji":"","lessons":["Lesson_1"],"tags":["IsTime"]},{"english":"Teacher","kana":"せんせい","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"College","kana":"だいがく","kanji":"","lessons":["Lesson_1"],"tags":["IsLocation"]},{"english":"Younger Brother","kana":"おとうと","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Engineering","kana":"こうがく","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"History","kana":"れきし","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"Economics","kana":"けえざい","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"China","kana":"ちゅうごく","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"International Relations","kana":"こくさいかんけい","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"Younger Sister","kana":"いもうと","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Business","kana":"ビジネス","kanji":"","lessons":["Lesson_1"],"tags":["IsMajor"]},{"english":"Mother","kana":"おかあさん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"USA","kana":"アメリカ","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"Older Brother","kana":"おにいさん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Country","kana":"くに","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Egypt","kana":"エジプト","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"Korea","kana":"かんこく","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"Older Sister","kana":"おねえさん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"Graduate Student","kana":"だいがくいんせい","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Office Worker","kana":"かいしゃいん","kanji":"","lessons":["Lesson_1"],"tags":["IsOccupation"]},{"english":"Father","kana":"おとうさん","kanji":"","lessons":["Lesson_1"],"tags":["IsMisc"]},{"english":"High School","kana":"こうこう","kanji":"","lessons":["Lesson_1"],"tags":["IsLocation"]},{"english":"Canada","kana":"カナダ","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"Australia","kana":"オーストラリア","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"Japan","kana":"にほん","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"Philippines","kana":"フィリピン","kanji":"","lessons":["Lesson_1"],"tags":["IsCountry", "IsLocation"]},{"english":"Desk","kana":"つくえ","kanji":"","lessons":["Lesson_2", "Lesson_4"],"tags":["IsObject"]},{"english":"Chair","kana":"いす","kanji":"","lessons":["Lesson_2", "Lesson_4"],"tags":["IsObject"]},{"english":"Fish","kana":"さかな","kanji":"","lessons":["Lesson_2"],"tags":["IsFood"]},{"english":"Bag","kana":"かばん","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Shoes","kana":"くつ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"... Please","kana":"(～を)おねがいします","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Please say it again","kana":"もういちどいってください","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"How much","kana":"いくら","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Door","kana":"ドア","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Please listen","kana":"きいてください","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"English","kana":"えいご","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Please say it slowly","kana":"ゆっくりいってください","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Please wait a moment","kana":"ちょっとまってください","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Bank","kana":"ぎんこう","kanji":"","lessons":["Lesson_2"],"tags":["IsLocation"]},{"english":"Menu","kana":"メニュー","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Pencil","kana":"えんぴつ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"In that case ...","kana":"じゃあ","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Light","kana":"でんき","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Please look at page 10","kana":"じゅうページをみてください","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Umbrella","kana":"かさ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Jeans","kana":"ジーンズ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Delicious","kana":"おいしい","kanji":"","lessons":["Lesson_2"],"tags":["IsAdjective"]},{"english":"Wallet","kana":"さいふ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Hat","kana":"ぼうし","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Book","kana":"ほん","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Meat","kana":"にく","kanji":"","lessons":["Lesson_2"],"tags":["IsFood"]},{"english":"Bicycle","kana":"じてんしゃ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"I don't understand","kana":"わかりません","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Yen","kana":"～えん","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"T Shirt","kana":"Ｔシャツ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Smartphone","kana":"スマホ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Notebook","kana":"ノート","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"I understand","kana":"わかりました","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Window","kana":"まど","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Do you understand?","kana":"わかりましたか","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Curtain","kana":"カーテン","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Toilet","kana":"トイレ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject", "IsLocation"]},{"english":"Pen","kana":"ペン","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Vegetable","kana":"やさい","kanji":"","lessons":["Lesson_2"],"tags":["IsFood"]},{"english":"Please give me ...","kana":"(～を)ください","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Pork Cutlet","kana":"とんかつ","kanji":"","lessons":["Lesson_2"],"tags":["IsFood"]},{"english":"Thank you","kana":"どうも","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Welcome (to our store)","kana":"いらっしゃいませ","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Expensive","kana":"たかい","kanji":"","lessons":["Lesson_2"],"tags":["IsAdjective"]},{"english":"Convenience Store","kana":"コンビニ","kanji":"","lessons":["Lesson_2"],"tags":["IsLocation"]},{"english":"Please have this","kana":"どうぞ","kanji":"","lessons":["Lesson_2"],"tags":["IsMisc"]},{"english":"Watch","kana":"とけい","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Eraser","kana":"けしゴム","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Blackboard","kana":"こくばん","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Dictionary","kana":"じしょ","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Post Office","kana":"ゆうびんきょく","kanji":"","lessons":["Lesson_2"],"tags":["IsLocation"]},{"english":"Library","kana":"としょかん","kanji":"","lessons":["Lesson_2"],"tags":["IsLocation"]},{"english":"Newspaper","kana":"しんぶん","kanji":"","lessons":["Lesson_2"],"tags":["IsObject"]},{"english":"Movie","kana":"えいが","kanji":"映画","lessons":["Lesson_3"],"tags":["IsEntertainment"]},{"english":"Music","kana":"おんがく","kanji":"音楽","lessons":["Lesson_3"],"tags":["IsEntertainment"]},{"english":"Magazine","kana":"ざっし","kanji":"雑誌","lessons":["Lesson_3"],"tags":["IsObject", "IsEntertainment"]},{"english":"Sports","kana":"スポーツ","kanji":"","lessons":["Lesson_3"],"tags":["IsEntertainment"]},{"english":"Date (Romance)","kana":"デート","kanji":"","lessons":["Lesson_3"],"tags":["IsEntertainment"]},{"english":"Tennis","kana":"テニス","kanji":"","lessons":["Lesson_3"],"tags":["IsEntertainment"]},{"english":"TV","kana":"テレビ","kanji":"","lessons":["Lesson_3"],"tags":["IsObject", "IsEntertainment"]},{"english":"Ice Cream","kana":"アイスクリーム","kanji":"","lessons":["Lesson_3"],"tags":["IsFood"]},{"english":"Hamburger","kana":"ハンバーガー","kanji":"","lessons":["Lesson_3"],"tags":["IsFood"]},{"english":"Sake","kana":"おさけ","kanji":"お酒","lessons":["Lesson_3"],"tags":["IsDrink"]},{"english":"Green Tea","kana":"おちゃ","kanji":"お茶","lessons":["Lesson_3"],"tags":["IsDrink"]},{"english":"Coffee","kana":"コーヒー","kanji":"","lessons":["Lesson_3"],"tags":["IsDrink"]},{"english":"Water","kana":"みず","kanji":"水","lessons":["Lesson_3"],"tags":["IsDrink"]},{"english":"Breakfast","kana":"あさごはん","kanji":"朝ご飯","lessons":["Lesson_3"],"tags":["IsFood"]},{"english":"Lunch","kana":"ひるごはん","kanji":"昼ご飯","lessons":["Lesson_3"],"tags":["IsFood"]},{"english":"Dinner","kana":"ばんごはん","kanji":"晩ご飯","lessons":["Lesson_3"],"tags":["IsFood"]},{"english":"Home / House","kana":"いえ","kanji":"家","lessons":["Lesson_3"],"tags":["IsLocation"]},{"english":"Home / House / My Place","kana":"うち","kanji":"","lessons":["Lesson_3"],"tags":["IsLocation"]},{"english":"School","kana":"がっこう","kanji":"学校","lessons":["Lesson_3"],"tags":["IsLocation"]},{"english":"Cafe","kana":"カフェ","kanji":"","lessons":["Lesson_3"],"tags":["IsLocation"]},{"english":"Tomorrow","kana":"あした","kanji":"明日","lessons":["Lesson_3"],"tags":["IsTime"]},{"english":"Today","kana":"きょう","kanji":"今日","lessons":["Lesson_3"],"tags":["IsTime"]},{"english":"Morning","kana":"あさ","kanji":"朝","lessons":["Lesson_3"],"tags":["IsTime"]},{"english":"Tonight","kana":"こんばん","kanji":"今晩","lessons":["Lesson_3"],"tags":["IsTime"]},{"english":"Every Day","kana":"まいにち","kanji":"毎日","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"Every Night","kana":"まいばん","kanji":"毎晩","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"Weekend","kana":"しゅうまつ","kanji":"週末","lessons":["Lesson_3"],"tags":["IsTime"]},{"english":"Saturday","kana":"どようび","kanji":"土曜日","lessons":["Lesson_3"],"tags":["IsTime"]},{"english":"Sunday","kana":"にちようび","kanji":"日曜日","lessons":["Lesson_3"],"tags":["IsTime"]},{"english":"When","kana":"いつ","kanji":"","lessons":["Lesson_3"],"tags":["IsMisc"]},{"english":"At about ...","kana":"～ごろ","kanji":"","lessons":["Lesson_3"],"tags":["IsMisc"]},{"english":"To go","kana":"いく","kanji":"行く","lessons":["Lesson_3"],"tags":["IsVerb", "IsUVerb"]},{"english":"To go back / To return","kana":"かえる","kanji":"帰る","lessons":["Lesson_3"],"tags":["IsVerb", "IsUVerb"]},{"english":"To listen / To hear","kana":"きく","kanji":"聞く","lessons":["Lesson_3"],"tags":["IsVerb", "IsUVerb"]},{"english":"To drink","kana":"のむ","kanji":"飲む","lessons":["Lesson_3"],"tags":["IsVerb", "IsUVerb"]},{"english":"To speak / To talk","kana":"はなす","kanji":"話す","lessons":["Lesson_3"],"tags":["IsVerb", "IsUVerb"]},{"english":"To read","kana":"よむ","kanji":"読む","lessons":["Lesson_3"],"tags":["IsVerb", "IsUVerb"]},{"english":"To get up","kana":"おきる","kanji":"起きる","lessons":["Lesson_3"],"tags":["IsVerb", "IsRuVerb"]},{"english":"To eat","kana":"たべる","kanji":"食べる","lessons":["Lesson_3"],"tags":["IsVerb", "IsRuVerb"]},{"english":"To sleep / To go to sleep","kana":"ねる","kanji":"寝る","lessons":["Lesson_3"],"tags":["IsVerb", "IsRuVerb"]},{"english":"To see / To look at / To watch","kana":"みる","kanji":"見る","lessons":["Lesson_3"],"tags":["IsVerb", "IsRuVerb"]},{"english":"To come","kana":"くる","kanji":"来る","lessons":["Lesson_3"],"tags":["IsVerb", "IsIrregular"]},{"english":"To do","kana":"する","kanji":"","lessons":["Lesson_3"],"tags":["IsVerb", "IsIrregular"]},{"english":"To study","kana":"べんきょうする","kanji":"勉強する","lessons":["Lesson_3"],"tags":["IsVerb", "IsIrregular"]},{"english":"Good","kana":"いい","kanji":"","lessons":["Lesson_3"],"tags":["IsAdjective"]},{"english":"Early","kana":"はやい","kanji":"早い","lessons":["Lesson_3"],"tags":["IsAdjective"]},{"english":"Not Much","kana":"あまり","kanji":"","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"Not at All","kana":"ぜんぜん","kanji":"全然","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"Usually","kana":"たいてい","kanji":"","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"A Little","kana":"ちょっと","kanji":"","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"Sometimes","kana":"ときどき","kanji":"時々","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"Often / Much","kana":"よく","kanji":"","lessons":["Lesson_3"],"tags":["IsAdverb"]},{"english":"That's right / Let me see","kana":"そうですね","kanji":"","lessons":["Lesson_3"],"tags":["IsMisc"]},{"english":"But","kana":"でも","kanji":"","lessons":["Lesson_3"],"tags":["IsMisc"]},{"english":"How about ...? / How is ...?","kana":"どうですか","kanji":"","lessons":["Lesson_3"],"tags":["IsMisc"]},{"english":"Yes (Informal)","kana":"ええ","kanji":"","lessons":["Lesson_3"],"tags":["IsMisc"]},{"english":"One","kana":"いち","kanji":"一","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"One Variant","kana":"ひとつ","kanji":"一つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Two","kana":"に","kanji":"二","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Two Variant","kana":"ふたつ","kanji":"二つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Two Days","kana":"ふつかかん","kanji":"二日間","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Three","kana":"さん","kanji":"三","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Three Variant","kana":"みっつ","kanji":"三つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Four","kana":"よん / し","kanji":"四","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Four Variant","kana":"よっつ","kanji":"四つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Five","kana":"ご","kanji":"五","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Five Variant","kana":"いつつ","kanji":"五つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Six","kana":"ろく","kanji":"六","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Six Variant","kana":"むっつ","kanji":"六つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Seven","kana":"なな / しち","kanji":"七","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Seven Variant","kana":"ななつ","kanji":"七つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Eight","kana":"はち","kanji":"八","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Eight Variant","kana":"やっつ","kanji":"八つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Nine","kana":"きゅう","kanji":"九","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Nine Variant","kana":"いいのつ","kanji":"九つ","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Ten","kana":"じゅう / とお","kanji":"十","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Hundred","kana":"ひゃく / びゃく / ぴゃく","kanji":"百","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Thousand","kana":"せん / ぜん","kanji":"千","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Ten Thousand","kana":"まん","kanji":"万","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Yen / Circle","kana":"えん / まる","kanji":"円","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Time","kana":"じ / とき","kanji":"時","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Minute","kana":"ふん / ぷん","kanji":"分","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Month","kana":"～がつ","kanji":"月","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Year Student","kana":"～ねんせい","kanji":"年生","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Years Old","kana":"～さい","kanji":"歳","lessons":["Kanji_1"],"tags":["IsMisc"]},{"english":"Game","kana":"ゲーム","kanji":"","lessons":["Lesson_4"],"tags":["IsEntertainment"]},{"english":"Part-Time Job","kana":"アルバイト","kanji":"","lessons":["Lesson_4"],"tags":["IsOccupation"]},{"english":"Shopping","kana":"かいもの","kanji":"買い物","lessons":["Lesson_4"],"tags":["IsEntertainment"]},{"english":"Class","kana":"クラス","kanji":"","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Dog","kana":"いぬ","kanji":"犬","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Cat","kana":"ねこ","kanji":"猫","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Person","kana":"ひと","kanji":"人","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Child","kana":"こども","kanji":"子供","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"You","kana":"あなた","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Picture / Photograph","kana":"しゃしん","kanji":"写真","lessons":["Lesson_4"],"tags":["IsObject"]},{"english":"Flower","kana":"はな","kanji":"花","lessons":["Lesson_4"],"tags":["IsObject"]},{"english":"(Term) Paper","kana":"レポート","kanji":"","lessons":["Lesson_4"],"tags":["IsObject"]},{"english":"Rice / Meal","kana":"ごはん","kanji":"ご飯","lessons":["Lesson_4"],"tags":["IsFood"]},{"english":"Bread","kana":"パン","kanji":"","lessons":["Lesson_4"],"tags":["IsFood"]},{"english":"Temple","kana":"おてら","kanji":"お寺","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Park","kana":"こうえん","kanji":"公園","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Supermarket","kana":"スーパー","kanji":"","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Bus Stop","kana":"バスてい","kanji":"バス停","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Hospital","kana":"びょういん","kanji":"病院","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Hotel","kana":"ホテル","kanji":"","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Bookstore","kana":"ほんや","kanji":"本屋","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Town / City","kana":"まち","kanji":"町","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Restaurant","kana":"レストラン","kanji":"","lessons":["Lesson_4"],"tags":["IsLocation"]},{"english":"Yesterday","kana":"きのう","kanji":"昨日","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"... Hours","kana":"～じかん","kanji":"～時間","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"One Hour","kana":"いちじかん","kanji":"一時間","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"Last Week","kana":"せんしゅう","kanji":"先週","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"When ... / At the time of ...","kana":"とき","kanji":"時","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Monday","kana":"げつようび","kanji":"月曜日","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"Tuesday","kana":"かようび","kanji":"火曜日","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"Wednesday","kana":"すいようび","kanji":"水曜日","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"Thursday","kana":"もくようび","kanji":"木曜日","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"Friday","kana":"きんようび","kanji":"金曜日","lessons":["Lesson_4"],"tags":["IsTime"]},{"english":"To meet / To see (A person)","kana":"あう","kanji":"会う","lessons":["Lesson_4"],"tags":["IsVerb", "IsUVerb"]},{"english":"There is ...","kana":"ある","kanji":"","lessons":["Lesson_4"],"tags":["IsVerb", "IsUVerb"]},{"english":"To buy","kana":"かう","kanji":"買う","lessons":["Lesson_4"],"tags":["IsVerb", "IsUVerb"]},{"english":"To write","kana":"かく","kanji":"書く","lessons":["Lesson_4"],"tags":["IsVerb", "IsUVerb"]},{"english":"To take","kana":"とる","kanji":"撮る","lessons":["Lesson_4"],"tags":["IsVerb", "IsUVerb"]},{"english":"To wait","kana":"まつ","kanji":"待つ","lessons":["Lesson_4"],"tags":["IsVerb", "IsUVerb"]},{"english":"To understand","kana":"わかる","kanji":"","lessons":["Lesson_4"],"tags":["IsVerb", "IsUVerb"]},{"english":"(A person) is in ... / Stays at ...","kana":"いる","kanji":"","lessons":["Lesson_4"],"tags":["IsVerb", "IsRuVerb"]},{"english":"About (approximate measurement)","kana":"～ぐらい","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"I'm sorry","kana":"ごめんなさい","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"And then","kana":"それから","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"So / Therefore","kana":"だから","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Many / A lot","kana":"たくさん","kanji":"","lessons":["Lesson_4"],"tags":["IsAdjective"]},{"english":"Together with (a person) / And","kana":"～と","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Why","kana":"どうして","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Alone","kana":"ひとりで","kanji":"一人で","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Hello? (On the phone)","kana":"もしもし","kanji":"","lessons":["Lesson_4"],"tags":["IsMisc"]},{"english":"Right","kana":"みぎ","kanji":"右","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Left","kana":"ひだり","kanji":"左","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Front","kana":"まえ","kanji":"前","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Back","kana":"うしろ","kanji":"後ろ","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Inside","kana":"なか","kanji":"中","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"On","kana":"うえ","kanji":"上","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Under","kana":"した","kanji":"下","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Near","kana":"ちかく","kanji":"近く","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Next","kana":"となり","kanji":"隣","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Between","kana":"あいだ","kanji":"間","lessons":["Lesson_4"],"tags":["IsPreposition"]},{"english":"Day / Sun","kana":"に / にち / び","kanji":"日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Book / Basis","kana":"ほん","kanji":"本","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Person","kana":"ひと / じん","kanji":"人","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Moon / Month","kana":"げつ / がつ","kanji":"月","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Fire","kana":"ひ / か","kanji":"火","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Water","kana":"みず / すい","kanji":"水","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Tree","kana":"き / もく","kanji":"木","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Gold / Money","kana":"きん / かね","kanji":"金","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Soil","kana":"つち / ど","kanji":"土","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Weekday","kana":"よう","kanji":"曜","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Up / Top / Above","kana":"うえ","kanji":"上","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Down / Under","kana":"した","kanji":"下","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Middle / Inside","kana":"なか","kanji":"中","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Half","kana":"はん","kanji":"半","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Japan","kana":"にほん","kanji":"日本","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Sunday","kana":"にちようび","kanji":"日曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Japanese People","kana":"にほんじん","kanji":"日本人","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Alone","kana":"ひとりで","kanji":"一人で","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"This Person","kana":"このひと","kanji":"この人","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Monday","kana":"げつようび","kanji":"月曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"January","kana":"いちがつ","kanji":"一月","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Tuesday","kana":"かようび","kanji":"火曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Wednesday","kana":"すいようび","kanji":"水曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Thursday","kana":"もくようび","kanji":"木曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Friday","kana":"きんようび","kanji":"金曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Saturday","kana":"どようび","kanji":"土曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Sunday","kana":"にちようび","kanji":"日曜日","lessons":["Kanji_2"],"tags":["IsMisc"]},{"english":"Half Past Three","kana":"さんじはん","kanji":"三時半","lessons":["Kanji_2"],"tags":["IsMisc"]}]
 
     var lessons = new Set();
-    var katakanaToHiragana = {
-        'ア': 'あ',
-        'イ': 'い',
-        'ウ': 'う',
-        'エ': 'え',
-        'オ': 'お',
-        'カ': 'か',
-        'キ': 'き',
-        'ク': 'く',
-        'ケ': 'け',
-        'コ': 'こ',
-        'ガ': 'が',
-        'ギ': 'ぎ',
-        'グ': 'ぐ',
-        'ゲ': 'げ',
-        'ゴ': 'ご',
-        'サ': 'さ',
-        'シ': 'し',
-        'ス': 'す',
-        'セ': 'せ',
-        'ソ': 'そ',
-        'ザ': 'ざ',
-        'ジ': 'じ',
-        'ズ': 'ず',
-        'ゼ': 'ぜ',
-        'ゾ': 'ぞ',
-        'タ': 'た',
-        'チ': 'ち',
-        'ツ': 'つ',
-        'テ': 'て',
-        'ト': 'と',
-        'ダ': 'だ',
-        'ヂ': 'ぢ',
-        'ヅ': 'づ',
-        'デ': 'で',
-        'ド': 'ど',
-        'ナ': 'な',
-        'ニ': 'に',
-        'ヌ': 'ぬ',
-        'ネ': 'ね',
-        'ノ': 'の',
-        'ハ': 'は',
-        'ヒ': 'ひ',
-        'フ': 'ふ',
-        'ヘ': 'へ',
-        'ホ': 'ほ',
-        'バ': 'ば',
-        'ビ': 'び',
-        'ブ': 'ぶ',
-        'ベ': 'べ',
-        'ボ': 'ぼ',
-        'パ': 'ぱ',
-        'ピ': 'ぴ',
-        'プ': 'ぷ',
-        'ペ': 'ぺ',
-        'ポ': 'ぽ',
-        'マ': 'ま',
-        'ミ': 'み',
-        'ム': 'む',
-        'メ': 'め',
-        'モ': 'も',
-        'ヤ': 'や',
-        'ユ': 'ゆ',
-        'ヨ': 'よ',
-        'ラ': 'ら',
-        'リ': 'り',
-        'ル': 'る',
-        'レ': 'れ',
-        'ロ': 'ろ',
-        'ワ': 'わ',
-        'ヲ': 'を',
-        'ァ': 'ぁ',
-        'ィ': 'ぃ',
-        'ゥ': 'ぅ',
-        'ェ': 'ぇ',
-        'ォ': 'ぉ',
-        'ャ': 'ゃ',
-        'ュ': 'ゅ',
-        'ョ': 'ょ',
-        'ン': 'ん'
-    }
+        var katakanaToHiragana = {
+            'ア': 'あ',
+            'イ': 'い',
+            'ウ': 'う',
+            'エ': 'え',
+            'オ': 'お',
+            'カ': 'か',
+            'キ': 'き',
+            'ク': 'く',
+            'ケ': 'け',
+            'コ': 'こ',
+            'ガ': 'が',
+            'ギ': 'ぎ',
+            'グ': 'ぐ',
+            'ゲ': 'げ',
+            'ゴ': 'ご',
+            'サ': 'さ',
+            'シ': 'し',
+            'ス': 'す',
+            'セ': 'せ',
+            'ソ': 'そ',
+            'ザ': 'ざ',
+            'ジ': 'じ',
+            'ズ': 'ず',
+            'ゼ': 'ぜ',
+            'ゾ': 'ぞ',
+            'タ': 'た',
+            'チ': 'ち',
+            'ツ': 'つ',
+            'テ': 'て',
+            'ト': 'と',
+            'ダ': 'だ',
+            'ヂ': 'ぢ',
+            'ヅ': 'づ',
+            'デ': 'で',
+            'ド': 'ど',
+            'ナ': 'な',
+            'ニ': 'に',
+            'ヌ': 'ぬ',
+            'ネ': 'ね',
+            'ノ': 'の',
+            'ハ': 'は',
+            'ヒ': 'ひ',
+            'フ': 'ふ',
+            'ヘ': 'へ',
+            'ホ': 'ほ',
+            'バ': 'ば',
+            'ビ': 'び',
+            'ブ': 'ぶ',
+            'ベ': 'べ',
+            'ボ': 'ぼ',
+            'パ': 'ぱ',
+            'ピ': 'ぴ',
+            'プ': 'ぷ',
+            'ペ': 'ぺ',
+            'ポ': 'ぽ',
+            'マ': 'ま',
+            'ミ': 'み',
+            'ム': 'む',
+            'メ': 'め',
+            'モ': 'も',
+            'ヤ': 'や',
+            'ユ': 'ゆ',
+            'ヨ': 'よ',
+            'ラ': 'ら',
+            'リ': 'り',
+            'ル': 'る',
+            'レ': 'れ',
+            'ロ': 'ろ',
+            'ワ': 'わ',
+            'ヲ': 'を',
+            'ァ': 'ぁ',
+            'ィ': 'ぃ',
+            'ゥ': 'ぅ',
+            'ェ': 'ぇ',
+            'ォ': 'ぉ',
+            'ャ': 'ゃ',
+            'ュ': 'ゅ',
+            'ョ': 'ょ',
+            'ン': 'ん'
+        }
 
-    let endsInA = ['ア', 'カ', 'ガ', 'サ', 'ザ', 'タ', 'ダ', 'ナ', 'ハ', 'バ', 'パ', 'マ', 'ヤ', 'ラ', 'ワ', 'ャ', 'ァ'];
+    let endsInA =['ア', 'カ', 'ガ', 'サ', 'ザ', 'タ', 'ダ', 'ナ', 'ハ', 'バ', 'パ', 'マ', 'ヤ', 'ラ', 'ワ', 'ャ', 'ァ'];
 
-    let endsInI = ['イ', 'キ', 'ギ', 'シ', 'ジ', 'チ', 'ヂ', 'ニ', 'ヒ', 'ビ', 'ピ', 'ミ', 'リ', 'ィ'];
+        let endsInI =['イ', 'キ', 'ギ', 'シ', 'ジ', 'チ', 'ヂ', 'ニ', 'ヒ', 'ビ', 'ピ', 'ミ', 'リ', 'ィ'];
 
-    let endsInU = ['ウ', 'ク', 'グ', 'ス', 'ズ', 'ツ', 'ヅ', 'ヌ', 'フ', 'ブ', 'プ', 'ム', 'ユ', 'ル', 'ュ', 'ゥ'];
+        let endsInU =['ウ', 'ク', 'グ', 'ス', 'ズ', 'ツ', 'ヅ', 'ヌ', 'フ', 'ブ', 'プ', 'ム', 'ユ', 'ル', 'ュ', 'ゥ'];
 
-    let endsInE = ['エ', 'ケ', 'ゲ', 'セ', 'ゼ', 'テ', 'デ', 'ネ', 'ヘ', 'ベ', 'ペ', 'メ', 'レ', 'ェ'];
+        let endsInE =['エ', 'ケ', 'ゲ', 'セ', 'ゼ', 'テ', 'デ', 'ネ', 'ヘ', 'ベ', 'ペ', 'メ', 'レ', 'ェ'];
 
-    let endsInO = ['オ', 'コ', 'ゴ', 'ソ', 'ゾ', 'ト', 'ド', 'ノ', 'ホ', 'ボ', 'ポ', 'モ', 'ヨ', 'ロ', 'ヲ', 'ョ', 'ォ'];
+        let endsInO =['オ', 'コ', 'ゴ', 'ソ', 'ゾ', 'ト', 'ド', 'ノ', 'ホ', 'ボ', 'ポ', 'モ', 'ヨ', 'ロ', 'ヲ', 'ョ', 'ォ'];
 
-    function getEnglish(word) {
-        return word.english;
-    }
+        function getEnglish(word) {
+            return word.english;
+        }
 
     function getHiragana(word) {
-        let out = "";
-        let lastC = "";
-        [...word.kana].forEach(c => {
-            if (katakanaToHiragana[c] != undefined) {
-                out += katakanaToHiragana[c];
-            } else {
-                if (c == 'ー') {
+            let out = "";
+            let lastC = "";
+            [...word.kana].forEach(c => {
+                if (katakanaToHiragana[c] != undefined) {
+                    out += katakanaToHiragana[c];
+                } else {
+                    if (c == 'ー') {
 
-                    if (endsInA.includes(lastC)) {
-                        out += "あ";
-                    } else if (endsInI.includes(lastC)) {
-                        out += "い";
-                    } else if (endsInU.includes(lastC)) {
-                        out += "う";
-                    } else if (endsInE.includes(lastC)) {
-                        out += "え";
-                    } else if (endsInO.includes(lastC)) {
-                        out += "う";
+                        if (endsInA.includes(lastC)) {
+                            out += "あ";
+                        } else if (endsInI.includes(lastC)) {
+                            out += "い";
+                        } else if (endsInU.includes(lastC)) {
+                            out += "う";
+                        } else if (endsInE.includes(lastC)) {
+                            out += "え";
+                        } else if (endsInO.includes(lastC)) {
+                            out += "う";
+                        } else {
+                            console.log("hi");
+                            out += c;
+                        }
+
                     } else {
-                        console.log("hi");
                         out += c;
                     }
 
-                } else {
-                    out += c;
                 }
-
-            }
-            lastC = c;
-        });
-        return out;
-    }
+                lastC = c;
+            });
+            return out;
+        }
 
     function getKana(word) {
-        return word.kana;
-    }
-
-    function getKanji(word) {
-        if(word.kanji == ""){
             return word.kana;
         }
-        return word.kanji;
-    }
+
+    function getKanji(word) {
+            if (word.kanji == "") {
+                return word.kana;
+            }
+            return word.kanji;
+        }
 
 </script>
 
 <script>
     class ElementSelector {
-        constructor() {
-            this.list = {};
-        }
-
-        addOption(id, element) {
-            this.list[id] = element;
-        }
-
-        select(id) {
-            for (const element in this.list) {
-                this.list[element].classList.add("Hidden");
+            constructor() {
+                this.list = {};
             }
 
-            this.list[id].classList.remove("Hidden");
+            addOption(id, element) {
+                this.list[id] = element;
+            }
+
+            select(id) {
+                for (const element in this.list) {
+                    this.list[element].classList.add("Hidden");
+                }
+
+                this.list[id].classList.remove("Hidden");
+            }
         }
-    }
 </script>
 
 <script>
     function getRandomSubarray(arr, size) {
-        var shuffled = arr.slice(0), i = arr.length, temp, index;
-        while (i--) {
-            index = Math.floor((i + 1) * Math.random());
-            temp = shuffled[index];
-            shuffled[index] = shuffled[i];
-            shuffled[i] = temp;
+            var shuffled = arr.slice(0), i = arr.length, temp, index;
+            while (i--) {
+                index = Math.floor((i + 1) * Math.random());
+                temp = shuffled[index];
+                shuffled[index] = shuffled[i];
+                shuffled[i] = temp;
+            }
+            return shuffled.slice(0, size);
         }
-        return shuffled.slice(0, size);
-    }
 
     const QuestionStyle = {
         FlashCard: "Flash Card",
@@ -636,9 +696,9 @@
             let hasValidTag = word.tags.some(tag => {
                 return programState.selectedTags.has(tag);
             });
-            
+
             let hasValidWordType = true;
-            if(programState.translationDirection == TranslationDirection.KanaToKanji || programState.translationDirection == TranslationDirection.KanjiToKana){
+            if (programState.translationDirection == TranslationDirection.KanaToKanji || programState.translationDirection == TranslationDirection.KanjiToKana) {
                 hasValidWordType = word.kanji != "";
             }
 
@@ -771,28 +831,28 @@
         }
     }
 
-    function submitMultipleChoice(event){
+    function submitMultipleChoice(event) {
         multipleChoiceAttempts++;
-        if(event.target.value == JSON.stringify(multipleChoiceCorrect)){//correct
+        if (event.target.value == JSON.stringify(multipleChoiceCorrect)) {//correct
             multipleChoiceScore++;
             multipleChoicePlayingAnimation++;
             document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceWrong");
             document.getElementById("MultipleChoicePrompt").classList.add("MultipleChoiceCorrect");
-            setTimeout(()=>{
+            setTimeout(() => {
                 multipleChoicePlayingAnimation--;
-                if(multipleChoicePlayingAnimation == 0){
+                if (multipleChoicePlayingAnimation == 0) {
                     document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceCorrect");
                     document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceWrong");
                     generateNewMultipleChoicePrompt();
                 }
             }, 500);
-        }else{
+        } else {
             multipleChoicePlayingAnimation++;
             document.getElementById("MultipleChoicePrompt").classList.add("MultipleChoiceWrong");
             document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceCorrect");
-            setTimeout(()=>{
+            setTimeout(() => {
                 multipleChoicePlayingAnimation--;
-                if(multipleChoicePlayingAnimation == 0){
+                if (multipleChoicePlayingAnimation == 0) {
                     document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceCorrect");
                     document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceWrong");
                 }
@@ -804,6 +864,83 @@
 
     //info dump functions
     function loadInfoDump() {
+        programState.wordBuffer = [...programState.validWords];
+        //document.getElementById("InfoDumpTester").innerHTML = JSON.stringify(programState.wordBuffer);
+        let infoDumpContainer = document.getElementById("InfoDumpTester");
+        infoDumpContainer.innerHTML = "";
+        infoDumpContainer.classList.remove("InfoDumpWordMenu");
+
+        programState.wordBuffer.forEach(word => {
+            let button = document.createElement("button");
+            button.innerHTML = getFrontText(word);
+            infoDumpContainer.appendChild(button);
+            button.onclick = () => {
+                loadInfoDumpPage(word);
+            }
+        });
+    }
+
+    function loadInfoDumpPage(word) {
+        let infoDumpContainer = document.getElementById("InfoDumpTester");
+        infoDumpContainer.innerHTML = "";
+        infoDumpContainer.classList.add("InfoDumpWordMenu");
+
+
+        let closeButton = document.createElement("button");
+        closeButton.innerHTML = "Close";
+        closeButton.onclick = loadInfoDump;
+        infoDumpContainer.appendChild(closeButton);
+
+        let infoDiv = document.createElement("div");
+        infoDumpContainer.appendChild(infoDiv);
+
+        let englishDiv = document.createElement("div");
+        let englishDivPrompt = document.createElement("div");
+        let englishDivText = document.createElement("div");
+        englishDivPrompt.innerHTML = "English";
+        englishDivText.innerHTML = word.english;
+        englishDiv.appendChild(englishDivPrompt);
+        englishDiv.appendChild(englishDivText);
+
+        let kanaDiv = document.createElement("div");
+        let kanaDivPrompt = document.createElement("div");
+        let kanaDivText = document.createElement("div");
+        kanaDivPrompt.innerHTML = "Kana";
+        kanaDivText.innerHTML = word.kana;
+        kanaDiv.appendChild(kanaDivPrompt);
+        kanaDiv.appendChild(kanaDivText);
+
+        let kanjiDiv = document.createElement("div");
+        let kanjiDivPrompt = document.createElement("div");
+        let kanjiDivText = document.createElement("div");
+        kanjiDivPrompt.innerHTML = "Kanji";
+        kanjiDivText.innerHTML = word.kanji;
+        kanjiDiv.appendChild(kanjiDivPrompt);
+        kanjiDiv.appendChild(kanjiDivText);
+
+
+        infoDiv.appendChild(englishDiv);
+        infoDiv.appendChild(kanaDiv);
+        infoDiv.appendChild(kanjiDiv);
+
+
+        let lessonList = document.createElement("span");
+        infoDiv.appendChild(lessonList);
+
+        word.lessons.forEach(lesson => {
+            let lessonLabel = document.createElement("div");
+            lessonLabel.innerHTML = lesson.replaceAll("_", " ");;
+            lessonList.appendChild(lessonLabel);
+        })
+
+        let tagList = document.createElement("span");
+        infoDiv.appendChild(tagList);
+
+        word.tags.forEach(tag => {
+            let tagLabel = document.createElement("div");
+            tagLabel.innerHTML = tag;
+            tagList.appendChild(tagLabel);
+        })
 
     }
 
@@ -859,6 +996,7 @@
         menuSelector.select(programState.displayedMenu);
         testerSelector.select(programState.questionStyle);
         initializeQuestionStyleMenu();
+        generateWordSelectionMenu();
         onMenuChange();
     }
 
@@ -993,13 +1131,16 @@
                 programState.selectedLessons.add(lesson.firstChild.value);
             });
 
-            if(programState.isKanjiLesson){
-                document.querySelector(`input[value="${TextStyle.Kanji}"]`).checked = true;
-                document.querySelector(`input[value="${TextStyle.Kanji}"]`).onclick();
+            if (programState.isKanjiLesson) {
+                if (programState.questionStyle != QuestionStyle.InfoDump) {
+                    document.querySelector(`input[value="${TextStyle.Kanji}"]`).checked = true;
+                    document.querySelector(`input[value="${TextStyle.Kanji}"]`).onclick();
 
-                document.querySelector(`input[value="${TranslationDirection.KanjiToKana}"]`).checked = true;
+                    document.querySelector(`input[value="${TranslationDirection.KanjiToKana}"]`).checked = true;
+                }
+
                 updateQuestionStyle();
-            }else{
+            } else {
                 document.querySelector(`input[value="${TranslationDirection.JapaneseToEnglish}"]`).checked = true;
                 updateQuestionStyle();
             }

@@ -63,8 +63,8 @@ Canada,カナダ,,Lesson_1,IsCountry IsLocation
 Australia,オーストラリア,,Lesson_1,IsCountry IsLocation
 Japan,にほん,,Lesson_1,IsCountry IsLocation
 Philippines,フィリピン,,Lesson_1,IsCountry IsLocation
-Desk,つくえ,,Lesson_2,IsObject
-Chair,いす,,Lesson_2,IsObject
+Desk,つくえ,,Lesson_2 Lesson_4,IsObject
+Chair,いす,,Lesson_2 Lesson_4,IsObject
 Fish,さかな,,Lesson_2,IsFood
 Bag,かばん,,Lesson_2,IsObject
 Shoes,くつ,,Lesson_2,IsObject
