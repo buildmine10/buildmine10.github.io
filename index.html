@@ -8,6 +8,7 @@
         * {
             font-size: 15pt;
             font-family: Arial, Helvetica, sans-serif;
+            user-select: none;
         }
 
         body {
@@ -700,10 +701,7 @@
     //flash card functions
     function loadFlashCard() {
         programState.wordBuffer = [...programState.validWords];
-        multipleChoiceScore = 0;
-        multipleChoiceAttempts = 0;
         generateNewFlashCardPrompt();
-        document.getElementById("MultipleChoiceNextButton").innerHTML = `Next Word [100%]`;
     }
 
     function generateNewFlashCardPrompt() {
@@ -730,7 +728,10 @@
     //multiple choice functions
     function loadMultipleChoice() {
         programState.wordBuffer = [...programState.validWords];
+        multipleChoiceScore = 0;
+        multipleChoiceAttempts = 0;
         generateNewMultipleChoicePrompt();
+        document.getElementById("MultipleChoiceNextButton").innerHTML = `Next Word [100%]`;
     }
 
     function generateNewMultipleChoicePrompt() {
