@@ -472,6 +472,9 @@
     }
 
     function getKanji(word) {
+        if(word.kanji == ""){
+            return word.kana;
+        }
         return word.kanji;
     }
 
@@ -632,8 +635,14 @@
 
             let hasValidTag = word.tags.some(tag => {
                 return programState.selectedTags.has(tag);
-            })
-            return isPartOfIncludedLesson && hasValidTag;
+            });
+            
+            let hasValidWordType = true;
+            if(programState.translationDirection == TranslationDirection.KanaToKanji || programState.translationDirection == TranslationDirection.KanjiToKana){
+                hasValidWordType = word.kanji != "";
+            }
+
+            return isPartOfIncludedLesson && hasValidTag && hasValidWordType;
         });
     }
 
@@ -959,6 +968,7 @@
         document.querySelector(`input[value="${TextStyle.Kanji}"]`).onclick = () => {
             document.getElementById(TranslationDirection.KanjiToKana + "Label").classList.remove("Hidden");
             document.getElementById(TranslationDirection.KanaToKanji + "Label").classList.remove("Hidden");
+            updateQuestionStyle();
         }
     }
 
@@ -982,6 +992,17 @@
             lessonFilterContainer.querySelectorAll("label[class='Hidden']").forEach(lesson => {
                 programState.selectedLessons.add(lesson.firstChild.value);
             });
+
+            if(programState.isKanjiLesson){
+                document.querySelector(`input[value="${TextStyle.Kanji}"]`).checked = true;
+                document.querySelector(`input[value="${TextStyle.Kanji}"]`).onclick();
+
+                document.querySelector(`input[value="${TranslationDirection.KanjiToKana}"]`).checked = true;
+                updateQuestionStyle();
+            }else{
+                document.querySelector(`input[value="${TranslationDirection.JapaneseToEnglish}"]`).checked = true;
+                updateQuestionStyle();
+            }
 
             generateWordSelectionMenu();
         }
