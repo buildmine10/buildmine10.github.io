@@ -61,7 +61,7 @@ Father,おとうさん,,Lesson_1,
 High School,こうこう,,Lesson_1,IsLocation
 Canada,カナダ,,Lesson_1,IsCountry IsLocation
 Australia,オーストラリア,,Lesson_1,IsCountry IsLocation
-Japan,にほん,,Lesson_1,IsCountry IsLocation
+Japan,にほん,日本,Lesson_1 Kanji_2,IsCountry IsLocation
 Philippines,フィリピン,,Lesson_1,IsCountry IsLocation
 Desk,つくえ,,Lesson_2 Lesson_4,IsObject
 Chair,いす,,Lesson_2 Lesson_4,IsObject
@@ -136,15 +136,15 @@ Home / House,いえ,家,Lesson_3,IsLocation
 Home / House / My Place,うち,,Lesson_3,IsLocation
 School,がっこう,学校,Lesson_3,IsLocation
 Cafe,カフェ,,Lesson_3,IsLocation
-Tomorrow,あした,明日,Lesson_3,IsTime
-Today,きょう,今日,Lesson_3,IsTime
+,,,,
+,,,,
 Morning,あさ,朝,Lesson_3,IsTime
 Tonight,こんばん,今晩,Lesson_3,IsTime
 Every Day,まいにち,毎日,Lesson_3,IsAdverb
 Every Night,まいばん,毎晩,Lesson_3,IsAdverb
 Weekend,しゅうまつ,週末,Lesson_3,IsTime
-Saturday,どようび,土曜日,Lesson_3,IsTime
-Sunday,にちようび,日曜日,Lesson_3,IsTime
+Saturday,どようび,土曜日,Lesson_3 Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
+Sunday,にちようび,日曜日,Lesson_3 Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
 When,いつ,,Lesson_3,
 At about ...,～ごろ,,Lesson_3,
 To go,いく,行く,Lesson_3,IsVerb IsUVerb
@@ -224,16 +224,15 @@ Hotel,ホテル,,Lesson_4,IsLocation
 Bookstore,ほんや,本屋,Lesson_4,IsLocation
 Town / City,まち,町,Lesson_4,IsLocation
 Restaurant,レストラン,,Lesson_4,IsLocation
-Yesterday,きのう,昨日,Lesson_4,IsTime
 ... Hours,～じかん,～時間,Lesson_4,IsTime
 One Hour,いちじかん,一時間,Lesson_4,IsTime
 Last Week,せんしゅう,先週,Lesson_4,IsTime
 When ... / At the time of ...,とき,時,Lesson_4,
-Monday,げつようび,月曜日,Lesson_4,IsTime
-Tuesday,かようび,火曜日,Lesson_4,IsTime
-Wednesday,すいようび,水曜日,Lesson_4,IsTime
-Thursday,もくようび,木曜日,Lesson_4,IsTime
-Friday,きんようび,金曜日,Lesson_4,IsTime
+Monday,げつようび,月曜日,Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
+Tuesday,かようび,火曜日,Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
+Wednesday,すいようび,水曜日,Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
+Thursday,もくようび,木曜日,Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
+Friday,きんようび,金曜日,Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
 To meet / To see (A person),あう,会う,Lesson_4,IsVerb IsUVerb
 There is ...,ある,,Lesson_4,IsVerb IsUVerb
 To buy,かう,買う,Lesson_4,IsVerb IsUVerb
@@ -249,7 +248,7 @@ So / Therefore,だから,,Lesson_4,
 Many / A lot,たくさん,,Lesson_4,IsAdjective
 Together with (a person) / And,～と,,Lesson_4,
 Why,どうして,,Lesson_4,
-Alone,ひとりで,一人で,Lesson_4,
+Alone,ひとりで,一人で,Lesson_4 Kanji_2,
 Hello? (On the phone),もしもし,,Lesson_4,
 Right,みぎ,右,Lesson_4,IsPreposition
 Left,ひだり,左,Lesson_4,IsPreposition
@@ -275,17 +274,69 @@ Up / Top / Above,うえ,上,Kanji_2,
 Down / Under,した,下,Kanji_2,
 Middle / Inside,なか,中,Kanji_2,
 Half,はん,半,Kanji_2,
-Japan,にほん,日本,Kanji_2,
-Sunday,にちようび,日曜日,Kanji_2,
 Japanese People,にほんじん,日本人,Kanji_2,
-Alone,ひとりで,一人で,Kanji_2,
 This Person,このひと,この人,Kanji_2,
-Monday,げつようび,月曜日,Kanji_2,
-January,いちがつ,一月,Kanji_2,
-Tuesday,かようび,火曜日,Kanji_2,
-Wednesday,すいようび,水曜日,Kanji_2,
-Thursday,もくようび,木曜日,Kanji_2,
-Friday,きんようび,金曜日,Kanji_2,
-Saturday,どようび,土曜日,Kanji_2,
-Sunday,にちようび,日曜日,Kanji_2,
 Half Past Three,さんじはん,三時半,Kanji_2,
+1st of the Month,ついたち,一日,Misc,IsTime IsDay
+2nd of the Month,ふつか,二日,Misc,IsTime IsDay
+3rd of the Month,みっか,三日,Misc,IsTime IsDay
+4th of the Month,よっか,四日,Misc,IsTime IsDay
+5th of the Month,いつか,五日,Misc,IsTime IsDay
+6th of the Month,むいか,六日,Misc,IsTime IsDay
+7th of the Month,なのか,七日,Misc,IsTime IsDay
+8th of the Month,ようか,八日,Misc,IsTime IsDay
+9th of the Month,ここのか,九日,Misc,IsTime IsDay
+10th of the Month,とおか,十日,Misc,IsTime IsDay
+11th of the Month,じゅういちにち,十一日,Misc,IsTime IsDay
+12th of the Month,じゅうににち,十二日,Misc,IsTime IsDay
+13th of the Month,じゅうさんにち,十三日,Misc,IsTime IsDay
+14th of the Month,じゅうよっか,十四日,Misc,IsTime IsDay
+15th of the Month,じゅうごにち,十五日,Misc,IsTime IsDay
+16th of the Month,じゅうろくにち,十六日,Misc,IsTime IsDay
+17th of the Month,じゅうしちにち,十七日,Misc,IsTime IsDay
+18th of the Month,じゅうはちにち,十八日,Misc,IsTime IsDay
+19th of the Month,じゅうくにち,十九日,Misc,IsTime IsDay
+20th of the Month,はつか,二十日,Misc,IsTime IsDay
+21th of the Month,にじゅういちにち,二十一日,Misc,IsTime IsDay
+22th of the Month,にじゅうににち,二十二日,Misc,IsTime IsDay
+23th of the Month,にじゅうさんにち,二十三日,Misc,IsTime IsDay
+24th of the Month,にじゅうよっか,二十四日,Misc,IsTime IsDay
+25th of the Month,にじゅうごにち,二十五日,Misc,IsTime IsDay
+26th of the Month,にじゅうろくにち,二十六日,Misc,IsTime IsDay
+27th of the Month,にじゅうしちにち,二十七日,Misc,IsTime IsDay
+28th of the Month,にじゅうはちにち,二十八日,Misc,IsTime IsDay
+29th of the Month,にじゅうくにち,二十九日,Misc,IsTime IsDay
+30th of the Month,さんじゅうにち,三十日,Misc,IsTime IsDay
+31th of the Month,さんじゅういちにち,三十一日,Misc,IsTime IsDay
+January,いちがつ,一月,Kanji_2 Misc,IsTime IsMonth
+February,にがつ,二月,Misc,IsTime IsMonth
+March,さんつ,三月,Misc,IsTime IsMonth
+April,しがつ,四月,Misc,IsTime IsMonth
+May,ごがつ,五月,Misc,IsTime IsMonth
+June,ろくがつ,六月,Misc,IsTime IsMonth
+July,しちがつ,七月,Misc,IsTime IsMonth
+August,はちがつ,八月,Misc,IsTime IsMonth
+September,くがつ,九月,Misc,IsTime IsMonth
+October,じゅうがつ,十月,Misc,IsTime IsMonth
+November,じゅういちがつ,十一月,Misc,IsTime IsMonth
+December,じゅうにがつ,十二月,Misc,IsTime IsMonth
+The Day Before Yesterday,おととい,,Misc,IsTime IsDay
+Yesterday,きのう,昨日,Lesson_4 Misc,IsTime IsDay
+Today,きょう,今日,Lesson_3 Misc,IsTime IsDay
+Tomorrow,あした,明日,Lesson_3 Misc,IsTime IsDay
+The Day After Tomorrow,あさって,,Misc,IsTime IsDay
+Two Weeks Ago,にしゅうかんまえ,二週間前,Misc,IsTime IsWeek
+Last Week,せんしゅう,先週,Misc,IsTime IsWeek
+This Week,こんしゅう,今週,Misc,IsTime IsWeek
+Next Week,らいしゅう,来週,Misc,IsTime IsWeek
+The Week After Next,さらいしゅう,再来週,Misc,IsTime IsWeek
+Two Months Ago,にかげつまえ,二か月前,Misc,IsTime IsMonth
+Last Month,せんげつ,先月,Misc,IsTime IsMonth
+This Month,こんげつ,今月,Misc,IsTime IsMonth
+Next Month,らいげつ,来月,Misc,IsTime IsMonth
+The Month After Next,さらいげつ,再来週,Misc,IsTime IsMonth
+The Year Before Last,おととし,,Misc,IsTime IsYear
+Last Year,きょねん,去年,Misc,IsTime IsYear
+This Year,ことし,今年,Misc,IsTime IsYear
+Next Year,らいねん,来年,Misc,IsTime IsYear
+The Year After Next,さらいねん,再来年,Misc,IsTime IsYear
