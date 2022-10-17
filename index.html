@@ -809,7 +809,7 @@
             {
                 let correctWordIndex = Math.floor(programState.wordBuffer.length * Math.random());
                 multipleChoiceCorrect = programState.wordBuffer.splice(correctWordIndex, 1)[0];
-                multipleChoiceWrong = getRandomSubarray(programState.wordBuffer, 3);
+                multipleChoiceWrong = getRandomSubarray([...new Set(programState.wordBuffer)], 3);
             }
             console.log(multipleChoiceCorrect, ...multipleChoiceWrong)
             //console.log(programState.wordBuffer);
@@ -849,6 +849,7 @@
             multipleChoicePlayingAnimation++;
             document.getElementById("MultipleChoicePrompt").classList.add("MultipleChoiceWrong");
             document.getElementById("MultipleChoicePrompt").classList.remove("MultipleChoiceCorrect");
+            programState.wordBuffer.push(multipleChoiceCorrect);//if you get it wrong it should show up more often
             setTimeout(() => {
                 multipleChoicePlayingAnimation--;
                 if (multipleChoicePlayingAnimation == 0) {
