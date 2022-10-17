@@ -1301,6 +1301,12 @@
     document.getElementById("MultipleChoice3").onclick = submitMultipleChoice;
     document.getElementById("MultipleChoice4").onclick = submitMultipleChoice;
 
+
+    document.body.style.height = window.innerHeight + "px";
+// reset the height whenever the window's resized
+    window.addEventListener("resize", ()=>{
+        document.body.style.height = window.innerHeight + "px";
+    });
 </script>
 
 
