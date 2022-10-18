@@ -136,8 +136,6 @@ Home / House,いえ,家,Lesson_3,IsLocation
 Home / House / My Place,うち,,Lesson_3,IsLocation
 School,がっこう,学校,Lesson_3,IsLocation
 Cafe,カフェ,,Lesson_3,IsLocation
-,,,,
-,,,,
 Morning,あさ,朝,Lesson_3,IsTime
 Tonight,こんばん,今晩,Lesson_3,IsTime
 Every Day,まいにち,毎日,Lesson_3,IsAdverb
@@ -190,7 +188,7 @@ Seven Variant,ななつ,七つ,Kanji_1,
 Eight,はち,八,Kanji_1,
 Eight Variant,やっつ,八つ,Kanji_1,
 Nine,きゅう,九,Kanji_1,
-Nine Variant,いいのつ,九つ,Kanji_1,
+Nine Variant,ここのつ,九つ,Kanji_1,
 Ten,じゅう / とお,十,Kanji_1,
 Hundred,ひゃく / びゃく / ぴゃく,百,Kanji_1,
 Thousand,せん / ぜん,千,Kanji_1,
@@ -198,7 +196,6 @@ Ten Thousand,まん,万,Kanji_1,
 Yen / Circle,えん / まる,円,Kanji_1,
 Time,じ / とき,時,Kanji_1,
 Minute,ふん / ぷん,分,Kanji_1,
-Month,～がつ,月,Kanji_1,
 Year Student,～ねんせい,年生,Kanji_1,
 Years Old,～さい,歳,Kanji_1,
 Game,ゲーム,,Lesson_4,IsEntertainment
@@ -263,7 +260,7 @@ Between,あいだ,間,Lesson_4,IsPreposition
 Day / Sun,に / にち / び,日,Kanji_2,
 Book / Basis,ほん,本,Kanji_2,
 Person,ひと / じん,人,Kanji_2,
-Moon / Month,げつ / がつ,月,Kanji_2,
+Moon / Month,げつ / がつ,月,Kanji_1 Kanji_2,
 Fire,ひ / か,火,Kanji_2,
 Water,みず / すい,水,Kanji_2,
 Tree,き / もく,木,Kanji_2,
