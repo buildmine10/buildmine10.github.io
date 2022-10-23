@@ -223,7 +223,6 @@ Town / City,まち,町,Lesson_4,IsLocation
 Restaurant,レストラン,,Lesson_4,IsLocation
 ... Hours,～じかん,～時間,Lesson_4,IsTime
 One Hour,いちじかん,一時間,Lesson_4,IsTime
-Last Week,せんしゅう,先週,Lesson_4,IsTime
 When ... / At the time of ...,とき,時,Lesson_4,
 Monday,げつようび,月曜日,Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
 Tuesday,かようび,火曜日,Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
@@ -323,7 +322,7 @@ Today,きょう,今日,Lesson_3 Misc,IsTime IsDay
 Tomorrow,あした,明日,Lesson_3 Misc,IsTime IsDay
 The Day After Tomorrow,あさって,,Misc,IsTime IsDay
 Two Weeks Ago,にしゅうかんまえ,二週間前,Misc,IsTime IsWeek
-Last Week,せんしゅう,先週,Misc,IsTime IsWeek
+Last Week,せんしゅう,先週,Misc Lesson_4,IsTime IsWeek
 This Week,こんしゅう,今週,Misc,IsTime IsWeek
 Next Week,らいしゅう,来週,Misc,IsTime IsWeek
 The Week After Next,さらいしゅう,再来週,Misc,IsTime IsWeek
@@ -337,3 +336,54 @@ Last Year,きょねん,去年,Misc,IsTime IsYear
 This Year,ことし,今年,Misc,IsTime IsYear
 Next Year,らいねん,来年,Misc,IsTime IsYear
 The Year After Next,さらいねん,再来年,Misc,IsTime IsYear
+Food,たべもの,食べ物,Lesson_5,IsFood
+Drink,のみもの,飲み物,Lesson_5,IsFood
+Fruit,くだもの,果物,Lesson_5,IsFood
+Holiday / Day Off / Absence,やすみ,休み,Lesson_5,
+Travel,りょこう,旅行,Lesson_5,
+Sea,うみ,海,Lesson_5,IsLocation
+Surfing,サーフィン,,Lesson_5,
+Souvenir,おみやげ,お土産,Lesson_5,IsObject
+Bus,バス,,Lesson_5,
+Weather,てんき,天気,Lesson_5,
+Homework,しゅくだい,宿題,Lesson_5,IsObject
+Test,テスト,,Lesson_5,
+Birthday,たんじょうび,誕生日,Lesson_5,
+Room,へや,部屋,Lesson_5,
+I (Used by men),ぼく,僕,Lesson_5,
+Size L,Lサイズ（エルサイズ）,,Lesson_5,
+New,あたらしい,新しい,Lesson_5,IsAdjective IsいAdjective
+Old (Not for people),ふるい,古い,Lesson_5,IsAdjective IsいAdjective
+Hot (Weather / Thing),あつい,暑い,Lesson_5,IsAdjective IsいAdjective
+Cold (Weather),さむい,寒い,Lesson_5,IsAdjective IsいAdjective
+Busy (People / Days),いそがしい,忙しい,Lesson_5,IsAdjective IsいAdjective
+Large,おおきい,大きい,Lesson_5,IsAdjective IsいAdjective
+Small,ちいさい,小さい,Lesson_5,IsAdjective IsいAdjective
+Interesting / Funny,おもしろい,面白い,Lesson_5,IsAdjective IsいAdjective
+Boring,つまらない,,Lesson_5,IsAdjective IsいAdjective
+Easy (Problem) / Kind (Person),やさしい,,Lesson_5,IsAdjective IsいAdjective
+Difficult,むずかしい,難しい,Lesson_5,IsAdjective IsいAdjective
+Good-Looking,かっこいい,,Lesson_5,IsAdjective IsいAdjective
+Frightening,こわい,怖い,Lesson_5,IsAdjective IsいAdjective
+Fun,たのしい,楽しい,Lesson_5,IsAdjective IsいAdjective
+Inexpensive (Thing),やすい,安い,Lesson_5,IsAdjective IsいAdjective
+Fond of / To Like,すき（な）,好き,Lesson_5,IsAdjective IsなAdjective
+Disgusted with / To Dislike,きらい（な）,嫌い,Lesson_5,IsAdjective IsなAdjective
+Very Fond of / To Love,だいすき（な）,大好き,Lesson_5,IsAdjective IsなAdjective
+To Hate,だいきらい（な）,大嫌い,Lesson_5,IsAdjective IsなAdjective
+Beautiful / Clean,きれい（な）,,Lesson_5,IsAdjective IsなAdjective
+Healthy / Energetic,げんき（な）,元気,Lesson_5,IsAdjective IsなAdjective
+Quiet,しずか（な）,静か,Lesson_5,IsAdjective IsなAdjective
+Lively,にぎやか（な）,,Lesson_5,IsAdjective IsなAdjective
+Not Busy / Free (Time),ひま（な）,暇,Lesson_5,IsAdjective IsなAdjective
+To Swim,およぐ,泳ぐ,Lesson_5,IsVerb IsUVerb
+To Ask,きく,聞く,Lesson_5,IsVerb IsUVerb
+To Ride / To Board,のる,乗る,Lesson_5,IsVerb IsUVerb
+To Do / To Perform,やる,,Lesson_5,IsVerb IsUVerb
+To Go Out,でかける,出かける,Lesson_5,IsVerb IsRuVerb
+Together,いっしょに,一緒に,Lesson_5,
+Extremely,すごく,,Lesson_5,
+It's Okay / Not to worry,だいじょうぶ,大丈夫,Lesson_5,
+Very,とても,,Lesson_5,
+What Kind of ...,どんな,,Lesson_5,
+Counter for flat objects,～まい,～枚,Lesson_5,
