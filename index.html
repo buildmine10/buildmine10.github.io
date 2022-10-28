@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 
+
+<!-- For some reason get english sometimes fails because .english is undefiend for a word -->
+<!-- This causes Multiple choice to fail eventually -->
 <html>
 
 <head>
@@ -823,10 +826,21 @@
             {
                 let correctWordIndex = Math.floor(programState.wordBuffer.length * Math.random());
                 multipleChoiceCorrect = programState.wordBuffer.splice(correctWordIndex, 1)[0];
-                multipleChoiceWrong = getRandomSubarray([...new Set(programState.wordBuffer)], 3);
+                let temp = programState.wordBuffer;
+                if (programState.wordBuffer.length < 4) {//If there are not enough words in the word buffer, add words temporarily to the list so that incorrect answers can be made
+                    let temp2 = words.filter(word => {
+                        let isPartOfIncludedLesson = word.lessons.some(lesson => {
+                            return programState.selectedLessons.has(lesson);
+                        });
+
+                        return isPartOfIncludedLesson && word != multipleChoiceCorrect;
+                    });
+                    temp = temp.concat([...new Set(temp2)])
+                }
+                multipleChoiceWrong = getRandomSubarray([...new Set(temp)], 3);
             }
-            //console.log(multipleChoiceCorrect, ...multipleChoiceWrong)
-            //console.log(programState.wordBuffer);
+            console.log(multipleChoiceCorrect, ...multipleChoiceWrong)
+            console.log(programState.wordBuffer);
 
             document.getElementById("MultipleChoicePrompt").innerHTML = getFrontText(multipleChoiceCorrect);
 
