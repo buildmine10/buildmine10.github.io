@@ -68,7 +68,7 @@ Chair,いす,,Lesson_2 Lesson_4,IsObject
 Fish,さかな,,Lesson_2,IsFood
 Bag,かばん,,Lesson_2,IsObject
 Shoes,くつ,,Lesson_2,IsObject
-... Please,(～を)おねがいします,,Lesson_2,
+... Please,(～を) おねがいします,,Lesson_2,
 Please say it again,もういちどいってください,,Lesson_2,
 How much,いくら,,Lesson_2,
 Door,ドア,,Lesson_2,IsObject
@@ -76,7 +76,7 @@ Please listen,きいてください,,Lesson_2,
 English,えいご,,Lesson_2,
 Please say it slowly,ゆっくりいってください,,Lesson_2,
 Please wait a moment,ちょっとまってください,,Lesson_2,
-Bank,ぎんこう,,Lesson_2,IsLocation
+Bank,ぎんこう,銀行,Lesson_2 Kanji_3,IsLocation
 Menu,メニュー,,Lesson_2,IsObject
 Pencil,えんぴつ,,Lesson_2,IsObject
 In that case ...,じゃあ,,Lesson_2,
@@ -137,7 +137,7 @@ Home / House / My Place,うち,,Lesson_3,IsLocation
 School,がっこう,学校,Lesson_3,IsLocation
 Cafe,カフェ,,Lesson_3,IsLocation
 Morning,あさ,朝,Lesson_3,IsTime
-Tonight,こんばん,今晩,Lesson_3,IsTime
+Tonight,こんばん,今晩,Lesson_3 Kanji_3,IsTime
 Every Day,まいにち,毎日,Lesson_3,IsAdverb
 Every Night,まいばん,毎晩,Lesson_3,IsAdverb
 Weekend,しゅうまつ,週末,Lesson_3,IsTime
@@ -145,14 +145,14 @@ Saturday,どようび,土曜日,Lesson_3 Lesson_4 Kanji_2 Misc,IsTime IsDay IsWe
 Sunday,にちようび,日曜日,Lesson_3 Lesson_4 Kanji_2 Misc,IsTime IsDay IsWeekday
 When,いつ,,Lesson_3,
 At about ...,～ごろ,,Lesson_3,
-To go,いく,行く,Lesson_3,IsVerb IsUVerb
+To go,いく,行く,Lesson_3 Kanji_3,IsVerb IsUVerb
 To go back / To return,かえる,帰る,Lesson_3,IsVerb IsUVerb
 To listen / To hear,きく,聞く,Lesson_3,IsVerb IsUVerb
-To drink,のむ,飲む,Lesson_3,IsVerb IsUVerb
+To drink,のむ,飲む,Lesson_3 Kanji_3,IsVerb IsUVerb
 To speak / To talk,はなす,話す,Lesson_3,IsVerb IsUVerb
 To read,よむ,読む,Lesson_3,IsVerb IsUVerb
 To get up,おきる,起きる,Lesson_3,IsVerb IsRuVerb
-To eat,たべる,食べる,Lesson_3,IsVerb IsRuVerb
+To eat,たべる,食べる,Lesson_3 Kanji_3,IsVerb IsRuVerb
 To sleep / To go to sleep,ねる,寝る,Lesson_3,IsVerb IsRuVerb
 To see / To look at / To watch,みる,見る,Lesson_3,IsVerb IsRuVerb
 To come,くる,来る,Lesson_3,IsVerb IsIrregular
@@ -318,7 +318,7 @@ November,じゅういちがつ,十一月,Misc,IsTime IsMonth
 December,じゅうにがつ,十二月,Misc,IsTime IsMonth
 The Day Before Yesterday,おととい,,Misc,IsTime IsDay
 Yesterday,きのう,昨日,Lesson_4 Misc,IsTime IsDay
-Today,きょう,今日,Lesson_3 Misc,IsTime IsDay
+Today,きょう,今日,Lesson_3 Misc Kanji_3,IsTime IsDay
 Tomorrow,あした,明日,Lesson_3 Misc,IsTime IsDay
 The Day After Tomorrow,あさって,,Misc,IsTime IsDay
 Two Weeks Ago,にしゅうかんまえ,二週間前,Misc,IsTime IsWeek
@@ -328,30 +328,30 @@ Next Week,らいしゅう,来週,Misc,IsTime IsWeek
 The Week After Next,さらいしゅう,再来週,Misc,IsTime IsWeek
 Two Months Ago,にかげつまえ,二か月前,Misc,IsTime IsMonth
 Last Month,せんげつ,先月,Misc,IsTime IsMonth
-This Month,こんげつ,今月,Misc,IsTime IsMonth
+This Month,こんげつ,今月,Misc Kanji_3,IsTime IsMonth
 Next Month,らいげつ,来月,Misc,IsTime IsMonth
 The Month After Next,さらいげつ,再来週,Misc,IsTime IsMonth
 The Year Before Last,おととし,,Misc,IsTime IsYear
 Last Year,きょねん,去年,Misc,IsTime IsYear
-This Year,ことし,今年,Misc,IsTime IsYear
+This Year,ことし,今年,Misc Kanji_3,IsTime IsYear
 Next Year,らいねん,来年,Misc,IsTime IsYear
 The Year After Next,さらいねん,再来年,Misc,IsTime IsYear
-Food,たべもの,食べ物,Lesson_5,IsFood
-Drink,のみもの,飲み物,Lesson_5,IsFood
+Food,たべもの,食べ物,Lesson_5 Kanji_3,IsFood
+Drink,のみもの,飲み物,Lesson_5 Kanji_3,IsFood
 Fruit,くだもの,果物,Lesson_5,IsFood
 Holiday / Day Off / Absence,やすみ,休み,Lesson_5,
-Travel,りょこう,旅行,Lesson_5,
+Travel,りょこう,旅行,Lesson_5 Kanji_3,
 Sea,うみ,海,Lesson_5,IsLocation
 Surfing,サーフィン,,Lesson_5,
 Souvenir,おみやげ,お土産,Lesson_5,IsObject
 Bus,バス,,Lesson_5,
-Weather,てんき,天気,Lesson_5,
+Weather,てんき,天気,Lesson_5 Kanji_3,
 Homework,しゅくだい,宿題,Lesson_5,IsObject
 Test,テスト,,Lesson_5,
 Birthday,たんじょうび,誕生日,Lesson_5,
 Room,へや,部屋,Lesson_5,
 I (Used by men),ぼく,僕,Lesson_5,
-Size L,Lサイズ（エルサイズ）,,Lesson_5,
+Size L,Lサイズ (エルサイズ),,Lesson_5,
 New,あたらしい,新しい,Lesson_5,IsAdjective IsいAdjective
 Old (Not for people),ふるい,古い,Lesson_5,IsAdjective IsいAdjective
 Hot (Weather / Thing),あつい,暑い,Lesson_5,IsAdjective IsいAdjective
@@ -367,15 +367,15 @@ Good-Looking,かっこいい,,Lesson_5,IsAdjective IsいAdjective
 Frightening,こわい,怖い,Lesson_5,IsAdjective IsいAdjective
 Fun,たのしい,楽しい,Lesson_5,IsAdjective IsいAdjective
 Inexpensive (Thing),やすい,安い,Lesson_5,IsAdjective IsいAdjective
-Fond of / To Like,すき（な）,好き,Lesson_5,IsAdjective IsなAdjective
-Disgusted with / To Dislike,きらい（な）,嫌い,Lesson_5,IsAdjective IsなAdjective
-Very Fond of / To Love,だいすき（な）,大好き,Lesson_5,IsAdjective IsなAdjective
-To Hate,だいきらい（な）,大嫌い,Lesson_5,IsAdjective IsなAdjective
-Beautiful / Clean,きれい（な）,,Lesson_5,IsAdjective IsなAdjective
-Healthy / Energetic,げんき（な）,元気,Lesson_5,IsAdjective IsなAdjective
-Quiet,しずか（な）,静か,Lesson_5,IsAdjective IsなAdjective
-Lively,にぎやか（な）,,Lesson_5,IsAdjective IsなAdjective
-Not Busy / Free (Time),ひま（な）,暇,Lesson_5,IsAdjective IsなAdjective
+Fond of / To Like,すき (な),好き,Lesson_5,IsAdjective IsなAdjective
+Disgusted with / To Dislike,きらい (な),嫌い,Lesson_5,IsAdjective IsなAdjective
+Very Fond of / To Love,だいすき (な),大好き,Lesson_5,IsAdjective IsなAdjective
+To Hate,だいきらい (な),大嫌い,Lesson_5,IsAdjective IsなAdjective
+Beautiful / Clean,きれい (な),,Lesson_5,IsAdjective IsなAdjective
+Healthy / Energetic,げんき (な),元気,Lesson_5,IsAdjective IsなAdjective
+Quiet,しずか (な),静か,Lesson_5,IsAdjective IsなAdjective
+Lively,にぎやか (な),,Lesson_5,IsAdjective IsなAdjective
+Not Busy / Free (Time),ひま (な),暇,Lesson_5,IsAdjective IsなAdjective
 To Swim,およぐ,泳ぐ,Lesson_5,IsVerb IsUVerb
 To Ask,きく,聞く,Lesson_5,IsVerb IsUVerb
 To Ride / To Board,のる,乗る,Lesson_5,IsVerb IsUVerb
@@ -387,3 +387,43 @@ It's Okay / Not to worry,だいじょうぶ,大丈夫,Lesson_5,
 Very,とても,,Lesson_5,
 What Kind of ...,どんな,,Lesson_5,
 Counter for flat objects,～まい,～枚,Lesson_5,
+,,,,
+Mountain,やま / さん,山,Kanji_3,
+River,かわ / がわ,川,Kanji_3,
+Origin,げん / がん / もと,元,Kanji_3,
+Spirit,き,気,Kanji_3,
+Heaven (Kanji),てん,天,Kanji_3,
+I / Private,わたし,私,Kanji_3,
+Now (Kanji),いま / こん,今,Kanji_3,
+Rice Field (Kanji),た / だ,田,Kanji_3,
+Woman (Kanji),おんな / じょ,女,Kanji_3,
+Man (Kanji),おとこ / だん,男,Kanji_3,
+To See (Kanji),けん / み,見,Kanji_3,
+To Go (Kanji),い / こう / ぎょう,行,Kanji_3,
+To Eat (Kanji),た / しょく,食,Kanji_3,
+To Drink (Kanji),の / いん,飲,Kanji_3,
+Mt. Fuji,ふじさん,富士山,Kanji_3,
+Fine,げんきな,元気な,Kanji_3,
+Electricity / Light,でんき,電気,Kanji_3,
+Popularity,にんき,人気,Kanji_3,
+Feeling,きもち,気持ち,Kanji_3,
+Heaven,てんごく,天国,Kanji_3,
+Genius,てんさい,天才,Kanji_3,
+Japanese Emperor,てんのう,天皇,Kanji_3,
+Private University,しりつだいがく,私立大学,Kanji_3,
+Rice Field,たんぼ,田んぼ,Kanji_3,
+Woman,おんなのひと / じょせい,女の人 / 女性,Kanji_3,
+Girl,おんなのこ,女の子,Kanji_3,
+Eldest Daughter,ちょうじょ,長女,Kanji_3,
+Man,おとこのひと / だんせい,男の人 / 男性,Kanji_3,
+Boy,おとこのこ,男の子,Kanji_3,
+Male Student,だんしがくせい,男子学生,Kanji_3,
+To See,みる,見る,Kanji_3,
+Sightseeing,けんぶつ,見物,Kanji_3,
+Flower Viewing,はなみ,花見,Kanji_3,
+Opinion,いけん,意見,Kanji_3,
+First Line,いちぎょうめ,一行目,Kanji_3,
+Cafeteria,しょくどう,食堂,Kanji_3,
+Meal,しょくじ,食事,Kanji_3,
+Breakfast,ちょうしょく,朝食,Kanji_3,
+Drunken Driving,いんしゅうんてん,飲酒運転,Kanji_3,
