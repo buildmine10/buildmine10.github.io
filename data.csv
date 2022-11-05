@@ -1,4 +1,4 @@
-English,Kana,Kanji,Lessons,Tags
+ ,Kana,Kanji,Lessons,Tags
 High School Student,こうこうせい,,Lesson_1,IsOccupation 
 Computer,コンピューター,,Lesson_1,IsMajor IsObject
 Britain,イギリス,,Lesson_1,IsCountry IsLocation
@@ -96,7 +96,7 @@ T Shirt,Ｔシャツ,,Lesson_2,IsObject
 Smartphone,スマホ,,Lesson_2,IsObject
 Notebook,ノート,,Lesson_2,IsObject
 I understand,わかりました,,Lesson_2,
-Window,まど,,Lesson_2,IsObject
+Window,まど,窓,Lesson_2 Lesson_6,IsObject
 Do you understand?,わかりましたか,,Lesson_2,
 Curtain,カーテン,,Lesson_2,IsObject
 Toilet,トイレ,,Lesson_2,IsObject IsLocation
@@ -323,8 +323,8 @@ Tomorrow,あした,明日,Lesson_3 Misc,IsTime IsDay
 The Day After Tomorrow,あさって,,Misc,IsTime IsDay
 Two Weeks Ago,にしゅうかんまえ,二週間前,Misc,IsTime IsWeek
 Last Week,せんしゅう,先週,Misc Lesson_4,IsTime IsWeek
-This Week,こんしゅう,今週,Misc,IsTime IsWeek
-Next Week,らいしゅう,来週,Misc,IsTime IsWeek
+This Week,こんしゅう,今週,Misc Lesson_6,IsTime IsWeek
+Next Week,らいしゅう,来週,Misc Lesson_6,IsTime IsWeek
 The Week After Next,さらいしゅう,再来週,Misc,IsTime IsWeek
 Two Months Ago,にかげつまえ,二か月前,Misc,IsTime IsMonth
 Last Month,せんげつ,先月,Misc,IsTime IsMonth
@@ -334,7 +334,7 @@ The Month After Next,さらいげつ,再来週,Misc,IsTime IsMonth
 The Year Before Last,おととし,,Misc,IsTime IsYear
 Last Year,きょねん,去年,Misc,IsTime IsYear
 This Year,ことし,今年,Misc Kanji_3,IsTime IsYear
-Next Year,らいねん,来年,Misc,IsTime IsYear
+Next Year,らいねん,来年,Misc Lesson_6,IsTime IsYear
 The Year After Next,さらいねん,再来年,Misc,IsTime IsYear
 Food,たべもの,食べ物,Lesson_5 Kanji_3,IsFood
 Drink,のみもの,飲み物,Lesson_5 Kanji_3,IsFood
@@ -404,7 +404,7 @@ To Eat (Kanji),た / しょく,食,Kanji_3,IsBaseKanji
 To Drink (Kanji),の / いん,飲,Kanji_3,IsBaseKanji
 Mt. Fuji,ふじさん,富士山,Kanji_3,
 Fine,げんきな,元気な,Kanji_3,
-Electricity / Light,でんき,電気,Kanji_3,
+Electricity / Light,でんき,電気,Kanji_3 Lesson_6,
 Popularity,にんき,人気,Kanji_3,
 Feeling,きもち,気持ち,Kanji_3,
 Heaven,てんごく,天国,Kanji_3,
@@ -427,3 +427,45 @@ Cafeteria,しょくどう,食堂,Kanji_3,
 Meal,しょくじ,食事,Kanji_3,
 Breakfast,ちょうしょく,朝食,Kanji_3,
 Drunken Driving,いんしゅうんてん,飲酒運転,Kanji_3,
+Kanji,かんじ,漢字,Lesson_6,
+Textbook,きょうかしょ,教科書,Lesson_6,
+Page,ページ,,Lesson_6,
+Next (ordinal),つぎ,次,Lesson_6,
+Money,おかね,お金,Lesson_6,
+Baggage,にもつ,荷物,Lesson_6,
+Personal Computer,パソコン,,Lesson_6,
+Shower,シャワー,,Lesson_6,
+Air Conditioner,エアコン,,Lesson_6,
+Train,でんしゃ,電車,Lesson_6,
+Country / Place of Origin,くに,国,Lesson_6,
+Night,よる,夜,Lesson_6,
+Tough (Situation),たいへん (な),大変,Lesson_6,IsAdjective IsなAdjective
+To Play / To spend time plesantly,あそぶ,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To Hurry,いそぐ,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To Return (a thing),かえす,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To turn off / To erase,けす,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To die,しぬ,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To sit down,すわる,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To stand up,たつ,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To smoke,たばこをすう,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To use,つかう,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To help,てつだう,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To enter,はいる,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To carry / To hold,もつ,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To be absent from ... / To rest,やすむ,Kanji Needed,Lesson_6,IsVerb IsUVerb
+To open,あける,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To close,しめる,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To teach / To instruct,おしえる,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To forget / To leave behind,わすれる,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To get off,おりる,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To borrow,かりる,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To take a shower,シャワーをあびる,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To turn on,つける,Kanji Needed,Lesson_6,IsVerb IsRuVerb
+To call,でんわする,Kanji Needed,Lesson_6,IsVerb IsIrregular
+To bring (a person),つれてくる,Kanji Needed,Lesson_6,IsVerb IsIrregular
+To bring (a thing),もってくる,Kanji Needed,Lesson_6,IsVerb IsIrregular
+Later on,おとで,Kanji Needed,Lesson_6,IsExpression
+Right away,すぐ,Kanji Needed,Lesson_6,IsExpression
+Slowly / Leisurely / Unhurriedly,ゆっくり,Kanji Needed,Lesson_6,IsExpression
+That would be fine / That wouldn't be necessary,けっこです,Kanji Needed,Lesson_6,IsExpression
+Really?,ほんとですか,Kanji Needed,Lesson_6,IsExpression
