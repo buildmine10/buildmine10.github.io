@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<style>
+    body{
+        background-color: grey;
+    }
+
+    .PathPlotterCanvas{
+        border: 2px solid black;
+    }
+
+    .hidden{
+        display: none;
+    }
+
+    .pieceSpecifier{
+        display: flex;
+        gap: 1em;
+        background-color: lightgray;
+        width: fit-content;
+        padding: 0.5em;
+    }
+
+    #DefinitionScreen > div{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    #sectionDefinitions{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    
+</style>
+
+<body>
+    <div class="screen" id="DefinitionScreen">
+        <div>
+            <div id="sectionDefinitionScreenControls">
+                <button id="toPlayBackScreenButton">To Simulation</button>
+                <button id="sectionDefinitionSortButton">Sort</button>
+                <button id="addSectionDefinitionButton">Add Section</button>
+            </div>
+            <div id="sectionDefinitions"></div>
+        </div>
+    </div>
+    <div class="screen" id="PlayBackScreen">
+        <div>
+
+        </div>
+    </div>
+</body>
+
+<script>
+    class Vector2{
+        constructor(x, y){
+            this.x = x;
+            this.y = y;
+        }
+
+        add(other){
+            return new Vector2(this.x + other.x, this.y + other.y);
+        }
+
+        sub(other){
+            return new Vector2(this.x - other.x, this.y - other.y);
+        }
+
+        dot(other){
+            return this.x * other.x + this.y * other.y;
+        }
+
+        mult(value){
+            return new Vector2(this.x * value, this.y * value);
+        }
+
+        div(value){
+            return new Vector2(this.x / value, this.y / value);
+        }
+
+        magnitude(){
+            return Math.sqrt(this.dot(this));
+        }
+
+        normalized(){
+            return this.div(this.magnitude());
+        }
+
+        print(){
+            console.log(`(${this.x}, ${this.y})`);
+        }
+    }
+</script>
+
+<script>
+    class PathPiece{
+        constructor(lowerX, upperX, expression){
+            this.lowerX = lowerX;
+            this.upperX = upperX;
+
+            if(lowerX > upperX){
+                console.log("The upper and lower bounds are in the wrong order.");
+                this.lowerX = upperX;
+                this.upperX = lowerX;
+            }
+            
+            this.expression = expression;
+        }
+
+        at(x){
+            if(x < this.lowerX)
+                return undefined;
+            if(x > this.upperX)
+                return undefined;
+
+            return eval(this.expression);
+        }
+
+        doOverlap(other){
+            if(!(other instanceof PathPiece))
+                return false;
+            
+            if(this.upperX > other.upperX){
+                if(this.lowerX < other.upperX)
+                    return true;
+            }
+            
+            if(other.upperX > this.upperX){
+                if(other.lowerX < this.upperX)
+                    return true;
+            }
+
+            return false;
+        }
+        
+        isInBounds(x){
+            if(x < this.lowerX)
+                return false;
+            if(x >= this.upperX)
+                return false;
+            
+            return true;
+        }
+    }
+
+    class PathDescription{
+        constructor(){
+            this.pieces = []
+            this.lowerX = undefined;
+            this.upperX = undefined;
+        }
+
+        addPiece(lowerX, upperX, expression){
+            let newPiece = new PathPiece(lowerX, upperX, expression);
+
+            if( this.pieces.some(piece=>{
+                return piece.doOverlap(newPiece);
+            }) ){
+                //if an overlap is present it fails
+                console.log("Failed to add piece. That region is already defined. " + expression);
+                return false;
+            }
+
+            this.pieces.push(newPiece);
+
+            if(this.lowerX == undefined || newPiece.lowerX < this.lowerX){
+                this.lowerX = newPiece.lowerX;
+            }
+
+            if(this.upperX == undefined || newPiece.upperX > this.upperX){
+                this.upperX = newPiece.upperX;
+            }
+
+            return true;
+        }
+
+        getPieceAt(x){
+            return this.pieces.find(piece=>{
+                return piece.isInBounds(x);
+            });
+        }
+
+        at(x){
+
+            let piece = this.getPieceAt(x);
+            if(piece == undefined){
+                return undefined;
+            }
+            return piece.at(x);
+        }
+
+
+    }
+
+    class Path{
+        constructor(pathDescription, deltaX){
+            this.isContinuous = true;
+            this.isDifferentiable = true;
+
+            this.points = [];
+            this.tangents = [];
+            this.normals = [];
+            this.distances = [];
+            this.curvatures = []
+
+            let lastPoint = undefined;
+            let totalDistance = 0;
+            let lastY = undefined;
+            for(let x = pathDescription.lowerX; x < pathDescription.upperX; x += deltaX){
+                let y = pathDescription.at(x);
+                if(y == undefined){
+                    this.points.push(new Vector2(x, lastY));
+                    this.tangents.push(new Vector2(1, 0));
+                    this.normals.push(new Vector2(0, 1));
+                    totalDistance += deltaX;
+                    this.distances.push(totalDistance);
+                    lastPoint = new Vector2(x, lastY);
+                    this.curvatures.push(0);//flat line has 0 curvature
+                    continue;
+                }
+                //console.log(x);
+
+                lastY = y;
+                this.points.push(new Vector2(x, y));
+
+                {
+                    let nx = x - deltaX / 10;
+                    if(nx < pathDescription.lowerX){
+                        nx = pathDescription.lowerX;
+                    }
+                    
+                    let px = x + deltaX / 10;
+                    if(px >  pathDescription.upperX){
+                        px = pathDescription.upperX;
+                    }
+
+                    
+
+                    let ny = pathDescription.at(nx);
+                    let py = pathDescription.at(px);
+
+
+                    let derivative = (py - ny) / (px - nx);
+                    let vector = new Vector2(1, derivative).normalized();
+                    this.tangents.push(vector);
+                    this.normals.push(new Vector2(-vector.y, vector.x));
+
+                    
+                    {
+                        let nT = undefined;
+                        let pT = undefined;
+                        let derivative1 = (y - ny) / (x - nx);
+                        let derivative2 = (py - y) / (px - x);
+
+                        nT = new Vector2(1, derivative1);
+                        
+                        pT = new Vector2(1, derivative2);
+
+                        
+                        let curvature = (pT.sub(nT)).div(new Vector2(nx, ny).sub(new Vector2(px, py)).magnitude()).magnitude() / 2;
+                        this.curvatures.push(curvature);
+                    }
+
+                    
+                    
+                }
+
+                let distance = 0;
+                if(lastPoint != undefined){
+                    distance = new Vector2(x, y).sub(lastPoint).magnitude();
+                }
+                totalDistance += distance;
+
+                this.distances.push(totalDistance);
+                lastPoint = new Vector2(x, y);
+
+            }
+
+            this.points.splice(0, 1);
+            this.tangents.splice(0, 1);
+            this.normals.splice(0, 1);
+            this.distances.splice(0, 1);
+            this.curvatures.splice(0, 1);
+
+            this.points.splice(this.points.length - 1, 1);
+            this.tangents.splice(this.tangents.length - 1, 1);
+            this.normals.splice(this.normals.length - 1, 1);
+            this.distances.splice(this.distances.length - 1, 1);
+            this.curvatures.splice(this.curvatures.length - 1, 1);
+
+            this.checkForDifferentiability(10 * deltaX, 0.01);
+        }
+
+        getDataAtDistance(targetDistance){
+            let minIndex = 0;
+            let maxIndex = this.distances.length - 1;
+
+            while(maxIndex - minIndex > 1){
+                let midIndex = Math.floor((minIndex + maxIndex) / 2);
+                if(this.distances[midIndex] < targetDistance){
+                    minIndex = midIndex;
+                }else{
+                    maxIndex = midIndex;
+                }
+
+                if(this.distances[midIndex] == targetDistance){
+                    minIndex = midIndex;
+                    maxIndex = midIndex;
+                }
+
+                
+            }
+
+            let percent = (targetDistance - this.distances[minIndex]) / (this.distances[maxIndex] - this.distances[minIndex]);
+
+            let point = this.points[minIndex].mult(1 - percent).add(this.points[maxIndex].mult(percent));
+            let tangent = this.tangents[minIndex].mult(1 - percent).add(this.tangents[maxIndex].mult(percent));
+            let normal = this.normals[minIndex].mult(1 - percent).add(this.normals[maxIndex].mult(percent));
+            let curvature = this.curvatures[minIndex] * (1 - percent) + this.curvatures[maxIndex] * percent;
+
+            return {
+                point: point,
+                tangent: tangent,
+                normal: normal,
+                curvature: curvature
+            };
+        }
+   
+        printDistance(distance){
+            let out = "";
+            for(let i = 0; i < distance; i += 0.1){
+                let data = this.getDataAtDistance(i);
+                out += `${data.point.x}, ${data.point.y}\n`;
+            }
+            console.log(out);
+        }
+    
+        checkForDifferentiability(tolerance1, tolerance2){
+            let lastPoint = this.points[0];
+            if( this.points.some(point=>{
+                if(point.sub(lastPoint).magnitude() > tolerance1){
+                    return true;
+                }
+                lastPoint = point;
+                return false;
+            }) ){
+                this.isContinuous = false;
+                console.log("The path is not continuous");
+            }
+
+            if(!this.isContinuous){
+                this.isDifferentiable = false;
+                return;
+            }
+
+            let lastTangent = this.tangents[0];
+            if( this.tangents.some(tangent=>{
+                if(tangent.sub(lastTangent).magnitude() > tolerance2){
+                    return true;
+                }
+                lastTangent = tangent;
+                return false;
+            }) ){
+                this.isDifferentiable = false;
+                console.log("The path is not differentiable");
+            }
+        }
+    
+        getMinimumTurnRadius(radius){
+            let minRadius = Infinity;
+
+            //console.log(this.curvatures[0])
+            this.curvatures.forEach(curvature=>{
+                //console.log(curvature);
+                let radius = Math.abs(1 / curvature);
+                if(radius < minRadius){
+                    minRadius = radius;
+                }
+            });
+            
+            return minRadius;
+        }
+    }
+
+</script>
+
+<script>
+    class PathPlotter{
+        constructor(parentElement){
+            this.canvas = document.createElement("canvas");
+            this.ctx = this.canvas.getContext("2d");
+
+            this.canvas.width = 400;
+            this.canvas.height = 400;
+            this.canvas.classList.add("PathPlotterCanvas");
+
+            this.minX = 0;
+            this.maxX = 10;
+            this.minY = 0;
+            this.maxY = 0;
+
+            this.parentElement = parentElement;
+
+            parentElement.append(this.canvas);
+        }
+
+
+        setBoundsFromPath(path){
+            this.minX = path.points[0].x;
+            this.maxX = path.points[path.points.length - 1].x;
+
+            this.minY = Infinity;
+            this.maxY = -Infinity;
+
+            path.points.forEach(point=>{
+                if(point.y > this.maxY){
+                    this.maxY = point.y;
+                }
+                if(point.y < this.minY){
+                    this.minY = point.y;
+                }
+            });
+        }
+
+        setBounds(minX, minY, maxX, maxY){
+            this.minX = minX;
+            this.maxX = maxX;
+            this.minY = minY;
+            this.maxY = maxY;
+        }
+
+        padBounds(amount){
+            this.minX -= amount;
+            this.minY -= amount;
+            this.maxX += amount;
+            this.maxY += amount;
+        }
+
+        draw(path){
+            let scale = new Vector2(this.maxX - this.minX, this.maxY - this.minY);
+
+            this.ctx.beginPath();
+            this.ctx.moveTo((path.points[0].x - this.minX) / scale.x * this.canvas.width, this.canvas.height - (path.points[0].y - this.minY) / scale.y * this.canvas.height);
+            path.points.forEach(point=>{
+                let temp = this.worldSpaceToScreenSpace(point);
+                this.ctx.lineTo(temp.x, temp.y);
+            });
+
+            this.ctx.stroke();
+        }
+
+        drawBallAtDistance(path, distance, radius){
+            if(radius == undefined){
+                radius = 3;
+            }
+    
+            let scale = new Vector2(this.maxX - this.minX, this.maxY - this.minY);
+
+            this.ctx.beginPath();
+            let data = path.getDataAtDistance(distance);
+            
+            let point = this.worldSpaceToScreenSpace(data.point);
+            this.ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+
+            this.ctx.fill();
+        }
+    
+        clear(){
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+    
+        worldSpaceToScreenSpace(vector){
+            return new Vector2((vector.x - this.minX) / (this.maxX - this.minX) * this.canvas.width, this.canvas.height - (vector.y - this.minY) / (this.maxY - this.minY) * this.canvas.height);
+        }
+        
+        removeFromParent(){
+            this.parentElement.remove(this.canvas);
+        }
+        //Consider adding functions that draw grid lines and numbers
+    }
+</script>
+
+<script>
+    //It is assumed that no energy is lost due to changing directions
+    class Simulation{
+        constructor(path, deltaTime, massOfCart, airResistanceFactor, coefficientOfKineticFriction, gravityStrength, climbSpeed){
+            this.path = path;
+            this.times = [];
+            this.distances = [];
+            this.velocities = [];//these are linear velocities
+            this.tangentialAccelerations = [];
+            this.perpendicularAccelerations = [];
+
+            let time = 0;
+            let distance = 0;
+
+            let linearVelocity = climbSpeed;
+
+            let lastTrackDirection = path.getDataAtDistance(distance).tangent;
+
+            let lastPoint = path.getDataAtDistance(distance).point;
+            let isInitialClimb = true;
+
+            let gravityVector = new Vector2(0, -gravityStrength);
+
+        
+            while(true){
+                let data = path.getDataAtDistance(distance);
+                //record data
+                this.times.push(time);
+                this.distances.push(distance);
+                this.velocities.push(linearVelocity);
+
+                //gravity and the changing direction of the track are both sources of perpendicual forces
+                let gravityPerpendicular = gravityVector.dot(data.normal);
+                let trackRedirectionAcceleration = data.tangent.sub(lastTrackDirection).mult(linearVelocity / deltaTime).magnitude();//The change in velocity due to the change in direction / deltaTime
+                let perpendicularAcceleration = gravityPerpendicular + trackRedirectionAcceleration;
+
+                //air resistance and friction are both tangential forces. Gravity also contributes
+                let gravityTangent = gravityVector.dot(data.tangent);
+                let airResistance = -Math.sign(linearVelocity) * airResistanceFactor * linearVelocity * linearVelocity / massOfCart;//The mass of the cart is being divided to get the acceleration
+                let friction = -Math.sign(linearVelocity) * coefficientOfKineticFriction * Math.abs(perpendicularAcceleration);//The mass of the cart is used to find the downward force, but it is then divided to find the acceleration
+                let tangentialAcceleration = gravityTangent + friction + airResistance;
+
+                this.tangentialAccelerations.push(tangentialAcceleration);
+                this.perpendicularAccelerations.push(perpendicularAcceleration);
+
+                
+
+                //Update state
+                //console.log(data)
+                if(lastPoint.y > data.point.y){
+                    isInitialClimb = false;
+                }
+
+                if(isInitialClimb)
+                    tangentialAcceleration = 0;
+
+                distance += linearVelocity * deltaTime + 0.5 * tangentialAcceleration * deltaTime * deltaTime;
+
+                if(!isInitialClimb){
+                    linearVelocity += tangentialAcceleration * deltaTime;//after the climb the velocity is determined by physics
+                }
+
+
+                lastPoint = data.point;
+                time += deltaTime;
+                lastTrackDirection = data.tangent;
+                
+                if(path.upperX < data.point.x){
+                    break;
+                }
+                if(linearVelocity < 0){
+                    break;
+                }
+            }
+        }
+
+        getDataAtTime(targetTime){
+            //When out of the simulation time-bounds, just give either the beginning or the end
+            if(targetTime > this.times[this.times.length - 1]){
+                return this.getDataAtTime(this.times[this.times.length - 1]);
+            }
+            if(targetTime < 0){
+                return this.getDataAtTime(0);
+            }
+
+
+            let minIndex = 0;
+            let maxIndex = this.times.length - 1;
+
+            while(maxIndex - minIndex > 1){
+                let midIndex = Math.floor((minIndex + maxIndex) / 2);
+                if(this.times[midIndex] < targetTime){
+                    minIndex = midIndex;
+                }else{
+                    maxIndex = midIndex;
+                }
+            }
+
+            let percent = (targetTime - this.times[minIndex]) / (this.times[maxIndex] - this.times[minIndex]);
+            //console.log(minIndex, maxIndex, percent);
+
+            let distance = this.distances[minIndex] * (1 - percent) + this.distances[maxIndex] * percent;
+            let velocity = this.velocities[minIndex] * (1 - percent) + this.velocities[maxIndex] * percent;
+            let tangentialAcceleration = this.tangentialAccelerations[minIndex] * (1 - percent) + this.tangentialAccelerations[maxIndex] * percent;
+            let perpendicularAcceleration = this.perpendicularAccelerations[minIndex] * (1 - percent) + this.perpendicularAccelerations[maxIndex] * percent;
+
+            let pathData = this.path.getDataAtDistance(distance);
+
+
+            return {
+                distance: distance,
+                velocity: velocity,
+                tangentialAcceleration: tangentialAcceleration, 
+                perpendicularAcceleration: perpendicularAcceleration,
+                point: pathData.point,
+                tangent: pathData.tangent,
+                normal: pathData.normal,
+                curvature: pathData.curvature
+            };
+        }
+    
+    }
+</script>
+
+<script>
+    var pathDescription;
+    var path;
+    var plotter;
+    var sim;
+
+    function playAnimation(plotter, sim){
+        if(this.isPlaying == undefined){
+            this.isPlaying = false;
+        }
+
+        if(!this.isPlaying){
+            this.isPlaying = true;
+            let time = 0;
+            let maxTime = sim.times[sim.times.length - 1];
+            let self = this;
+
+            let animation = setInterval(()=>{
+                let point = sim.getDataAtTime(time);
+                plotter.clear();
+                plotter.draw(sim.path);
+                plotter.drawBallAtDistance(path, point.distance);
+
+                time += 10 / 1000;
+                if(time > maxTime){
+                    clearInterval(animation);
+                    self.isPlaying = false;
+                }
+            }, 10);
+            
+        }
+        
+    }
+
+    function loadScreen(screenId){
+        for(let i = 0; i < document.body.children.length; i++){
+            let child = document.body.children.item(i);
+            if(child.classList.contains("screen")){
+                child.classList.add("hidden");
+            }
+            if(child.id == screenId){
+                child.classList.remove("hidden");
+            }
+        }
+        
+    }
+
+
+    function addPieceSpecifier(){
+        let div = document.createElement("div");
+        div.classList.add("pieceSpecifier");
+
+        let startX = document.createElement("input");
+        startX.type = "number";
+        startX.placeholder = "start x";
+
+        div.appendChild(startX);
+
+        let endX = document.createElement("input");
+        endX.type = "number";
+        endX.placeholder = "end x";
+
+        div.appendChild(endX);
+
+        let expression = document.createElement("input");
+        expression.type = "text";
+        expression.placeholder = "expression";
+
+        div.appendChild(expression);
+
+        let removeButton = document.createElement("button");
+        removeButton.onclick = ()=>{
+            document.getElementById("sectionDefinitions").removeChild(removeButton.parentElement);
+        }
+        removeButton.innerText = "Remove";
+
+
+
+        div.appendChild(removeButton);
+
+        document.getElementById("sectionDefinitions").prepend(div);
+    }
+
+    function sortFunctionSpecifiers(){
+        let sectionDefinitionsDiv = document.getElementById("sectionDefinitions");
+
+        let specifiers = [];
+        for(let i = 0; i < sectionDefinitionsDiv.children.length; i++){
+            specifiers.push(sectionDefinitionsDiv.children.item(i));
+        }
+
+        
+        sectionDefinitionsDiv.innerHTML = "";
+
+        specifiers.sort((a, b)=>{
+            return a.children.item(0).value - b.children.item(0).value;
+        });
+
+        specifiers.forEach(specifier=>{
+            sectionDefinitionsDiv.appendChild(specifier);
+        })
+    }
+
+    function loadSimulation(){
+        pathDescription = new PathDescription();
+
+        let sectionDefinitionsDiv = document.getElementById("sectionDefinitions");
+
+        for(let i = 0; i < sectionDefinitionsDiv.children.length; i++){
+            let specifier = sectionDefinitionsDiv.children.item(i);
+            //console.log(specifier.children.item(0).value, specifier.children.item(1).value, specifier.children.item(2).value)
+            pathDescription.addPiece(parseFloat(specifier.children.item(0).value), parseFloat(specifier.children.item(1).value), specifier.children.item(2).value);
+        }
+        
+        path = new Path(pathDescription, 0.001);
+        console.log(path);
+
+        if(plotter != undefined){
+            plotter.removeFromParent();
+        }
+
+        plotter = new PathPlotter(document.getElementById("PlayBackScreen").children.item(0));
+        plotter.setBoundsFromPath(path);
+        plotter.padBounds(1);
+
+        sim = new Simulation(path, 0.01, 735, 0.25, 0.08, 9.8, 1);
+        console.log(sim);
+
+        //playAnimation(plotter, sim);
+    }
+</script>
+
+<script>
+
+    document.getElementById("sectionDefinitionSortButton").onclick = ()=>{
+        sortFunctionSpecifiers();
+    }
+
+    document.getElementById("addSectionDefinitionButton").onclick = ()=>{
+        addPieceSpecifier();
+    }
+
+    document.getElementById("toPlayBackScreenButton").onclick = ()=>{
+        loadScreen("PlayBackScreen");
+        loadSimulation();
+    }
+</script>
+
+
+<script>
+    /*
+    var pathDescription = new PathDescription();
+    pathDescription.addPiece(0, 1, "x");
+    pathDescription.addPiece(1, 2, "Math.pow(x - 0.5, 2) + (1 - 0.5 * 0.5)");
+    pathDescription.addPiece(-1, 0, "Math.pow(x + 0.5, 2) - 0.5 * 0.5");
+    pathDescription.addPiece(-2, -1, "-Math.pow(x + 1.5, 2) + 0.5 * 0.5");
+    
+    var path = new Path(pathDescription, 0.001);
+    console.log(path);
+
+    var plotter = new PathPlotter(document.getElementById("PlayBackScreen"));
+    plotter.setBoundsFromPath(path);
+    plotter.padBounds(1);
+    
+    
+
+    var sim = new Simulation(path, 0.01, 735, 0.25, 0.08, 9.8, 1);
+    console.log(sim);
+
+    let out = "";
+
+    playAnimation(plotter, sim);
+    */
+
+    //loadScreen("PlayBackScreen");
+    loadScreen("DefinitionScreen");
+
+
+    
+    addPieceSpecifier();
+    //addPieceSpecifier();
+
+
+    //console.log(out);
+
+
+
+
+    //TODO: Add the UI for defining the path
+    //TODO: Improve the check for continuity
+    //      Currently it limits the slope of the line
+</script>
+
+
+
