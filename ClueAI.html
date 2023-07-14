@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<script>
+    //6 characters
+    //6 weapons
+    //9 rooms
+
+
+    var numberOfPlayers = 6;
+
+
+    //Set up the cards
+    //0 = no info
+    //1 = might have the card
+    //2 = has the card
+    //-1 = doesn't have the card
+
+    var characterCards = [];//[playerIndex][characterName]
+    for (let i = 0; i < numberOfPlayers; i++) {
+        characterCards.push(new Map());
+        //0 = no info
+        //1 = might have the card
+        //2 = has the card
+        //-1 = doesn't have the card
+        characterCards[characterCards.length - 1].set("Miss Scarlett", 0);
+        characterCards[characterCards.length - 1].set("Mr. Green", 0);
+        characterCards[characterCards.length - 1].set("Col. Mustard", 0);
+        characterCards[characterCards.length - 1].set("Prof. Plum", 0);
+        characterCards[characterCards.length - 1].set("Mrs. Peacock", 0);
+        characterCards[characterCards.length - 1].set("Mrs. White", 0);
+    }
+
+
+    var weaponCards = [];//[playerIndex][weaponName]
+    for (let i = 0; i < numberOfPlayers; i++) {
+        weaponCards.push(new Map());
+        //0 = no info
+        //1 = might have the card
+        //2 = has the card
+        //-1 = doesn't have the card
+        weaponCards[weaponCards.length - 1].set("Candlestick", 0);
+        weaponCards[weaponCards.length - 1].set("Dagger", 0);
+        weaponCards[weaponCards.length - 1].set("Lead Pipe", 1);
+        weaponCards[weaponCards.length - 1].set("Revolver", 0);
+        weaponCards[weaponCards.length - 1].set("Rope", 0);
+        weaponCards[weaponCards.length - 1].set("Wrench", 0);
+    }
+
+
+    var roomCards = [];//[playerIndex][roomName]
+    for (let i = 0; i < numberOfPlayers; i++) {
+        roomCards.push(new Map());
+        //0 = no info
+        //1 = might have the card
+        //2 = has the card
+        //-1 = doesn't have the card
+        roomCards[roomCards.length - 1].set("Kitchen", 0);
+        roomCards[roomCards.length - 1].set("Ball Room", 0);
+        roomCards[roomCards.length - 1].set("Conservatory", 0);
+        roomCards[roomCards.length - 1].set("Dining Room", 0);
+        roomCards[roomCards.length - 1].set("Billard Room", 0);
+        roomCards[roomCards.length - 1].set("Library", 0);
+        roomCards[roomCards.length - 1].set("Lounge", 0);
+        roomCards[roomCards.length - 1].set("Hall", 0);
+        roomCards[roomCards.length - 1].set("Study", 0);
+    }
+
+    //End of card setup
+
+    //Finds the maximum value in the characterCards array for a specific character
+    //2 = this character is not guilty
+    //1 = this character might not be guilty
+    //0 = no info
+    //-1 = guilty
+    //Anything else = something went wrong
+    function checkCharacterScore(characterName) {
+        let out = -Infinity;
+        for (let i = 0; i < characterCards.length; i++) {
+            let value = characterCards[i].get(characterName);
+            if (value == undefined) {
+                return "Invalid Name";//Invalid character name
+            }
+            if (value > out) {
+                out = value;
+            }
+        }
+
+        return out;
+    }
+
+    function checkWeaponScore(weaponName) {
+        let out = -Infinity;
+        for (let i = 0; i < weaponCards.length; i++) {
+            let value = weaponCards[i].get(weaponName);
+            if (value == undefined) {
+                return "Invalid Name";//Invalid weapon name
+            }
+            if (value > out) {
+                out = value;
+            }
+        }
+
+        return out;
+    }
+
+    function checkRoomScore(roomName) {
+        let out = -Infinity;
+        for (let i = 0; i < roomCards.length; i++) {
+            let value = roomCards[i].get(roomName);
+            if (value == undefined) {
+                return "Invalid Name";//Invalid room name
+            }
+            if (value > out) {
+                out = value;
+            }
+        }
+
+        return out;
+    }
+
+
+    class Guess {
+        constructor(character, weapon, room) {
+            this.character = character;
+            this.weapon = weapon;
+            this.room = room;
+        }
+    }
+
+    function turn(askingPlayerIndex, answeringPlayerIndex, guess) {
+        if (answeringPlayerIndex <= askingPlayerIndex) {
+            answeringPlayerIndex += numberOfPlayers;
+        }
+
+        //This is where we determine who does not have specific cards
+        //It starts just after the asking player and ends just before the answering player
+        for (var i = askingPlayerIndex + 1; i < answeringPlayerIndex; i++) {
+            characterCards[i % numberOfPlayers].set(guess.character, -1);
+            weaponCards[i % numberOfPlayers].set(guess.weapon, -1);
+            roomCards[i % numberOfPlayers].set(guess.room, -1);
+        }
+
+
+
+
+        //For each of the cards that were guessed.
+        //If the answering player doesn't have the card, don't set the state to 1 (meaning that they might have the card)
+        //If the answering player definitly has the card, don't set the state to 1 (meaning that they might have the card)
+        //This will alter the state of the data in a way that increases the informaion available
+
+        answerPlayerCharacter = characterCards[answeringPlayer % numberOfPlayers].get(guess.character);
+        if (answerPlayerCharacter != -1 && answerPlayerCharacter != 2) {
+            characterCards[answeringPlayer % numberOfPlayers].set(guess.character, 1);
+        }
+
+
+        answerPlayerWeapon = weaponCards[answeringPlayer % numberOfPlayers].get(guess.weapon);
+        if (answerPlayerWeapon != -1 && answerPlayerWeapon != 2) {
+            weaponCards[answeringPlayer % numberOfPlayers].set(guess.weapon, 1);
+        }
+
+        answerPlayerRoom = roomCards[answeringPlayer % numberOfPlayers].get(guess.room);
+        if (answerPlayerRoom != -1 && answerPlayerRoom != 2) {
+            roomCards[answeringPlayer % numberOfPlayers].set(guess.room, 1);
+        }
+
+
+        //The only way to confirm if someone has a card is to ask about it, and get it shown
+    }
+
+    function generateDataGrid() {
+
+    }
+
+    function generateDataColumn() {
+        let out = document.createElement("div");
+        out.className = "infoGridColumn";
+
+        for (let i = 0; i < )
+}
+</script>
+
+<body>
+
+    <div id="infoGridDiv">
+        <div class="infoGridColumn">
+            <div class="infoGridEntry">
+                a
+            </div>
+            <br>
+            <div class="infoGridEntry">
+                a
+            </div>
+        </div>
+        <div class="infoGridColumn">
+            <div class="infoGridEntry">
+                a
+            </div>
+            <br>
+            <div class="infoGridEntry">
+                a
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
