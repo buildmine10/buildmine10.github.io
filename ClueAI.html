@@ -8,6 +8,7 @@
         flex-direction: column;
         align-items: stretch;
         background-color: lightgrey;
+        gap: 1em;
     }
 
 
@@ -17,7 +18,7 @@
         gap: 0.25em;
         padding: 0.5em;
         box-sizing: border-box;
-        
+
     }
 
     .infoGridColumn {
@@ -32,18 +33,18 @@
         padding: 0.5em;
     }
 
-    #top{
+    #top {
         display: flex;
         flex-direction: row;
     }
 
-    #bottom{
+    #bottom {
         display: flex;
         flex-direction: column;
-        background-color: pink;
+        gap: 1em;
     }
 
-    #topRight{
+    #topRight {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
@@ -51,20 +52,20 @@
         gap: 1em;
     }
 
-    #characterGuessSelector{
+    #characterGuessSelector {
         display: flex;
         flex-direction: column;
         padding: 1em;
         gap: 1em;
     }
 
-    .radioButtonLabel{
+    .radioButtonLabel {
         background-color: darkgrey;
         padding: 0.75em;
         text-align: center;
     }
 
-    input[type=radio]:checked+.radioButtonLabel{
+    input[type=radio]:checked+.radioButtonLabel {
         background-color: lightblue;
     }
 
@@ -74,32 +75,32 @@
     }
     */
 
-    input[type=radio]{
+    input[type=radio] {
         display: none;
     }
-    
 
-    #weaponGuessSelector{
+
+    #weaponGuessSelector {
         display: flex;
         flex-direction: column;
         padding: 1em;
         gap: 1em;
     }
 
-    #roomGuessSelector{
+    #roomGuessSelector {
         display: flex;
         flex-direction: column;
         padding: 1em;
         gap: 1em;
     }
 
-    #topRightTop{
+    #topRightTop {
         display: flex;
         justify-content: space-around;
     }
 
 
-    .ColumnLabel{
+    .ColumnLabel {
         background-color: darkgrey;
         text-align: center;
         padding: 1em;
@@ -107,16 +108,16 @@
     }
 
 
-    button{
+    button {
         font-size: larger;
         flex-grow: 1;
     }
 
-    input[type=number]{
+    input[type=number] {
         font-size: larger;
     }
 
-    #askingPlayerGuessDiv{
+    #askingPlayerGuessDiv {
         background-color: darkgrey;
         display: flex;
         flex-direction: column;
@@ -124,15 +125,18 @@
         padding: 0.5em;
     }
 
-    #answeringPlayerGuessDiv{
+    #answeringPlayerGuessDiv {
         background-color: darkgrey;
         display: flex;
         flex-direction: column;
         gap: 0.5em;
         padding: 0.5em;
-        
+
     }
-    
+
+    #bottom>button{
+        padding: 1em;
+    }
 </style>
 
 <body>
@@ -148,19 +152,19 @@
 
                     <input type="radio" name="guessCharacter" value="Miss Scarlett" id="Miss Scarlett Guess">
                     <label class="radioButtonLabel" for="Miss Scarlett Guess">Miss Scarlett</label>
-    
+
                     <input type="radio" name="guessCharacter" value="Mr. Green" id="Mr. Green Guess">
                     <label class="radioButtonLabel" for="Mr. Green Guess">Mr. Green</label>
-    
+
                     <input type="radio" name="guessCharacter" value="Col. Mustard" id="Col. Mustard Guess">
                     <label class="radioButtonLabel" for="Col. Mustard Guess">Col. Mustard</label>
-    
+
                     <input type="radio" name="guessCharacter" value="Prof. Plum" id="Prof. Plum Guess">
                     <label class="radioButtonLabel" for="Prof. Plum Guess">Prof. Plum</label>
-    
+
                     <input type="radio" name="guessCharacter" value="Mrs. Peacock" id="Mrs. Peacock Guess">
                     <label class="radioButtonLabel" for="Mrs. Peacock Guess">Mrs. Peacock</label>
-    
+
                     <input type="radio" name="guessCharacter" value="Mrs. White" id="Mrs. White Guess">
                     <label class="radioButtonLabel" for="Mrs. White Guess">Mrs. White</label>
 
@@ -168,67 +172,67 @@
                         Asking Player
                         <input type="number" id="askingPlayerGuess" min=0 max=5 value=0 inputmode="numeric">
                     </div>
-                    
+
                 </div>
-    
+
                 <div id="weaponGuessSelector">
-                    <div  class="ColumnLabel">
+                    <div class="ColumnLabel">
                         Weapon
                     </div>
 
                     <input type="radio" name="guessWeapon" value="Candlestick" id="Candlestick Guess">
                     <label class="radioButtonLabel" for="Candlestick Guess">Candlestick</label>
-    
+
                     <input type="radio" name="guessWeapon" value="Dagger" id="Dagger Guess">
                     <label class="radioButtonLabel" for="Dagger Guess">Dagger</label>
-    
+
                     <input type="radio" name="guessWeapon" value="Lead Pipe" id="Lead Pipe Guess">
                     <label class="radioButtonLabel" for="Lead Pipe Guess">Lead Pipe</label>
-    
+
                     <input type="radio" name="guessWeapon" value="Revolver" id="Revolver Guess">
                     <label class="radioButtonLabel" for="Revolver Guess">Revolver</label>
-    
+
                     <input type="radio" name="guessWeapon" value="Rope" id="Rope Guess">
                     <label class="radioButtonLabel" for="Rope Guess">Rope</label>
-    
+
                     <input type="radio" name="guessWeapon" value="Wrench" id="Wrench Guess">
                     <label class="radioButtonLabel" for="Wrench Guess">Wrench</label>
 
                     <div id="answeringPlayerGuessDiv">
                         Answering Player
-                        <input type="number" id="answeringPlayerGuess" min=0 max=5 value=0  inputmode="numeric">
+                        <input type="number" id="answeringPlayerGuess" min=0 max=5 value=0 inputmode="numeric">
                     </div>
                 </div>
-    
+
                 <div id="roomGuessSelector">
-                    <div  class="ColumnLabel">
+                    <div class="ColumnLabel">
                         Room
                     </div>
 
                     <input type="radio" name="guessRoom" value="Kitchen" id="Kitchen Guess">
                     <label class="radioButtonLabel" for="Kitchen Guess">Kitchen</label>
-    
+
                     <input type="radio" name="guessRoom" value="Ball Room" id="Ball Room Guess">
                     <label class="radioButtonLabel" for="Ball Room Guess">Ball Room</label>
-    
+
                     <input type="radio" name="guessRoom" value="Conservatory" id="Conservatory Guess">
                     <label class="radioButtonLabel" for="Conservatory Guess">Conservatory</label>
-    
+
                     <input type="radio" name="guessRoom" value="Dining Room" id="Dining Room Guess">
                     <label class="radioButtonLabel" for="Dining Room Guess">Dining Room</label>
-    
+
                     <input type="radio" name="guessRoom" value="Billard Room" id="Billard Room Guess">
                     <label class="radioButtonLabel" for="Billard Room Guess">Billard Room</label>
-    
+
                     <input type="radio" name="guessRoom" value="Library" id="Library Guess">
                     <label class="radioButtonLabel" for="Library Guess">Library</label>
-    
+
                     <input type="radio" name="guessRoom" value="Lounge" id="Lounge Guess">
                     <label class="radioButtonLabel" for="Lounge Guess">Lounge</label>
-    
+
                     <input type="radio" name="guessRoom" value="Hall" id="Hall Guess">
                     <label class="radioButtonLabel" for="Hall Guess">Hall</label>
-    
+
                     <input type="radio" name="guessRoom" value="Study" id="Study Guess">
                     <label class="radioButtonLabel" for="Study Guess">Study</label>
                 </div>
@@ -238,13 +242,14 @@
             <button onclick="addToYourCards()">Add To Your Cards</button>
         </div>
     </div>
-    <div id="bottom">  
-        <button onclick="testFunction()">test button</button>
+    <div id="bottom">
+        <button onclick="clearCards()">Clear Info</button>
         <div>
-            <input type="number" id="numberOfPlayersInput" placeholder="Number of Players" value=6 inputmode="numeric">
+            <input type="number" id="numberOfPlayersInput" placeholder="Number of Players" value=6 min=2 max=6
+                inputmode="numeric">
             <button onclick="setNumberOfPlayers()">submit</button>
         </div>
-        
+
     </div>
 
 </body>
@@ -268,7 +273,7 @@
         indexToCharacterName.set(4, "Mrs. Peacock");
         indexToCharacterName.set(5, "Mrs. White");
     }
-    
+
 
     const indexToWeaponName = new Map();
     {
@@ -279,7 +284,7 @@
         indexToWeaponName.set(4, "Rope");
         indexToWeaponName.set(5, "Wrench");
     }
-    
+
 
 
     const indexToRoomName = new Map();
@@ -294,7 +299,7 @@
         indexToRoomName.set(7, "Hall");
         indexToRoomName.set(8, "Study");
     }
-    
+
 
     var numberOfPlayers = 6;
 
@@ -305,57 +310,6 @@
     //2 = has the card
     //-1 = doesn't have the card
 
-    var characterCards = [];//[playerIndex][characterName]
-    for (let i = 0; i < numberOfPlayers; i++) {
-        characterCards.push(new Map());
-        //0 = no info
-        //1 = might have the card
-        //2 = has the card
-        //-1 = doesn't have the card
-        characterCards[characterCards.length - 1].set("Miss Scarlett", 0);
-        characterCards[characterCards.length - 1].set("Mr. Green", 0);
-        characterCards[characterCards.length - 1].set("Col. Mustard", 0);
-        characterCards[characterCards.length - 1].set("Prof. Plum", 0);
-        characterCards[characterCards.length - 1].set("Mrs. Peacock", 0);
-        characterCards[characterCards.length - 1].set("Mrs. White", 0);
-    }
-
-
-    var weaponCards = [];//[playerIndex][weaponName]
-    for (let i = 0; i < numberOfPlayers; i++) {
-        weaponCards.push(new Map());
-        //0 = no info
-        //1 = might have the card
-        //2 = has the card
-        //-1 = doesn't have the card
-        weaponCards[weaponCards.length - 1].set("Candlestick", 0);
-        weaponCards[weaponCards.length - 1].set("Dagger"    , 0);
-        weaponCards[weaponCards.length - 1].set("Lead Pipe" , 0);
-        weaponCards[weaponCards.length - 1].set("Revolver"  , 0);
-        weaponCards[weaponCards.length - 1].set("Rope"      , 0);
-        weaponCards[weaponCards.length - 1].set("Wrench"    , 0);
-    }
-    
-
-    var roomCards = [];//[playerIndex][roomName]
-    for (let i = 0; i < numberOfPlayers; i++) {
-        roomCards.push(new Map());
-        //0 = no info
-        //1 = might have the card
-        //2 = has the card
-        //-1 = doesn't have the card
-        roomCards[roomCards.length - 1].set("Kitchen"       , 0);
-        roomCards[roomCards.length - 1].set("Ball Room"     , 0);
-        roomCards[roomCards.length - 1].set("Conservatory"  , 0);
-        roomCards[roomCards.length - 1].set("Dining Room"   , 0);
-        roomCards[roomCards.length - 1].set("Billard Room"  , 0);
-        roomCards[roomCards.length - 1].set("Library"       , 0);
-        roomCards[roomCards.length - 1].set("Lounge"        , 0);
-        roomCards[roomCards.length - 1].set("Hall"          , 0);
-        roomCards[roomCards.length - 1].set("Study"         , 0);
-    }
-
-       
     //End of card setup
 
     //Finds the maximum value in the characterCards array for a specific character
@@ -412,24 +366,24 @@
 
     class Guess {
         constructor(character, weapon, room) {
-            if(validCharacters.includes(character)){
+            if (validCharacters.includes(character)) {
                 this.character = character;
-            }else{
+            } else {
                 throw "Invalid character name in Guess";
             }
-        
-            if(validWeapons.includes(weapon)){
+
+            if (validWeapons.includes(weapon)) {
                 this.weapon = weapon;
-            }else{
+            } else {
                 throw "Invalid weapon name in Guess";
             }
 
-            if(validRooms.includes(room)){
+            if (validRooms.includes(room)) {
                 this.room = room;
-            }else{
+            } else {
                 throw "Invalid room name in Guess";
             }
-            
+
         }
     }
 
@@ -482,7 +436,7 @@
         //The Labels
         let labelDiv = document.createElement("div");
         labelDiv.className = "infoGridColumn";
-        for(let i = 0; i < 6; i++){
+        for (let i = 0; i < 6; i++) {
             let div = document.createElement("div");
             div.className = "infoGridEntry"
             div.innerText = indexToCharacterName.get(i);
@@ -490,7 +444,7 @@
         }
 
         labelDiv.appendChild(document.createElement("br"));
-        for(let i = 0; i < 6; i++){
+        for (let i = 0; i < 6; i++) {
             let div = document.createElement("div");
             div.className = "infoGridEntry"
             div.innerText = indexToWeaponName.get(i);
@@ -498,7 +452,7 @@
         }
 
         labelDiv.appendChild(document.createElement("br"));
-        for(let i = 0; i < 9; i++){
+        for (let i = 0; i < 9; i++) {
             let div = document.createElement("div");
             div.className = "infoGridEntry"
             div.innerText = indexToRoomName.get(i);
@@ -507,7 +461,7 @@
         infoGrid.appendChild(labelDiv);
 
         //The data
-        for(let i = 0; i < numberOfPlayers; i++){
+        for (let i = 0; i < numberOfPlayers; i++) {
             //console.log("hi")
             infoGrid.appendChild(generateDataColumn(i));
         }
@@ -521,7 +475,7 @@
         for (let i = 0; i < 6; i++) {
             let entry = document.createElement("div");
             entry.className = "infoGridEntry";
-            
+
             entry.innerText = characterCards[playerIndex].get(indexToCharacterName.get(i));
             out.appendChild(entry);
         }
@@ -537,14 +491,14 @@
             out.appendChild(entry);
         }
 
-        
+
         out.appendChild(document.createElement("br"));
 
         //rooms
         for (let i = 0; i < 9; i++) {
             let entry = document.createElement("div");
             entry.className = "infoGridEntry";
-            
+
             entry.innerText = roomCards[playerIndex].get(indexToRoomName.get(i));
             out.appendChild(entry);
         }
@@ -553,79 +507,79 @@
     }
 
 
-    function getSelectedGuessCharacter(){
+    function getSelectedGuessCharacter() {
         let out = document.querySelector('input[name="guessCharacter"]:checked');
-        if(out == undefined){
+        if (out == undefined) {
             return out;
         }
         return out.value;
     }
 
-    function getSelectedGuessWeapon(){
+    function getSelectedGuessWeapon() {
         let out = document.querySelector('input[name="guessWeapon"]:checked');
-        if(out == undefined){
+        if (out == undefined) {
             return out;
         }
         return out.value;
     }
 
-    function getSelectedGuessRoom(){
+    function getSelectedGuessRoom() {
         let out = document.querySelector('input[name="guessRoom"]:checked');
-        if(out == undefined){
+        if (out == undefined) {
             return out;
         }
         return out.value;
     }
 
 
-    function clearGuessSelection(){
+    function clearGuessSelection() {
         document.querySelector('input[name="guessCharacter"]:checked').checked = false;
         document.querySelector('input[name="guessWeapon"]:checked').checked = false;
         document.querySelector('input[name="guessRoom"]:checked').checked = false;
     }
 
-    function submitGuess(){
+    function submitGuess() {
         let askingPlayer = Number.parseInt(document.getElementById("askingPlayerGuess").value) % numberOfPlayers
         let answeringPlayer = Number.parseInt(document.getElementById("answeringPlayerGuess").value) % numberOfPlayers
         let character = getSelectedGuessCharacter();
         let weapon = getSelectedGuessWeapon();
         let room = getSelectedGuessRoom();
 
-        if(character != null && weapon != null && room != null){
+        if (character != null && weapon != null && room != null) {
             applyGuessResult(askingPlayer, answeringPlayer, new Guess(character, weapon, room))
             updateDataGrid();
-        }else{
+        } else {
             throw "Attempted to guess without full selection";
         }
-        
-        
+
+
     }
 
-    function addToYourCards(){
+    function addToYourCards() {
         let character = getSelectedGuessCharacter();
         let weapon = getSelectedGuessWeapon();
         let room = getSelectedGuessRoom();
 
-        if(character != null && validCharacters.includes(character)){
+        if (character != null && validCharacters.includes(character)) {
             characterCards[0].set(character, 2);
 
-            for(let i = 1; i < numberOfPlayers; i++){
+            for (let i = 1; i < numberOfPlayers; i++) {
                 characterCards[i].set(character, -1);
             }
         }
 
-        if(weapon != null && validWeapons.includes(weapon)){
+        if (weapon != null && validWeapons.includes(weapon)) {
             weaponCards[0].set(weapon, 2);
 
-            for(let i = 1; i < numberOfPlayers; i++){
+            for (let i = 1; i < numberOfPlayers; i++) {
                 weaponCards[i].set(weapon, -1);
             }
         }
 
-        if(room != null && validRooms.includes(room)){
+        if (room != null && validRooms.includes(room)) {
             roomCards[0].set(room, 2);
 
-            for(let i = 1; i < numberOfPlayers; i++){
+            for (let i = 1; i < numberOfPlayers; i++) {
                 roomCards[i].set(room, -1);
             }
         }
@@ -634,8 +588,33 @@
     }
 
 
-    function setNumberOfPlayers(){
+    function setNumberOfPlayers() {
         numberOfPlayers = document.getElementById("numberOfPlayersInput").value;
+
+        if (numberOfPlayers < 2) {
+            numberOfPlayers = 2;
+        }
+
+        if (numberOfPlayers > 6) {
+            numberOfPlayers = 6;
+        }
+
+        clearCards();
+
+        updateDataGrid();
+    }
+
+    function clearCards(){
+        numberOfPlayers = document.getElementById("numberOfPlayersInput").value;
+
+        if (numberOfPlayers < 2) {
+            numberOfPlayers = 2;
+        }
+
+        if (numberOfPlayers > 6) {
+            numberOfPlayers = 6;
+        }
+
 
 
         characterCards = [];//[playerIndex][characterName]
@@ -662,13 +641,13 @@
             //2 = has the card
             //-1 = doesn't have the card
             weaponCards[weaponCards.length - 1].set("Candlestick", 0);
-            weaponCards[weaponCards.length - 1].set("Dagger"    , 0);
-            weaponCards[weaponCards.length - 1].set("Lead Pipe" , 0);
-            weaponCards[weaponCards.length - 1].set("Revolver"  , 0);
-            weaponCards[weaponCards.length - 1].set("Rope"      , 0);
-            weaponCards[weaponCards.length - 1].set("Wrench"    , 0);
+            weaponCards[weaponCards.length - 1].set("Dagger", 0);
+            weaponCards[weaponCards.length - 1].set("Lead Pipe", 0);
+            weaponCards[weaponCards.length - 1].set("Revolver", 0);
+            weaponCards[weaponCards.length - 1].set("Rope", 0);
+            weaponCards[weaponCards.length - 1].set("Wrench", 0);
         }
-        
+
 
         roomCards = [];//[playerIndex][roomName]
         for (let i = 0; i < numberOfPlayers; i++) {
@@ -677,27 +656,51 @@
             //1 = might have the card
             //2 = has the card
             //-1 = doesn't have the card
-            roomCards[roomCards.length - 1].set("Kitchen"       , 0);
-            roomCards[roomCards.length - 1].set("Ball Room"     , 0);
-            roomCards[roomCards.length - 1].set("Conservatory"  , 0);
-            roomCards[roomCards.length - 1].set("Dining Room"   , 0);
-            roomCards[roomCards.length - 1].set("Billard Room"  , 0);
-            roomCards[roomCards.length - 1].set("Library"       , 0);
-            roomCards[roomCards.length - 1].set("Lounge"        , 0);
-            roomCards[roomCards.length - 1].set("Hall"          , 0);
-            roomCards[roomCards.length - 1].set("Study"         , 0);
+            roomCards[roomCards.length - 1].set("Kitchen", 0);
+            roomCards[roomCards.length - 1].set("Ball Room", 0);
+            roomCards[roomCards.length - 1].set("Conservatory", 0);
+            roomCards[roomCards.length - 1].set("Dining Room", 0);
+            roomCards[roomCards.length - 1].set("Billard Room", 0);
+            roomCards[roomCards.length - 1].set("Library", 0);
+            roomCards[roomCards.length - 1].set("Lounge", 0);
+            roomCards[roomCards.length - 1].set("Hall", 0);
+            roomCards[roomCards.length - 1].set("Study", 0);
         }
 
-        updateDataGrid();
+
+        characterCards[0].set("Miss Scarlett", -1);
+        characterCards[0].set("Mr. Green", -1);
+        characterCards[0].set("Col. Mustard", -1);
+        characterCards[0].set("Prof. Plum", -1);
+        characterCards[0].set("Mrs. Peacock", -1);
+        characterCards[0].set("Mrs. White", -1);
+        weaponCards[0].set("Candlestick", -1);
+        weaponCards[0].set("Dagger", -1);
+        weaponCards[0].set("Lead Pipe", -1);
+        weaponCards[0].set("Revolver", -1);
+        weaponCards[0].set("Rope", -1);
+        weaponCards[0].set("Wrench", -1);
+        roomCards[0].set("Kitchen", -1);
+        roomCards[0].set("Ball Room", -1);
+        roomCards[0].set("Conservatory", -1);
+        roomCards[0].set("Dining Room", -1);
+        roomCards[0].set("Billard Room", -1);
+        roomCards[0].set("Library", -1);
+        roomCards[0].set("Lounge", -1);
+        roomCards[0].set("Hall", -1);
+        roomCards[0].set("Study", -1);
     }
 
-    function testFunction(){
+    function testFunction() {
         console.log(getSelectedGuessCharacter())
         console.log(getSelectedGuessWeapon())
         console.log(getSelectedGuessRoom())
     }
+
+    clearCards();
     updateDataGrid();
 
     //updateDataGrid();
 </script>
+
 </html>
