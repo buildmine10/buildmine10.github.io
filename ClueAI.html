@@ -39,7 +39,7 @@
 
     #bottom{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         background-color: pink;
     }
 
@@ -108,8 +108,8 @@
 
 
     button{
-        padding: 1em;
         font-size: larger;
+        flex-grow: 1;
     }
 
     input[type=number]{
@@ -166,7 +166,7 @@
 
                     <div id="askingPlayerGuessDiv">
                         Asking Player
-                        <input type="number" id="askingPlayerGuess" min="0" max="5" value="0" inputmode="numeric">
+                        <input type="number" id="askingPlayerGuess" min=0 max=5 value=0 inputmode="numeric">
                     </div>
                     
                 </div>
@@ -196,7 +196,7 @@
 
                     <div id="answeringPlayerGuessDiv">
                         Answering Player
-                        <input type="number" id="answeringPlayerGuess" min="0" max="5" value=0  inputmode="numeric">
+                        <input type="number" id="answeringPlayerGuess" min=0 max=5 value=0  inputmode="numeric">
                     </div>
                 </div>
     
@@ -240,6 +240,11 @@
     </div>
     <div id="bottom">  
         <button onclick="testFunction()">test button</button>
+        <div>
+            <input type="number" id="numberOfPlayersInput" placeholder="Number of Players" value=6 inputmode="numeric">
+            <button onclick="setNumberOfPlayers()">submit</button>
+        </div>
+        
     </div>
 
 </body>
@@ -623,6 +628,64 @@
             for(let i = 1; i < numberOfPlayers; i++){
                 roomCards[i].set(room, -1);
             }
+        }
+
+        updateDataGrid();
+    }
+
+
+    function setNumberOfPlayers(){
+        numberOfPlayers = document.getElementById("numberOfPlayersInput").value;
+
+
+        characterCards = [];//[playerIndex][characterName]
+        for (let i = 0; i < numberOfPlayers; i++) {
+            characterCards.push(new Map());
+            //0 = no info
+            //1 = might have the card
+            //2 = has the card
+            //-1 = doesn't have the card
+            characterCards[characterCards.length - 1].set("Miss Scarlett", 0);
+            characterCards[characterCards.length - 1].set("Mr. Green", 0);
+            characterCards[characterCards.length - 1].set("Col. Mustard", 0);
+            characterCards[characterCards.length - 1].set("Prof. Plum", 0);
+            characterCards[characterCards.length - 1].set("Mrs. Peacock", 0);
+            characterCards[characterCards.length - 1].set("Mrs. White", 0);
+        }
+
+
+        weaponCards = [];//[playerIndex][weaponName]
+        for (let i = 0; i < numberOfPlayers; i++) {
+            weaponCards.push(new Map());
+            //0 = no info
+            //1 = might have the card
+            //2 = has the card
+            //-1 = doesn't have the card
+            weaponCards[weaponCards.length - 1].set("Candlestick", 0);
+            weaponCards[weaponCards.length - 1].set("Dagger"    , 0);
+            weaponCards[weaponCards.length - 1].set("Lead Pipe" , 0);
+            weaponCards[weaponCards.length - 1].set("Revolver"  , 0);
+            weaponCards[weaponCards.length - 1].set("Rope"      , 0);
+            weaponCards[weaponCards.length - 1].set("Wrench"    , 0);
+        }
+        
+
+        roomCards = [];//[playerIndex][roomName]
+        for (let i = 0; i < numberOfPlayers; i++) {
+            roomCards.push(new Map());
+            //0 = no info
+            //1 = might have the card
+            //2 = has the card
+            //-1 = doesn't have the card
+            roomCards[roomCards.length - 1].set("Kitchen"       , 0);
+            roomCards[roomCards.length - 1].set("Ball Room"     , 0);
+            roomCards[roomCards.length - 1].set("Conservatory"  , 0);
+            roomCards[roomCards.length - 1].set("Dining Room"   , 0);
+            roomCards[roomCards.length - 1].set("Billard Room"  , 0);
+            roomCards[roomCards.length - 1].set("Library"       , 0);
+            roomCards[roomCards.length - 1].set("Lounge"        , 0);
+            roomCards[roomCards.length - 1].set("Hall"          , 0);
+            roomCards[roomCards.length - 1].set("Study"         , 0);
         }
 
         updateDataGrid();
