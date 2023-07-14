@@ -174,7 +174,7 @@
 
                     <div id="askingPlayerGuessDiv">
                         Asking Player
-                        <input type="number" id="askingPlayerGuess" min=0 max=5 value=0 inputmode="numeric">
+                        <input type="number" id="askingPlayerGuess" min=0 max=5 inputmode="numeric">
                     </div>
 
                 </div>
@@ -204,7 +204,7 @@
 
                     <div id="answeringPlayerGuessDiv">
                         Answering Player
-                        <input type="number" id="answeringPlayerGuess" min=0 max=5 value=0 inputmode="numeric">
+                        <input type="number" id="answeringPlayerGuess" min=0 max=5  inputmode="numeric">
                     </div>
                 </div>
 
@@ -248,6 +248,7 @@
     </div>
     <div id="bottom">
         <button onclick="clearCards()">Clear Info</button>
+        <button onclick="revealCard()">Reveal Card</button>
         <div>
             <input type="number" id="numberOfPlayersInput" placeholder="Number of Players" value=6 min=2 max=6
                 inputmode="numeric">
@@ -480,6 +481,24 @@
             let entry = document.createElement("div");
             entry.className = "infoGridEntry";
 
+            let score = checkCharacterScore(indexToCharacterName.get(i));
+            if(score == 2){
+                if(characterCards[playerIndex].get(indexToCharacterName.get(i)) == 2){
+                    entry.style.backgroundColor = "lightgrey";
+                }else{
+                    entry.style.backgroundColor = "black";
+                }
+                
+            }
+
+            if(score == 1){
+                entry.style.backgroundColor = "lightgrey";
+            }
+
+            if(score == -1){
+                entry.style.backgroundColor = "lightgreen";
+            }
+
             entry.innerText = characterCards[playerIndex].get(indexToCharacterName.get(i));
             out.appendChild(entry);
         }
@@ -490,6 +509,23 @@
         for (let i = 0; i < 6; i++) {
             let entry = document.createElement("div");
             entry.className = "infoGridEntry";
+
+            let score = checkWeaponScore(indexToWeaponName.get(i));
+            if(score == 2){
+                if(weaponCards[playerIndex].get(indexToWeaponName.get(i)) == 2){
+                    entry.style.backgroundColor = "lightgrey";
+                }else{
+                    entry.style.backgroundColor = "black";
+                }
+            }
+
+            if(score == 1){
+                entry.style.backgroundColor = "lightgrey";
+            }
+
+            if(score == -1){
+                entry.style.backgroundColor = "lightgreen";
+            }
 
             entry.innerText = weaponCards[playerIndex].get(indexToWeaponName.get(i));
             out.appendChild(entry);
@@ -502,6 +538,25 @@
         for (let i = 0; i < 9; i++) {
             let entry = document.createElement("div");
             entry.className = "infoGridEntry";
+
+            let score = checkRoomScore(indexToRoomName.get(i));
+            if(score == 2){
+                if(roomCards[playerIndex].get(indexToRoomName.get(i)) == 2){
+                    entry.style.backgroundColor = "lightgrey";
+                }else{
+                    entry.style.backgroundColor = "black";
+                }
+            }
+
+            if(score == 1){
+                entry.style.backgroundColor = "lightgrey";
+            }
+
+            if(score == -1){
+                entry.style.backgroundColor = "lightgreen";
+            }
+                
+            
 
             entry.innerText = roomCards[playerIndex].get(indexToRoomName.get(i));
             out.appendChild(entry);
@@ -553,10 +608,12 @@
             applyGuessResult(askingPlayer, answeringPlayer, new Guess(character, weapon, room))
             updateDataGrid();
         } else {
+            alert("Attempted to guess without full selection");
             throw "Attempted to guess without full selection";
         }
 
-
+        document.getElementById("askingPlayerGuess").value = null;
+        document.getElementById("answeringPlayerGuess").value = null;
     }
 
     function addToYourCards() {
@@ -591,6 +648,41 @@
         updateDataGrid();
     }
 
+    function revealCard(){
+        let character = getSelectedGuessCharacter();
+        let weapon = getSelectedGuessWeapon();
+        let room = getSelectedGuessRoom();
+
+        let answeringPlayer = Number.parseInt(document.getElementById("answeringPlayerGuess").value) % numberOfPlayers;
+        if(answeringPlayer == 0){
+            alert("You cannot reveal a card to yourself. (Change answering player)");
+            throw "You cannot reveal a card to yourself";
+        }
+        
+        if((character != null) + (weapon != null) + (room != null) == 1){
+            if(character != null){
+                console.log(character, answeringPlayer)
+                characterCards[answeringPlayer].set(character, 2);
+            }
+
+            if(weapon != null){
+                weaponCards[answeringPlayer].set(weapon, 2);
+            }
+
+            if(room != null){
+                roomCards[answeringPlayer].set(room, 2);
+            }
+        }else{
+            alert("Too many cards are selected only one is revealed at a time (Use clear selection)");
+            throw "Too many cards are selected only one is revealed at a time"
+        }
+
+        document.getElementById("askingPlayerGuess").value = null;
+        document.getElementById("answeringPlayerGuess").value = null;
+
+        updateDataGrid();
+    }
+
 
     function setNumberOfPlayers() {
         numberOfPlayers = document.getElementById("numberOfPlayersInput").value;
@@ -604,8 +696,6 @@
         }
 
         clearCards();
-
-        updateDataGrid();
     }
 
     function clearCards(){
@@ -693,13 +783,10 @@
         roomCards[0].set("Lounge", -1);
         roomCards[0].set("Hall", -1);
         roomCards[0].set("Study", -1);
+
+        updateDataGrid();
     }
 
-    function testFunction() {
-        console.log(getSelectedGuessCharacter())
-        console.log(getSelectedGuessWeapon())
-        console.log(getSelectedGuessRoom())
-    }
 
     clearCards();
     updateDataGrid();
