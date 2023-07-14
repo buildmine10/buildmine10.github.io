@@ -1,10 +1,121 @@
 <!DOCTYPE html>
 <html>
+
+
+<style>
+    body {
+        font-size: larger;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    #infoGridDiv {
+        background-color: black;
+        display: flex;
+        gap: 0.25em;
+        padding: 0.25em;
+        box-sizing: border-box;
+    }
+
+    .infoGridColumn {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25em;
+    }
+
+    .infoGridEntry {
+        background-color: white;
+        padding: 0.5em;
+    }
+
+    #top{
+        display: flex;
+        flex-direction: row;
+        background-color: blue;
+    }
+
+    #bottom{
+        display: flex;
+        flex-direction: row;
+        background-color: pink;
+    }
+</style>
+
+<body>
+    <div id="top">
+        <div id="infoGridDiv">
+            <div class="infoGridColumn">
+                <div class="infoGridEntry">
+                    a
+                </div>
+                <br>
+                <div class="infoGridEntry">
+                    a
+                </div>
+            </div>
+            <div class="infoGridColumn">
+                <div class="infoGridEntry">
+                    a
+                </div>
+                <br>
+                <div class="infoGridEntry">
+                    a
+                </div>
+            </div>
+        </div>
+        <button onclick="updateDataGrid()">hi</button>
+    </div>
+    <div id="bottom">  
+        hi
+    </div>
+
+</body>
+
+
 <script>
     //6 characters
     //6 weapons
     //9 rooms
 
+
+    const indexToCharacterName = new Map();
+    {
+        indexToCharacterName.set(0, "Miss Scarlett");
+        indexToCharacterName.set(1, "Mr. Green");
+        indexToCharacterName.set(2, "Col. Mustard");
+        indexToCharacterName.set(3, "Prof. Plum");
+        indexToCharacterName.set(4, "Mrs. Peacock");
+        indexToCharacterName.set(5, "Mrs. White");
+    }
+    
+
+    const indexToWeaponName = new Map();
+    {
+        indexToWeaponName.set(0, "Candlestick");
+        indexToWeaponName.set(1, "Dagger");
+        indexToWeaponName.set(2, "Lead Pipe");
+        indexToWeaponName.set(3, "Revolver");
+        indexToWeaponName.set(4, "Rope");
+        indexToWeaponName.set(5, "Wrench");
+    }
+    
+
+
+    const indexToRoomName = new Map();
+    {
+        indexToRoomName.set(0, "Kitchen");
+        indexToRoomName.set(1, "Ball Room");
+        indexToRoomName.set(2, "Conservatory");
+        indexToRoomName.set(3, "Dining Room");
+        indexToRoomName.set(4, "Billard Room");
+        indexToRoomName.set(5, "Library");
+        indexToRoomName.set(6, "Lounge");
+        indexToRoomName.set(7, "Hall");
+        indexToRoomName.set(8, "Study");
+    }
+    
 
     var numberOfPlayers = 6;
 
@@ -39,13 +150,13 @@
         //2 = has the card
         //-1 = doesn't have the card
         weaponCards[weaponCards.length - 1].set("Candlestick", 0);
-        weaponCards[weaponCards.length - 1].set("Dagger", 0);
-        weaponCards[weaponCards.length - 1].set("Lead Pipe", 1);
-        weaponCards[weaponCards.length - 1].set("Revolver", 0);
-        weaponCards[weaponCards.length - 1].set("Rope", 0);
-        weaponCards[weaponCards.length - 1].set("Wrench", 0);
+        weaponCards[weaponCards.length - 1].set("Dagger"    , 0);
+        weaponCards[weaponCards.length - 1].set("Lead Pipe" , 0);
+        weaponCards[weaponCards.length - 1].set("Revolver"  , 0);
+        weaponCards[weaponCards.length - 1].set("Rope"      , 0);
+        weaponCards[weaponCards.length - 1].set("Wrench"    , 0);
     }
-
+    
 
     var roomCards = [];//[playerIndex][roomName]
     for (let i = 0; i < numberOfPlayers; i++) {
@@ -54,17 +165,18 @@
         //1 = might have the card
         //2 = has the card
         //-1 = doesn't have the card
-        roomCards[roomCards.length - 1].set("Kitchen", 0);
-        roomCards[roomCards.length - 1].set("Ball Room", 0);
-        roomCards[roomCards.length - 1].set("Conservatory", 0);
-        roomCards[roomCards.length - 1].set("Dining Room", 0);
-        roomCards[roomCards.length - 1].set("Billard Room", 0);
-        roomCards[roomCards.length - 1].set("Library", 0);
-        roomCards[roomCards.length - 1].set("Lounge", 0);
-        roomCards[roomCards.length - 1].set("Hall", 0);
-        roomCards[roomCards.length - 1].set("Study", 0);
+        roomCards[roomCards.length - 1].set("Kitchen"       , 0);
+        roomCards[roomCards.length - 1].set("Ball Room"     , 0);
+        roomCards[roomCards.length - 1].set("Conservatory"  , 0);
+        roomCards[roomCards.length - 1].set("Dining Room"   , 0);
+        roomCards[roomCards.length - 1].set("Billard Room"  , 0);
+        roomCards[roomCards.length - 1].set("Library"       , 0);
+        roomCards[roomCards.length - 1].set("Lounge"        , 0);
+        roomCards[roomCards.length - 1].set("Hall"          , 0);
+        roomCards[roomCards.length - 1].set("Study"         , 0);
     }
 
+       
     //End of card setup
 
     //Finds the maximum value in the characterCards array for a specific character
@@ -121,20 +233,35 @@
 
     class Guess {
         constructor(character, weapon, room) {
-            this.character = character;
-            this.weapon = weapon;
-            this.room = room;
+            if(["Miss Scarlett", "Mr. Green", "Col. Mustard", "Prof. Plum", "Mrs. Peacock", "Mrs. White"].includes(character)){
+                this.character = character;
+            }else{
+                throw "Invalid character name in Guess";
+            }
+        
+            if(["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"].includes(weapon)){
+                this.weapon = weapon;
+            }else{
+                throw "Invalid weapon name in Guess";
+            }
+
+            if(["Kitchen", "Ball Room", "Conservatory", "Dining Room", "Billard Room", "Library", "Lounge", "Hall", "Study"].includes(room)){
+                this.room = room;
+            }else{
+                throw "Invalid room name in Guess";
+            }
+            
         }
     }
 
-    function turn(askingPlayerIndex, answeringPlayerIndex, guess) {
-        if (answeringPlayerIndex <= askingPlayerIndex) {
-            answeringPlayerIndex += numberOfPlayers;
+    function applyGuessResult(askingPlayer, answeringPlayer, guess) {
+        if (answeringPlayer <= askingPlayer) {
+            answeringPlayer += numberOfPlayers;
         }
 
         //This is where we determine who does not have specific cards
         //It starts just after the asking player and ends just before the answering player
-        for (var i = askingPlayerIndex + 1; i < answeringPlayerIndex; i++) {
+        for (var i = askingPlayer + 1; i < answeringPlayer; i++) {
             characterCards[i % numberOfPlayers].set(guess.character, -1);
             weaponCards[i % numberOfPlayers].set(guess.weapon, -1);
             roomCards[i % numberOfPlayers].set(guess.room, -1);
@@ -168,41 +295,93 @@
         //The only way to confirm if someone has a card is to ask about it, and get it shown
     }
 
-    function generateDataGrid() {
+    function updateDataGrid() {
+        let infoGrid = document.getElementById("infoGridDiv");
+        infoGrid.innerHTML = "";
 
+
+        //The Labels
+        let labelDiv = document.createElement("div");
+        labelDiv.className = "infoGridColumn";
+        for(let i = 0; i < 6; i++){
+            let div = document.createElement("div");
+            div.className = "infoGridEntry"
+            div.innerText = indexToCharacterName.get(i);
+            labelDiv.appendChild(div);
+        }
+
+        labelDiv.appendChild(document.createElement("br"));
+        for(let i = 0; i < 6; i++){
+            let div = document.createElement("div");
+            div.className = "infoGridEntry"
+            div.innerText = indexToWeaponName.get(i);
+            labelDiv.appendChild(div);
+        }
+
+        labelDiv.appendChild(document.createElement("br"));
+        for(let i = 0; i < 9; i++){
+            let div = document.createElement("div");
+            div.className = "infoGridEntry"
+            div.innerText = indexToRoomName.get(i);
+            labelDiv.appendChild(div);
+        }
+        infoGrid.appendChild(labelDiv);
+
+        //The data
+        for(let i = 0; i < numberOfPlayers; i++){
+            //console.log("hi")
+            infoGrid.appendChild(generateDataColumn(i));
+        }
     }
 
-    function generateDataColumn() {
+
+
+
+
+    
+
+    function generateDataColumn(playerIndex) {
         let out = document.createElement("div");
         out.className = "infoGridColumn";
 
-        for (let i = 0; i < )
-}
+        //Characters
+        for (let i = 0; i < 6; i++) {
+            let entry = document.createElement("div");
+            entry.className = "infoGridEntry";
+            
+            entry.innerText = characterCards[playerIndex].get(indexToCharacterName.get(i));
+            out.appendChild(entry);
+        }
+
+        out.appendChild(document.createElement("br"));
+
+        //Weapons
+        for (let i = 0; i < 6; i++) {
+            let entry = document.createElement("div");
+            entry.className = "infoGridEntry";
+
+            entry.innerText = weaponCards[playerIndex].get(indexToWeaponName.get(i));
+            out.appendChild(entry);
+        }
+
+        
+        out.appendChild(document.createElement("br"));
+
+        //rooms
+        for (let i = 0; i < 9; i++) {
+            let entry = document.createElement("div");
+            entry.className = "infoGridEntry";
+            
+            entry.innerText = roomCards[playerIndex].get(indexToRoomName.get(i));
+            out.appendChild(entry);
+        }
+
+        return out;
+    }
+
+    updateDataGrid();
+    applyGuessResult(0, 4, new Guess("Miss Scarlett", "Candlestick", "Kitchen"))
+
+    //updateDataGrid();
 </script>
-
-<body>
-
-    <div id="infoGridDiv">
-        <div class="infoGridColumn">
-            <div class="infoGridEntry">
-                a
-            </div>
-            <br>
-            <div class="infoGridEntry">
-                a
-            </div>
-        </div>
-        <div class="infoGridColumn">
-            <div class="infoGridEntry">
-                a
-            </div>
-            <br>
-            <div class="infoGridEntry">
-                a
-            </div>
-        </div>
-    </div>
-
-</body>
-
 </html>
