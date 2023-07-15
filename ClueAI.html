@@ -135,7 +135,6 @@
     }
 
     #bottom button{
-        -webkit-appearance: none;
         padding: 1em;
     }
 
@@ -605,6 +604,11 @@
         let weapon = getSelectedGuessWeapon();
         let room = getSelectedGuessRoom();
 
+        if(document.getElementById("askingPlayerGuess").value == null || document.getElementById("answeringPlayerGuess").value == null){
+            alert("Attempted to guess without specifying who asked and who answered. (Set Asked Player and Answered Player)")
+            throw "Attempted to guess without specifying who asked and who answered"
+        }
+
         if (character != null && weapon != null && room != null) {
             applyGuessResult(askingPlayer, answeringPlayer, new Guess(character, weapon, room))
             updateDataGrid();
@@ -621,6 +625,20 @@
         let character = getSelectedGuessCharacter();
         let weapon = getSelectedGuessWeapon();
         let room = getSelectedGuessRoom();
+
+        let checksum = (character != null) + (weapon != null) + (room != null);
+        if(checksum > 1){
+            alert("You may only add one card at a time.")
+            throw "Attempted to add multiple cards to one's own deck at the same time"
+            return;
+        }
+
+        if(checksum == 0){
+            alert("You must select a card to add")
+            throw "Attempted to add no cards to the deck"
+            return;
+        }
+
 
         if (character != null && validCharacters.includes(character)) {
             characterCards[0].set(character, 2);
