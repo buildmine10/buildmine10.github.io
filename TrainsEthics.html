@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 
+
+<!--To change bar chart height alter the css-->
+<!--To change the bar chart numbers alter the html-->
+
+
 <html>
     <style>
         *{
@@ -176,7 +181,30 @@
         }
 
         #problemIntroAccidentsText>div{
-            
+            overflow: hidden;
+        }
+
+
+        #problemIntroPollution{
+            display:flex;
+            gap: 0.5em;
+            flex-grow: 1;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #problemIntroPollutionText {
+            padding: 1em;
+            font-size: 2em;
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        #problemIntroPollutionText>div{
             overflow: hidden;
         }
     </style>
@@ -280,7 +308,7 @@
         }
     </style>
 
-    <!--Monetary Cost Chart-->
+    <!--Accidents Chart-->
     <style>
         #problemIntroAccidentsChart{
             width: 50%;
@@ -377,6 +405,105 @@
             transition: height 0.5s ease;
         }
     </style>
+
+    <!--Pollution Chart-->
+    <style>
+        #problemIntroPollutionChart{
+            width: 50%;
+            height: calc(50vw * 0.7);
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: stretch;
+        }
+
+
+        #problemIntroPollutionChart>div{
+            flex-grow: 1;
+            padding: 1em;
+            display:flex;
+            flex-direction: column;
+            gap: 1em;
+
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        #problemIntroPollutionChart .ChartBar{
+            position:relative;
+            align-self: center;
+            width: 75%;
+        }
+
+
+
+        #problemIntro2019P .ChartBar.visible{
+            bottom: 0px;
+            height: 46.8%;
+            transition: height 0.5s ease;
+            transition-delay: 0s;
+        }
+        
+        #problemIntro2020P .ChartBar.visible{
+            bottom: 0px;
+            height: 42.7%;
+            transition: height 0.5s ease;
+            transition-delay: 0.1s;
+        }
+
+        #problemIntro2021P .ChartBar.visible{
+            bottom: 0px;
+            height: 61.3%;
+            transition: height 0.5s ease;
+            transition-delay: 0.2s;
+        }
+
+        #problemIntro2022P .ChartBar.visible{
+            bottom: 0px;
+            height: 74.6%;
+            transition: height 0.5s ease;
+            transition-delay: 0.3s;
+        }
+
+        #problemIntro2023P .ChartBar.visible{
+            bottom: 0px;
+            height: 100%;
+            transition: height 0.75s ease;
+            transition-delay: 0.4s;
+        }
+
+
+        #problemIntro2019P .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+        
+        #problemIntro2020P .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2021P .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2022P .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2023P .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+    </style>
+
 
 
     <body>
@@ -511,12 +638,81 @@
                             </div>
                             <!--<canvas id="problemIntroMonetaryCostCanvas"></canvas>-->
                         </div>
+
+
+                        <div id="problemIntroPollution">
+                            <div id="problemIntroPollutionText">
+                                <p>
+                                    Pollution
+                                </p>
+
+                                <p>
+                                    These accidents happen because ___.
+                                </p>
+
+                                <div>
+                                    
+                                </div>
+                                
+
+                    
+    
+                                <div class="hidden">
+                                    sources:
+
+    
+                                </div>
+                            </div>
+                            <div class="Spacer"></div>
+    
+                            <div id="problemIntroPollutionChart">
+                                <div id="problemIntro2019P">
+                                    <div>$3.6B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2019</div>
+                                </div>
+                                <div id="problemIntro2020P">
+                                    <div>$3.3B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2020</div>
+                                </div>
+                                <div id="problemIntro2021P">
+                                    <div>$4.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2021</div>
+                                </div>
+                                <div id="problemIntro2022P">
+                                    <div>$5.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2022</div>
+                                </div>
+                                <div id="problemIntro2023P">
+                                    <div>$7.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2023</div>
+                                </div>
+                                
+                            </div>
+                            <!--<canvas id="problemIntroMonetaryCostCanvas"></canvas>-->
+                        </div>
                     </div>
                 </div>
             </div>
 
 
             <!--Next section-->
+            <div id="trainsIntro">
+                <div class="Section">
+                    <div class="Info">
+                        <div class="ProblemStatement" id="problemIntroProblemStatement">
+                            Trains are a potential solution
+                        </div>
+    
+    
+
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 
@@ -524,7 +720,8 @@
     <script>
         //Ensure that this is in the same order as on the page
         var sectionHeights = {
-            problemIntro: 2
+            problemIntro: 3,
+            trainsIntro: 1
         };
     
         var sectionScrollPercents = {}
@@ -584,46 +781,86 @@
                     this.lastResult = 0;
                     document.getElementById("problemIntroMonetaryCost").style.display = "";
                     document.getElementById("problemIntroAccidents").style.display = "none";
+                    document.getElementById("problemIntroPollution").style.display = "none";
                 }
                 
 
-                if(scrollPercent < 0.5){
+                if(scrollPercent < 0.3333333){
 
                     if(this.lastResult != 0){
                         setProblemIntroAccidentsChartVisibility(false)
-                    
-                        setTimeout(()=>{
-                            document.getElementById("problemIntroMonetaryCost").style.display = "";
-                            document.getElementById("problemIntroAccidents").style.display = "none";
-                            setProblemIntroMonetaryCostChartVisibility(false)
-
-                            setTimeout(()=>{
-                                setProblemIntroMonetaryCostChartVisibility(true)
-                            }, 10)
-                        }, 500)
-                    }
-
-                    this.lastResult = 0;
-                    
-                    
-                    
-                    
-                }else if(scrollPercent > 0.5){
-                    if(this.lastResult != 1){
+                        setProblemIntroPollutionChartVisibility(false)
                         setProblemIntroMonetaryCostChartVisibility(false)
-                    
-                        setTimeout(()=>{
-                            document.getElementById("problemIntroMonetaryCost").style.display = "none";
-                            document.getElementById("problemIntroAccidents").style.display = "";
-                            setProblemIntroAccidentsChartVisibility(false)
+                        this.lastResult = 0;
 
-                            setTimeout(()=>{
-                                setProblemIntroAccidentsChartVisibility(true)
-                            }, 10)
+
+                        setTimeout(()=>{
+                            if(this.lastResult == 0){
+                                document.getElementById("problemIntroMonetaryCost").style.display = "";
+                                document.getElementById("problemIntroAccidents").style.display = "none";
+                                document.getElementById("problemIntroPollution").style.display = "none";
+                                
+
+                                setTimeout(()=>{
+                                    if(this.lastResult == 0){
+                                        setProblemIntroMonetaryCostChartVisibility(true)
+                                    }
+                                    
+                                }, 10)
+                            }
+                            
+                        }, 500)
+                    }
+                }else if(scrollPercent < 0.6666){
+                    if(this.lastResult != 1){
+                        setProblemIntroAccidentsChartVisibility(false)
+                        setProblemIntroPollutionChartVisibility(false)
+                        setProblemIntroMonetaryCostChartVisibility(false)
+                        this.lastResult = 1;
+
+                        setTimeout(()=>{
+                            if(this.lastResult == 1){
+                                document.getElementById("problemIntroMonetaryCost").style.display = "none";
+                                document.getElementById("problemIntroAccidents").style.display = "";
+                                document.getElementById("problemIntroPollution").style.display = "none";
+
+                                setTimeout(()=>{
+                                    if(this.lastResult == 1){
+                                        setProblemIntroAccidentsChartVisibility(true)
+                                    }
+                                    
+                                }, 10)
+                            }
+                            
                         }, 500)
                     }
 
-                    this.lastResult = 1;
+                    
+                }else {
+                    //TODO FIX
+                    if(this.lastResult != 2){
+                        setProblemIntroAccidentsChartVisibility(false)
+                        setProblemIntroPollutionChartVisibility(false)
+                        setProblemIntroMonetaryCostChartVisibility(false)
+                        this.lastResult = 2;
+
+
+                        setTimeout(()=>{
+                            if(this.lastResult == 2){
+                                document.getElementById("problemIntroMonetaryCost").style.display = "none";
+                                document.getElementById("problemIntroAccidents").style.display = "None";
+                                document.getElementById("problemIntroPollution").style.display = "";
+
+                                setTimeout(()=>{
+                                    if(this.lastResult == 2){
+                                        setProblemIntroPollutionChartVisibility(true)
+                                    }
+                                    
+                                }, 10)
+                            }
+                            
+                        }, 500)
+                    }
                 }
             }
         }
@@ -660,6 +897,20 @@
             }
         }
 
+        function setProblemIntroPollutionChartVisibility(isVisible){
+            let bars = document.getElementById("problemIntroPollutionChart").getElementsByClassName("ChartBar");
+
+            //console.log(bars)
+
+            for (let bar of bars) {
+                if(isVisible){
+                    bar.classList.add("visible")
+                }else{
+                    bar.classList.remove("visible")
+                }
+            }
+        }
+
 
         
         //Smooth scroll to the location
@@ -675,9 +926,7 @@
             targetElement.scrollIntoView({ behavior: 'smooth' });
         });
 
-        Object.keys(displayHandlers).forEach(key => {
-            displayHandlers[key](getScrollProgress(key))
-        });
+        
 
         setProblemIntroMonetaryCostChartVisibility(false)
         
@@ -688,6 +937,12 @@
         
         var scrollableElement = document.getElementById('bottom');
         var scrollPercent = 0;
+
+        Object.keys(displayHandlers).forEach(key => {
+            displayHandlers[key](getScrollProgress(key))
+        });
+
+
         scrollableElement.addEventListener('scroll', function() {
             var scrollTop = this.scrollTop;
             var scrollHeight = this.scrollHeight;
