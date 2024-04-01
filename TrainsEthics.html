@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+
+<html>
+    <style>
+        *{
+            font-family: Arial;
+        }
+
+        .hidden{
+            display:none;
+        }
+
+        body{
+            background-color: blue;
+            margin:0px;
+            overflow: hidden;
+        }
+
+        #topBar{
+            top: 0px;
+            background-color: #0021A5;
+            width: 100%;
+            position: fixed;
+            height: 3.5em;
+            box-sizing: border-box;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0.5em;
+            padding-left: 1em;
+
+            overflow: hidden;
+        }
+
+        #topBar>button{
+            background-color: #0021A5;
+
+            border: none;
+            border-radius: 0.5em;
+            padding: 0.5em;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1em;
+
+            color:white;
+        }
+        #topBar>button:hover{
+            background-color: #D1ECF1;
+            color: #0021A5;
+        }
+
+        #topBar>a{
+            background-color: #0021A5;
+
+            border: none;
+            border-radius: 0.5em;
+            padding: 0.5em;
+
+            color:unset;
+            text-decoration: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1em;
+
+
+            color:white;
+        }
+        #topBar>a:hover{
+            background-color: #D1ECF1;
+            color: #0021A5;
+        }
+
+        #bottom{
+            margin-top: 3.5em;
+            width: 100%;
+            height: calc(100% - 3.5em);
+            background-color: #F4F6F6;
+            position: absolute;
+            overflow: auto;
+        }
+
+
+
+        .ChartBar{
+            background-color: #FA4616;
+            
+        }
+
+        .Spacer{
+            flex-grow: 1;
+            align-self: stretch;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .Section{
+            height: calc(100vh - 3.5em);
+            top: 0px;
+            position: sticky;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .TitleBar{
+            font-size: 2em;
+
+            height: 2.5em;
+            display: flex;
+            align-items: center;
+            padding-left: 1em;
+
+        }
+
+        .Info{
+            flex-grow: 1;
+            padding: 1em;
+            display:flex;
+            flex-direction: column;
+            
+            align-items: stretch;
+            overflow: hidden;
+        }
+
+        .ProblemStatement{
+            font-size: 3em;
+            margin-left: 0.5em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        #problemIntro{
+
+        }
+
+        #problemIntroMonetaryCost{
+            display:flex;
+            gap: 0.5em;
+            flex-grow: 1;
+            align-items: center;
+        }
+
+        #problemIntroMonetaryCostText {
+            padding: 1em;
+            font-size: 2em;
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #problemIntroAccidents{
+            display:flex;
+            gap: 0.5em;
+            flex-grow: 1;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #problemIntroAccidentsText {
+            padding: 1em;
+            font-size: 2em;
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        #problemIntroAccidentsText>div{
+            
+            overflow: hidden;
+        }
+    </style>
+
+
+    <!--Monetary Cost Chart-->
+    <style>
+        #problemIntroMonetaryCostChart{
+            width: 50%;
+            height: calc(50vw * 0.7);
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: stretch;
+        }
+
+
+        #problemIntroMonetaryCostChart>div{
+            flex-grow: 1;
+            padding: 1em;
+            display:flex;
+            flex-direction: column;
+            gap: 1em;
+
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        #problemIntroMonetaryCostChart .ChartBar{
+            position:relative;
+            align-self: center;
+            width: 75%;
+        }
+
+
+
+        #problemIntro2019 .ChartBar.visible{
+            bottom: 0px;
+            height: 46.8%;
+            transition: height 0.5s ease;
+            transition-delay: 0s;
+        }
+        
+        #problemIntro2020 .ChartBar.visible{
+            bottom: 0px;
+            height: 42.7%;
+            transition: height 0.5s ease;
+            transition-delay: 0.1s;
+        }
+
+        #problemIntro2021 .ChartBar.visible{
+            bottom: 0px;
+            height: 61.3%;
+            transition: height 0.5s ease;
+            transition-delay: 0.2s;
+        }
+
+        #problemIntro2022 .ChartBar.visible{
+            bottom: 0px;
+            height: 74.6%;
+            transition: height 0.5s ease;
+            transition-delay: 0.3s;
+        }
+
+        #problemIntro2023 .ChartBar.visible{
+            bottom: 0px;
+            height: 100%;
+            transition: height 0.75s ease;
+            transition-delay: 0.4s;
+        }
+
+
+        #problemIntro2019 .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+        
+        #problemIntro2020 .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2021 .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2022 .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2023 .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+    </style>
+
+    <!--Monetary Cost Chart-->
+    <style>
+        #problemIntroAccidentsChart{
+            width: 50%;
+            height: calc(50vw * 0.7);
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: stretch;
+        }
+
+
+        #problemIntroAccidentsChart>div{
+            flex-grow: 1;
+            padding: 1em;
+            display:flex;
+            flex-direction: column;
+            gap: 1em;
+
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        #problemIntroAccidentsChart .ChartBar{
+            position:relative;
+            align-self: center;
+            width: 75%;
+        }
+
+
+
+        #problemIntro2019A .ChartBar.visible{
+            bottom: 0px;
+            height: 46.8%;
+            transition: height 0.5s ease;
+            transition-delay: 0s;
+        }
+        
+        #problemIntro2020A .ChartBar.visible{
+            bottom: 0px;
+            height: 42.7%;
+            transition: height 0.5s ease;
+            transition-delay: 0.1s;
+        }
+
+        #problemIntro2021A .ChartBar.visible{
+            bottom: 0px;
+            height: 61.3%;
+            transition: height 0.5s ease;
+            transition-delay: 0.2s;
+        }
+
+        #problemIntro2022A .ChartBar.visible{
+            bottom: 0px;
+            height: 74.6%;
+            transition: height 0.5s ease;
+            transition-delay: 0.3s;
+        }
+
+        #problemIntro2023A .ChartBar.visible{
+            bottom: 0px;
+            height: 100%;
+            transition: height 0.75s ease;
+            transition-delay: 0.4s;
+        }
+
+
+        #problemIntro2019A .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+        
+        #problemIntro2020A .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2021A .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2022A .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2023A .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+    </style>
+
+
+    <body>
+        <div id="topBar">
+            <button id="Home">
+                Home
+            </button>
+            <a href="#problemIntro" id="ProblemButton">
+                Problem
+            </a>
+        </div>
+
+        <div id="bottom">
+
+            <div id="problemIntro">
+                <div class="Section">
+                    <div class="Info">
+                        <div class="ProblemStatement" id="problemIntroProblemStatement">
+                            Car dependency in Florida comes at a massive societal cost
+                        </div>
+    
+    
+                        <div id="problemIntroMonetaryCost">
+                            <div id="problemIntroMonetaryCostText">
+                                <p>
+                                    Florida has spent around $5 billion per year on road infrastructure, for the past 5 years.
+                                </p>
+
+                                <p>
+                                    And this spending is only going to increase over the years, as Florida remains stuck in the car dependency cycle.
+                                </p>
+
+                                <p>
+                                    As more people use cars, the roads get more congested. And when the road gets congested the state builds more roads. But that just encourages more people to drive. And we end up back at the original problem.
+                                </p>
+                                
+    
+                                <div class="hidden">
+                                    sources:
+                                    https://www.fdot.gov/info/co/news/2023/06162023
+                                    https://www.fdot.gov/info/co/news/2022/06022022
+                                    https://www.fdot.gov/info/co/news/2021/12092021
+                                    https://www.flgov.com/wp-content/uploads/2020/06/2020-Budget-Highlights.pdf
+                                    https://fdotwww.blob.core.windows.net/sitefinity/docs/default-source/info/co/news/newsreleases/1118209-fdot-budget-final.pdf?sfvrsn=3e904d54_2
+                                </div>
+                            </div>
+                            <div class="Spacer"></div>
+    
+                            <div id="problemIntroMonetaryCostChart">
+                                <div id="problemIntro2019">
+                                    <div>$3.6B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2019</div>
+                                </div>
+                                <div id="problemIntro2020">
+                                    <div>$3.3B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2020</div>
+                                </div>
+                                <div id="problemIntro2021">
+                                    <div>$4.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2021</div>
+                                </div>
+                                <div id="problemIntro2022">
+                                    <div>$5.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2022</div>
+                                </div>
+                                <div id="problemIntro2023">
+                                    <div>$7.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2023</div>
+                                </div>
+                                
+                            </div>
+                            <!--<canvas id="problemIntroMonetaryCostCanvas"></canvas>-->
+                        </div>
+    
+                        <div id="problemIntroAccidents">
+                            <div id="problemIntroAccidentsText">
+                                <p>
+                                    Car accidents account for __ deaths and $__ in damages every year.
+                                </p>
+
+                                <p>
+                                    These accidents happen because ___.
+                                </p>
+
+                                <div>
+                                    <img src="https://www.ocala.com/gcdn/presto/2022/10/28/NOSB/69c190f0-b0fc-4dfe-bea6-dd5cb5283462-White_Hyundai.jpg?width=660&height=495&fit=crop&format=pjpg&auto=webp">
+                                </div>
+                                
+
+                    
+    
+                                <div class="hidden">
+                                    sources:
+
+    
+                                </div>
+                            </div>
+                            <div class="Spacer"></div>
+    
+                            <div id="problemIntroAccidentsChart">
+                                <div id="problemIntro2019A">
+                                    <div>$3.6B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2019</div>
+                                </div>
+                                <div id="problemIntro2020A">
+                                    <div>$3.3B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2020</div>
+                                </div>
+                                <div id="problemIntro2021A">
+                                    <div>$4.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2021</div>
+                                </div>
+                                <div id="problemIntro2022A">
+                                    <div>$5.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2022</div>
+                                </div>
+                                <div id="problemIntro2023A">
+                                    <div>$7.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2023</div>
+                                </div>
+                                
+                            </div>
+                            <!--<canvas id="problemIntroMonetaryCostCanvas"></canvas>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Next section-->
+        </div>
+    </body>
+
+
+    <script>
+        //Ensure that this is in the same order as on the page
+        var sectionHeights = {
+            problemIntro: 2
+        };
+    
+        var sectionScrollPercents = {}
+
+
+        function setSectionHeights(){
+            
+            sectionScrollPercents = {}
+
+            let previousKey = null
+
+            Object.keys(sectionHeights).forEach(key => {
+                const value = sectionHeights[key];
+                document.getElementById(key).style.height = value * 100 + "%";
+
+
+                if (previousKey == null) {
+                    sectionScrollPercents[key] = {start: 0, end: value}
+                }else{
+                    sectionScrollPercents[key] = {start: sectionScrollPercents[previousKey].end, end: sectionScrollPercents[previousKey].end + value}
+                }
+                previousKey = key;
+            });
+
+            let total = sectionScrollPercents[previousKey].end - 1
+
+            //console.log(sectionScrollPercents)
+
+            Object.keys(sectionScrollPercents).forEach(key => {
+                const start = sectionScrollPercents[key].start;
+                const end = sectionScrollPercents[key].end;
+                sectionScrollPercents[key].start = (start) / (total);
+                sectionScrollPercents[key].end = (end - 1) / (total);
+            });
+            //console.log(sectionScrollPercents)
+            
+        }
+
+
+
+        function getScrollProgress(sectionKey) {
+            const start = sectionScrollPercents[sectionKey].start;
+            const end = sectionScrollPercents[sectionKey].end;
+            
+            if(end - start == 0){
+                return 1;
+            }else{
+                return (scrollPercent - start) / (end - start);
+            }
+        }
+
+        setSectionHeights()
+
+        var displayHandlers = {
+            problemIntro: function(scrollPercent){
+                if(this.lastResult == null){
+                    this.lastResult = 0;
+                    document.getElementById("problemIntroMonetaryCost").style.display = "";
+                    document.getElementById("problemIntroAccidents").style.display = "none";
+                }
+                
+
+                if(scrollPercent < 0.5){
+
+                    if(this.lastResult != 0){
+                        setProblemIntroAccidentsChartVisibility(false)
+                    
+                        setTimeout(()=>{
+                            document.getElementById("problemIntroMonetaryCost").style.display = "";
+                            document.getElementById("problemIntroAccidents").style.display = "none";
+                            setProblemIntroMonetaryCostChartVisibility(false)
+
+                            setTimeout(()=>{
+                                setProblemIntroMonetaryCostChartVisibility(true)
+                            }, 10)
+                        }, 500)
+                    }
+
+                    this.lastResult = 0;
+                    
+                    
+                    
+                    
+                }else if(scrollPercent > 0.5){
+                    if(this.lastResult != 1){
+                        setProblemIntroMonetaryCostChartVisibility(false)
+                    
+                        setTimeout(()=>{
+                            document.getElementById("problemIntroMonetaryCost").style.display = "none";
+                            document.getElementById("problemIntroAccidents").style.display = "";
+                            setProblemIntroAccidentsChartVisibility(false)
+
+                            setTimeout(()=>{
+                                setProblemIntroAccidentsChartVisibility(true)
+                            }, 10)
+                        }, 500)
+                    }
+
+                    this.lastResult = 1;
+                }
+            }
+        }
+
+
+        
+
+        function setProblemIntroMonetaryCostChartVisibility(isVisible){
+            let bars = document.getElementById("problemIntroMonetaryCostChart").getElementsByClassName("ChartBar");
+
+            //console.log(bars)
+
+            for (let bar of bars) {
+                if(isVisible){
+                    bar.classList.add("visible")
+                }else{
+                    bar.classList.remove("visible")
+                }
+            }
+        }
+
+
+        function setProblemIntroAccidentsChartVisibility(isVisible){
+            let bars = document.getElementById("problemIntroAccidentsChart").getElementsByClassName("ChartBar");
+
+            //console.log(bars)
+
+            for (let bar of bars) {
+                if(isVisible){
+                    bar.classList.add("visible")
+                }else{
+                    bar.classList.remove("visible")
+                }
+            }
+        }
+
+
+        
+        //Smooth scroll to the location
+        document.querySelector('#ProblemButton').addEventListener('click', function(e) {
+            // Prevent the default anchor behavior
+            e.preventDefault();
+
+            // The target of the link
+            var targetId = this.getAttribute('href');
+            var targetElement = document.querySelector(targetId);
+
+            // Scroll to the target element smoothly
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        Object.keys(displayHandlers).forEach(key => {
+            displayHandlers[key](getScrollProgress(key))
+        });
+
+        setProblemIntroMonetaryCostChartVisibility(false)
+        
+        
+        setTimeout(()=>{
+            setProblemIntroMonetaryCostChartVisibility(true)
+        }, 100)
+        
+        var scrollableElement = document.getElementById('bottom');
+        var scrollPercent = 0;
+        scrollableElement.addEventListener('scroll', function() {
+            var scrollTop = this.scrollTop;
+            var scrollHeight = this.scrollHeight;
+            var elementHeight = this.clientHeight;
+            scrollPercent = (scrollTop / (scrollHeight - elementHeight));
+
+            //console.log((scrollPercent * 100).toFixed(2) + '%');
+            Object.keys(displayHandlers).forEach(key => {
+                displayHandlers[key](getScrollProgress(key))
+            });
+        });
+    
+        
+    
+    </script>
+</html>
