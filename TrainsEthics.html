@@ -207,6 +207,30 @@
         #problemIntroPollutionText>div{
             overflow: hidden;
         }
+
+
+        #problemIntroMonetaryCost2{
+            display:flex;
+            gap: 0.5em;
+            flex-grow: 1;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #problemIntroMonetaryCost2Text {
+            padding: 1em;
+            font-size: 2em;
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        #problemIntroMonetaryCost2Text>div{
+            overflow: hidden;
+        }
     </style>
 
 
@@ -307,6 +331,105 @@
             transition: height 0.5s ease;
         }
     </style>
+
+    <!--Monetary Cost2 Chart-->
+    <style>
+        #problemIntroMonetaryCost2Chart{
+            width: 50%;
+            height: calc(50vw * 0.7);
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: stretch;
+        }
+
+
+        #problemIntroMonetaryCost2Chart>div{
+            flex-grow: 1;
+            padding: 1em;
+            display:flex;
+            flex-direction: column;
+            gap: 1em;
+
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        #problemIntroMonetaryCost2Chart .ChartBar{
+            position:relative;
+            align-self: center;
+            width: 75%;
+        }
+
+
+
+        #problemIntro2019Q .ChartBar.visible{
+            bottom: 0px;
+            height: 46.8%;
+            transition: height 0.5s ease;
+            transition-delay: 0s;
+        }
+        
+        #problemIntro2020Q .ChartBar.visible{
+            bottom: 0px;
+            height: 42.7%;
+            transition: height 0.5s ease;
+            transition-delay: 0.1s;
+        }
+
+        #problemIntro2021Q .ChartBar.visible{
+            bottom: 0px;
+            height: 61.3%;
+            transition: height 0.5s ease;
+            transition-delay: 0.2s;
+        }
+
+        #problemIntro2022Q .ChartBar.visible{
+            bottom: 0px;
+            height: 74.6%;
+            transition: height 0.5s ease;
+            transition-delay: 0.3s;
+        }
+
+        #problemIntro2023Q .ChartBar.visible{
+            bottom: 0px;
+            height: 100%;
+            transition: height 0.75s ease;
+            transition-delay: 0.4s;
+        }
+
+
+        #problemIntro2019Q .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+        
+        #problemIntro2020Q .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2021Q .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2022Q .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        #problemIntro2023Q .ChartBar{
+            bottom: 0px;
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+    </style>
+
 
     <!--Accidents Chart-->
     <style>
@@ -582,6 +705,51 @@
                             </div>
                             <!--<canvas id="problemIntroMonetaryCostCanvas"></canvas>-->
                         </div>
+
+                        <div id="problemIntroMonetaryCost2">
+                            <div id="problemIntroMonetaryCost2Text">
+                                <p>
+                                    In additional to governmental costs, cars demand a substantial price for their continued use due to continued refueling and repair costs.
+                                </p>
+                                
+    
+                                <div class="hidden">
+                                    sources:
+
+                                </div>
+                            </div>
+                            <div class="Spacer"></div>
+    
+                            <div id="problemIntroMonetaryCost2Chart">
+                                <div id="problemIntro2019Q">
+                                    <div>$3.6B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2019</div>
+                                </div>
+                                <div id="problemIntro2020Q">
+                                    <div>$3.3B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2020</div>
+                                </div>
+                                <div id="problemIntro2021Q">
+                                    <div>$4.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2021</div>
+                                </div>
+                                <div id="problemIntro2022Q">
+                                    <div>$5.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2022</div>
+                                </div>
+                                <div id="problemIntro2023Q">
+                                    <div>$7.8B</div>
+                                    <div class="ChartBar"></div>
+                                    <div>2023</div>
+                                </div>
+                                
+                            </div>
+                            <!--<canvas id="problemIntroMonetaryCostCanvas"></canvas>-->
+                        </div>
     
                         <div id="problemIntroAccidents">
                             <div id="problemIntroAccidentsText">
@@ -720,7 +888,7 @@
     <script>
         //Ensure that this is in the same order as on the page
         var sectionHeights = {
-            problemIntro: 3,
+            problemIntro: 4,
             trainsIntro: 1
         };
     
@@ -780,29 +948,32 @@
                 if(this.lastResult == null){
                     this.lastResult = 0;
                     document.getElementById("problemIntroMonetaryCost").style.display = "";
+                    document.getElementById("problemIntroMonetaryCost2").style.display = "none";
                     document.getElementById("problemIntroAccidents").style.display = "none";
                     document.getElementById("problemIntroPollution").style.display = "none";
                 }
                 
 
-                if(scrollPercent < 0.3333333){
-
-                    if(this.lastResult != 0){
+                if(scrollPercent < 0.25){
+                    const resultValue = 0;
+                    if(this.lastResult != resultValue){
                         setProblemIntroAccidentsChartVisibility(false)
                         setProblemIntroPollutionChartVisibility(false)
                         setProblemIntroMonetaryCostChartVisibility(false)
-                        this.lastResult = 0;
+                        setProblemIntroMonetaryCost2ChartVisibility(false)
+                        this.lastResult = resultValue;
 
 
                         setTimeout(()=>{
-                            if(this.lastResult == 0){
+                            if(this.lastResult == resultValue){
                                 document.getElementById("problemIntroMonetaryCost").style.display = "";
+                                document.getElementById("problemIntroMonetaryCost2").style.display = "none";
                                 document.getElementById("problemIntroAccidents").style.display = "none";
                                 document.getElementById("problemIntroPollution").style.display = "none";
                                 
 
                                 setTimeout(()=>{
-                                    if(this.lastResult == 0){
+                                    if(this.lastResult == resultValue){
                                         setProblemIntroMonetaryCostChartVisibility(true)
                                     }
                                     
@@ -811,21 +982,52 @@
                             
                         }, 500)
                     }
-                }else if(scrollPercent < 0.6666){
-                    if(this.lastResult != 1){
+                }else if(scrollPercent < 0.5){
+                    const resultValue = 1;
+                    if(this.lastResult != resultValue){
                         setProblemIntroAccidentsChartVisibility(false)
                         setProblemIntroPollutionChartVisibility(false)
                         setProblemIntroMonetaryCostChartVisibility(false)
-                        this.lastResult = 1;
+                        setProblemIntroMonetaryCost2ChartVisibility(false)
+                        this.lastResult = resultValue;
 
                         setTimeout(()=>{
-                            if(this.lastResult == 1){
+                            if(this.lastResult == resultValue){
                                 document.getElementById("problemIntroMonetaryCost").style.display = "none";
+                                document.getElementById("problemIntroMonetaryCost2").style.display = "";
+                                document.getElementById("problemIntroAccidents").style.display = "none";
+                                document.getElementById("problemIntroPollution").style.display = "none";
+
+                                setTimeout(()=>{
+                                    if(this.lastResult == resultValue){
+                                        setProblemIntroMonetaryCost2ChartVisibility(true)
+                                    }
+                                    
+                                }, 10)
+                            }
+                            
+                        }, 500)
+                    }
+
+                    
+                }else if(scrollPercent < 0.75){
+                    const resultValue = 2;
+                    if(this.lastResult != resultValue){
+                        setProblemIntroAccidentsChartVisibility(false)
+                        setProblemIntroPollutionChartVisibility(false)
+                        setProblemIntroMonetaryCostChartVisibility(false)
+                        setProblemIntroMonetaryCost2ChartVisibility(false)
+                        this.lastResult = resultValue;
+
+                        setTimeout(()=>{
+                            if(this.lastResult == resultValue){
+                                document.getElementById("problemIntroMonetaryCost").style.display = "none";
+                                document.getElementById("problemIntroMonetaryCost2").style.display = "none";
                                 document.getElementById("problemIntroAccidents").style.display = "";
                                 document.getElementById("problemIntroPollution").style.display = "none";
 
                                 setTimeout(()=>{
-                                    if(this.lastResult == 1){
+                                    if(this.lastResult == resultValue){
                                         setProblemIntroAccidentsChartVisibility(true)
                                     }
                                     
@@ -838,21 +1040,24 @@
                     
                 }else {
                     //TODO FIX
-                    if(this.lastResult != 2){
+                    const resultValue = 3;
+                    if(this.lastResult != resultValue){
                         setProblemIntroAccidentsChartVisibility(false)
                         setProblemIntroPollutionChartVisibility(false)
                         setProblemIntroMonetaryCostChartVisibility(false)
-                        this.lastResult = 2;
+                        setProblemIntroMonetaryCost2ChartVisibility(false)
+                        this.lastResult = resultValue;
 
 
                         setTimeout(()=>{
-                            if(this.lastResult == 2){
+                            if(this.lastResult == resultValue){
                                 document.getElementById("problemIntroMonetaryCost").style.display = "none";
+                                document.getElementById("problemIntroMonetaryCost2").style.display = "none";
                                 document.getElementById("problemIntroAccidents").style.display = "None";
                                 document.getElementById("problemIntroPollution").style.display = "";
 
                                 setTimeout(()=>{
-                                    if(this.lastResult == 2){
+                                    if(this.lastResult == resultValue){
                                         setProblemIntroPollutionChartVisibility(true)
                                     }
                                     
@@ -881,7 +1086,20 @@
                 }
             }
         }
+        
+        function setProblemIntroMonetaryCost2ChartVisibility(isVisible){
+            let bars = document.getElementById("problemIntroMonetaryCost2Chart").getElementsByClassName("ChartBar");
 
+            //console.log(bars)
+
+            for (let bar of bars) {
+                if(isVisible){
+                    bar.classList.add("visible")
+                }else{
+                    bar.classList.remove("visible")
+                }
+            }
+        }
 
         function setProblemIntroAccidentsChartVisibility(isVisible){
             let bars = document.getElementById("problemIntroAccidentsChart").getElementsByClassName("ChartBar");
