@@ -926,7 +926,9 @@
         }
 
 
+        setSectionHeights()
 
+        
         function getScrollProgress(sectionKey) {
             const start = sectionScrollPercents[sectionKey].start;
             const end = sectionScrollPercents[sectionKey].end;
@@ -938,131 +940,103 @@
             }
         }
 
-        setSectionHeights()
+        
+
+
+        function showProblemSlide(id){
+            if(this.current == null){
+                this.current = 0;
+                document.getElementById("problemIntroMonetaryCost").style.display = "";
+                document.getElementById("problemIntroMonetaryCost2").style.display = "none";
+                document.getElementById("problemIntroAccidents").style.display = "none";
+                document.getElementById("problemIntroPollution").style.display = "none";
+            }
+            if(this.target == null){
+                this.target = 0
+            }
+            if(this.current == id){
+                return;
+            }
+            if(this.target == id){
+                return;
+            }
+
+            let setChartState = [
+                setProblemIntroMonetaryCostChartVisibility,
+                setProblemIntroMonetaryCost2ChartVisibility,
+                setProblemIntroAccidentsChartVisibility,
+                setProblemIntroPollutionChartVisibility
+            ];
+
+            let elementStyles = [
+                document.getElementById("problemIntroMonetaryCost").style,
+                document.getElementById("problemIntroMonetaryCost2").style,
+                document.getElementById("problemIntroAccidents").style,
+                document.getElementById("problemIntroPollution").style                   
+            ]
+
+            let textStyles = [
+                document.getElementById("problemIntroMonetaryCostText").style,
+                document.getElementById("problemIntroMonetaryCost2Text").style,
+                document.getElementById("problemIntroAccidentsText").style,
+                document.getElementById("problemIntroPollutionText").style                   
+            ]
+
+            let chartStyles = [
+                document.getElementById("problemIntroMonetaryCostChart").style,
+                document.getElementById("problemIntroMonetaryCost2Chart").style,
+                document.getElementById("problemIntroAccidentsChart").style,
+                document.getElementById("problemIntroPollutionChart").style                   
+            ]
+
+            chartStyles.forEach(chart=>{
+                chart.display = "none";
+            })
+            elementStyles.forEach(chart=>{
+                chart.display = "none";
+            })
+
+            chartStyles[this.current].display = "";
+            elementStyles[this.current].display = "";
+            textStyles[this.current].opacity = 0.25;
+            
+
+            setChartState[this.current](false);
+
+
+            
+            //This is the first change since the animation started
+            if(this.target == this.current){
+                setTimeout(()=>{
+                    console.log(this.current, this.target)
+                    elementStyles[this.current].display = "none";
+                    elementStyles[this.target].display = "";
+                    chartStyles[this.target].display = "";
+                    textStyles[this.target].opacity = 1;
+                    setTimeout(()=>{
+                        setChartState[this.target](true);
+                    }, 10);
+                    this.current = this.target;
+                }, 500);
+            }
+
+            this.target = id;
+
+
+
+            //this.current = id;
+        }
 
         var displayHandlers = {
             problemIntro: function(scrollPercent){
-                if(this.lastResult == null){
-                    this.lastResult = 0;
-                    document.getElementById("problemIntroMonetaryCost").style.display = "";
-                    document.getElementById("problemIntroMonetaryCost2").style.display = "none";
-                    document.getElementById("problemIntroAccidents").style.display = "none";
-                    document.getElementById("problemIntroPollution").style.display = "none";
-                }
-                
-
                 if(scrollPercent < 0.25){
-                    const resultValue = 0;
-                    if(this.lastResult != resultValue){
-                        setProblemIntroAccidentsChartVisibility(false)
-                        setProblemIntroPollutionChartVisibility(false)
-                        setProblemIntroMonetaryCostChartVisibility(false)
-                        setProblemIntroMonetaryCost2ChartVisibility(false)
-                        this.lastResult = resultValue;
-
-
-                        setTimeout(()=>{
-                            if(this.lastResult == resultValue){
-                                document.getElementById("problemIntroMonetaryCost").style.display = "";
-                                document.getElementById("problemIntroMonetaryCost2").style.display = "none";
-                                document.getElementById("problemIntroAccidents").style.display = "none";
-                                document.getElementById("problemIntroPollution").style.display = "none";
-                                
-
-                                setTimeout(()=>{
-                                    if(this.lastResult == resultValue){
-                                        setProblemIntroMonetaryCostChartVisibility(true)
-                                    }
-                                    
-                                }, 10)
-                            }
-                            
-                        }, 500)
-                    }
+                    showProblemSlide(0)
                 }else if(scrollPercent < 0.5){
-                    const resultValue = 1;
-                    if(this.lastResult != resultValue){
-                        setProblemIntroAccidentsChartVisibility(false)
-                        setProblemIntroPollutionChartVisibility(false)
-                        setProblemIntroMonetaryCostChartVisibility(false)
-                        setProblemIntroMonetaryCost2ChartVisibility(false)
-                        this.lastResult = resultValue;
-
-                        setTimeout(()=>{
-                            if(this.lastResult == resultValue){
-                                document.getElementById("problemIntroMonetaryCost").style.display = "none";
-                                document.getElementById("problemIntroMonetaryCost2").style.display = "";
-                                document.getElementById("problemIntroAccidents").style.display = "none";
-                                document.getElementById("problemIntroPollution").style.display = "none";
-
-                                setTimeout(()=>{
-                                    if(this.lastResult == resultValue){
-                                        setProblemIntroMonetaryCost2ChartVisibility(true)
-                                    }
-                                    
-                                }, 10)
-                            }
-                            
-                        }, 500)
-                    }
-
-                    
+                    showProblemSlide(1)
                 }else if(scrollPercent < 0.75){
-                    const resultValue = 2;
-                    if(this.lastResult != resultValue){
-                        setProblemIntroAccidentsChartVisibility(false)
-                        setProblemIntroPollutionChartVisibility(false)
-                        setProblemIntroMonetaryCostChartVisibility(false)
-                        setProblemIntroMonetaryCost2ChartVisibility(false)
-                        this.lastResult = resultValue;
-
-                        setTimeout(()=>{
-                            if(this.lastResult == resultValue){
-                                document.getElementById("problemIntroMonetaryCost").style.display = "none";
-                                document.getElementById("problemIntroMonetaryCost2").style.display = "none";
-                                document.getElementById("problemIntroAccidents").style.display = "";
-                                document.getElementById("problemIntroPollution").style.display = "none";
-
-                                setTimeout(()=>{
-                                    if(this.lastResult == resultValue){
-                                        setProblemIntroAccidentsChartVisibility(true)
-                                    }
-                                    
-                                }, 10)
-                            }
-                            
-                        }, 500)
-                    }
-
-                    
-                }else {
-                    //TODO FIX
-                    const resultValue = 3;
-                    if(this.lastResult != resultValue){
-                        setProblemIntroAccidentsChartVisibility(false)
-                        setProblemIntroPollutionChartVisibility(false)
-                        setProblemIntroMonetaryCostChartVisibility(false)
-                        setProblemIntroMonetaryCost2ChartVisibility(false)
-                        this.lastResult = resultValue;
-
-
-                        setTimeout(()=>{
-                            if(this.lastResult == resultValue){
-                                document.getElementById("problemIntroMonetaryCost").style.display = "none";
-                                document.getElementById("problemIntroMonetaryCost2").style.display = "none";
-                                document.getElementById("problemIntroAccidents").style.display = "None";
-                                document.getElementById("problemIntroPollution").style.display = "";
-
-                                setTimeout(()=>{
-                                    if(this.lastResult == resultValue){
-                                        setProblemIntroPollutionChartVisibility(true)
-                                    }
-                                    
-                                }, 10)
-                            }
-                            
-                        }, 500)
-                    }
+                    showProblemSlide(2)
+                }else{
+                    showProblemSlide(3)
                 }
             }
         }
