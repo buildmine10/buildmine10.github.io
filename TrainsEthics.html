@@ -631,8 +631,14 @@
 
     <body>
         <div id="topBar">
-            <a href="#problemIntro" id="ProblemButton">
+            <a href="#problemIntro" id="problemButton">
                 Problem
+            </a>
+            <a href="#trainsIntro" id="solutionButton">
+                Solution
+            </a>
+            <a href="#trainsIntro" id="breakdownButton">
+                Breakdown
             </a>
         </div>
 
@@ -1103,7 +1109,20 @@
 
         
         //Smooth scroll to the location
-        document.querySelector('#ProblemButton').addEventListener('click', function(e) {
+        document.querySelector('#problemButton').addEventListener('click', function(e) {
+            // Prevent the default anchor behavior
+            e.preventDefault();
+
+            // The target of the link
+            var targetId = this.getAttribute('href');
+            var targetElement = document.querySelector(targetId);
+
+            // Scroll to the target element smoothly
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        //Smooth scroll to the location
+        document.querySelector('#solutionButton').addEventListener('click', function(e) {
             // Prevent the default anchor behavior
             e.preventDefault();
 
