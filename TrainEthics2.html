@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+<html>
+    <style>
+        *{
+            font-family: Arial;
+            overflow: hidden;
+        }
+
+
+
+        body{
+            background-color: pink;
+            margin:0px;
+        }
+
+        #topBar{
+            top: 0px;
+            background-color: #0021A5;
+            width: 100%;
+            position: fixed;
+            height: 3.5em;
+            box-sizing: border-box;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0.5em;
+            padding-left: 1em;
+
+            overflow: hidden;
+        }
+
+        #topBar>a{
+            background-color: #0021A5;
+
+            border: none;
+            border-radius: 0.5em;
+            padding: 0.5em;
+
+            color:unset;
+            text-decoration: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1em;
+
+
+            color:white;
+        }
+        #topBar>a:hover{
+            background-color: #D1ECF1;
+            color: #0021A5;
+        }
+
+
+
+        #main{
+            background-color: #F4F6F6;
+            position: fixed;
+
+            top: 3.5em;
+            height: calc(100% - 3.5em);
+            width: 100%;
+            overflow: auto !important;
+        }
+
+
+        #temp1{
+            background-color: red;
+            height: 200%;
+        }
+        #temp2{
+            background-color: cyan;
+            height: 200%;
+        }
+
+        .Sticky{
+            position: sticky;
+
+            top: 0px;
+            height: calc(100vh - 3.5em);
+            overflow: hidden;
+        }
+
+
+        .StickySubsection{           
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+        }
+
+        
+        .StickySubsection.Closed{
+            display: none;
+        }
+        
+        
+
+
+    </style>
+
+
+    <style>
+        
+
+        .BarChartContainer{
+            justify-content: space-around;
+            height: 100%;
+            overflow: hidden;
+            align-items: stretch !important;
+        }
+
+        /*Around the bar and label*/
+        .BarChartBarContainer{
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 1em;
+            flex-grow: 1;
+            /*height: 100%;*/
+        }
+
+        .BarChartLabel{
+            display: flex;
+            justify-content: center;
+        }
+
+        /*Immeadiately around the bar*/
+        .BarChartBarBarContainer{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+
+        .BarChartBar{
+            background-color: #FA4616;
+            width: 50%;
+            transition-duration: 0.5s;
+            margin-top: 1em;
+        }
+
+        .BarChartBar.Opened{
+
+        }
+
+        .BarChartBar.Closed{
+            height: 0px !important;
+        }
+    </style>
+
+    <style>
+        .Text{
+            transition: opacity 0.5s;
+        }
+
+        .Text.Opened{
+            opacity: 1;
+            
+        }
+
+        .Text.Closed{
+            opacity: 0;
+        }
+
+
+        .Header{
+            font-size: 3vw;
+            padding-left: 0.5em;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+            box-sizing: border-box;
+        }
+
+        .Slide{
+            box-sizing: border-box;
+            padding: 1em;
+            display:flex;
+            flex-direction: column;
+            gap: 1em;
+            
+            align-items: stretch;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /*
+        .Slide.Closed{
+            display: none;
+        }
+        */
+
+        .HorizontalContent{
+            box-sizing: border-box;
+            display:flex;
+            flex-direction: row;
+            gap: 0.5em;
+            align-items: center;
+            flex-grow: 1;
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        .VerticalContent{
+            box-sizing: border-box;
+            display:flex;
+            flex-direction: column;
+            gap: 0.5em;
+            align-items: center;
+            flex-grow: 1;
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        .TextContainer{
+            height: 100%;
+            justify-content: space-evenly;
+            font-size: 2vw;
+            max-width: 50%;
+            margin: 1em;
+            align-items: flex-start;
+        }
+
+    </style>
+
+    <body>
+        <div id="topBar"></div>
+        <div id="main">
+            <!-- This is where sticky sections go -->
+        </div>
+    </body>
+
+    <!-- Storage of the Sticky Sections and Scroll Behavior -->
+    <script>
+        var stickySections = []
+
+                
+
+        //Setup the on scroll call backs
+        var scrollPercent = 0;
+        var onScroll = [];
+        document.getElementById('main').addEventListener('scroll', function() {
+            var scrollTop = this.scrollTop;
+            var scrollHeight = this.scrollHeight;
+            var elementHeight = this.clientHeight;
+            scrollPercent = (scrollTop / (scrollHeight - elementHeight));
+
+            //console.log((scrollPercent * 100).toFixed(2) + '%');
+            onScroll.forEach(func=>{
+                func();
+            });
+        });
+
+        //The percent scroll bounds of each sticky section
+        var sectionPercents = [];
+
+        function calibrateSectionPercents(){
+            sectionPercents = [];
+
+            for(let section of stickySections){
+                let height = section.subSections.length;
+
+                if (sectionPercents.length == 0) {
+                    
+                    sectionPercents.push({start: 0, end: height});
+                    //console.log(this.sectionPercents[0])
+                }else{
+                    sectionPercents.push({start: sectionPercents[sectionPercents.length - 1].end, end: sectionPercents[sectionPercents.length - 1].end + height});
+                }
+            }
+
+            let total = Math.max(1, sectionPercents[sectionPercents.length - 1].end - 1);
+
+
+            sectionPercents.forEach((section, index)=>{
+                const start = section.start;
+                const end = section.end;
+                sectionPercents[index].start = (start) / (total);
+                sectionPercents[index].end = (end - 1) / (total);
+            })
+
+            //console.log(sectionPercents[0])
+        }
+
+        //Gets how far you have scrolled through a specific sticky section
+        function getScrollPercent(stickyName){
+            
+            for(let index in stickySections){
+                let section = stickySections[index];
+
+                if(section.name == stickyName){
+                    let bounds = sectionPercents[index];
+                    //console.log(bounds)
+                    if(bounds.start == bounds.end){
+                        return 0;
+                    }
+
+                    return Math.max(Math.min((scrollPercent - bounds.start) / (bounds.end - bounds.start), 1), 0);
+                }
+            }
+        }
+    
+    </script>
+
+    <!-- Class definitions of the Sticky Sections -->
+    <script>
+        
+
+        class Subsection{
+            constructor(parent){
+                if(parent == undefined){
+                    console.log("Waring making a subsection that isn't inside a sticky section");
+                }
+
+                this.parent = parent;
+                this.div = document.createElement("div");
+                this.div.classList.add("StickySubsection");
+                this.div.classList.add("Closed");
+
+
+                //console.log(this.div)
+
+
+
+
+                //A list of all elements and all the children of those elements
+                this.elements = [];
+
+                this.transitioningElements = new Set();
+
+
+                this.isClosing = false;
+                this.isOpening = false;
+                this.transitionStartTime = null;
+            }
+
+
+            close(){
+                this.isOpening = false;
+                this.isClosing = true;
+                //When this completes it needs to runs some function to open the next
+                //console.log("CLOSE", this.elements.length);
+                this.transitionStartTime = Date.now();
+
+                
+                this.elements.forEach(element=>{
+                    element.classList.replace("Opened", "Closed");
+                });
+
+                //If nothing triggered a transition by 100 milliseconds, then end the transition
+                setTimeout(()=>{
+                    if(this.transitioningElements.size == 0){
+                        this.onTransitionEnd();
+                    }
+                }, 100)
+            }
+
+            open(){
+                this.isClosing = false;
+                this.isOpening = true;
+
+                //console.log("OPEN", this.elements.length)
+                this.div.classList.replace("Closed", "Opened");//Show the div
+                this.transitionStartTime = Date.now();
+
+                //Then change the class on the children
+                //The small delay is required to cause a screen refresh
+                //Without it, the transitions would be skipped
+                setTimeout(()=>{
+                    this.elements.forEach(element=>{
+                        element.classList.replace("Closed", "Opened");
+                    });
+
+                    //If nothing triggered a transition by 100 milliseconds, then end the transition
+                    setTimeout(()=>{
+                        if(this.transitioningElements.size == 0){
+                            this.onTransitionEnd();
+                        }
+                    }, 100)
+                }, 1)
+            }
+
+
+            addElement(element){
+                element.classList.add("Closed");
+                let i = this.elements.length;
+
+                element.addEventListener('transitionstart', (event) => {
+                    this.transitioningElements.add(i)
+                    //console.log('Transition started on child for property:', event.propertyName, i);
+                });
+                element.addEventListener('transitionend', (event) => {
+                    this.transitioningElements.delete(i)
+                    //console.log('Transition ended on child for property:', event.propertyName, i);
+
+                    if(this.transitioningElements.size == 0){
+                        this.onTransitionEnd();
+                    }
+                });
+
+                this.elements.push(element);
+                //this.div.appendChild(element);
+            }
+
+
+            onTransitionEnd(){
+                //If no transition is occuring do nothing
+                //This assumes that transitions are at least 50 milliseonds
+                //Prevents issues when an open and close transision start and end right next to each other.
+                //Sometimes the close start before the open ends.
+                //Sometime the open ends then the close starts.
+                //It's a race condition. This ignores this function when it can't be correct.
+                if(Date.now() - this.transitionStartTime < 50){
+                    return;
+                }
+
+                if(this.isOpening){
+                    //console.log("Finished Opening", this.elements.length)
+                    this.isOpening = false;
+                }
+
+                if(this.isClosing){
+                    //console.log("Finished Closing", this.elements.length)
+                    this.isClosing = false;
+                    this.div.classList.replace("Opened", "Closed");//Hide the div
+
+                    this.parent.isClosing = false;
+                    this.parent.shownSubsection = this.parent.nextSubsection;
+                    this.parent.subSections[this.parent.nextSubsection].open();
+                }
+            }
+        }
+
+        class StickySection{
+            constructor(name){
+                this.name = name;
+
+                //sectionDiv is the outer container
+                this.sectionDiv = document.createElement("div");
+                this.sectionDiv.style.height = "0%";
+                this.sectionDiv.style.overflow = "unset";
+                //this.sectionDiv.style.height = (subSections * 100) + "%";
+
+                name = name.replace(/\s/, "");
+                name = name.charAt(0).toLowerCase() + name.slice(1);
+
+                this.sectionDiv.id = name;
+
+                //stickyDiv is the inner container
+                //This is where the slides are put
+                this.stickyDiv = document.createElement("div");
+                this.stickyDiv.classList.add("Sticky");
+
+                this.sectionDiv.appendChild(this.stickyDiv);
+                document.getElementById("main").appendChild(this.sectionDiv);
+
+                stickySections.push(this);
+
+
+
+
+                //Also need to add a button in the top bar
+                this.button = document.createElement("a");
+                this.button.href = "#" + this.sectionDiv.id;
+
+                this.button.innerText = this.name;
+
+                //Make it scroll smoothly
+                this.button.addEventListener("click", function(e){
+                    // Prevent the default anchor behavior
+                    e.preventDefault();
+
+                    // The target of the link
+                    var targetId = this.getAttribute('href');
+                    var targetElement = document.querySelector(targetId);
+
+                    // Scroll to the target element smoothly
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                });
+
+
+                document.getElementById("topBar").appendChild(this.button);
+
+
+
+                //And finally the subsections
+                //The things you actually see
+
+                this.subSections = [];
+
+                onScroll.push(()=>{
+                    
+                    //Select the subsection to show
+                    let subsectionToShow = Math.min(Math.floor(getScrollPercent(this.name) * this.subSections.length), this.subSections.length - 1);
+                    //console.log(getScrollPercent(this.name));
+                    this.showSubsection(subsectionToShow);
+                });
+
+                this.shownSubsection = -1;
+                this.nextSubsection = -1;
+                this.isClosing = false;
+            }
+
+            addSubsection(){
+                let subsection = new Subsection(this);
+
+                this.subSections.push(subsection);
+
+                this.stickyDiv.appendChild(subsection.div);
+
+                //Update the height to match the 
+                this.sectionDiv.style.height = (this.subSections.length * 200) + "%";
+            }
+
+            getSubsection(id){
+                return this.subSections[id];
+            }
+
+
+            showSubsection(index){
+                
+                this.nextSubsection = index;
+                //console.log(this.nextSubsection)
+
+                if(this.isClosing && this.nextSubsection == this.shownSubsection){
+                    this.subSections[index].open();
+                    this.isClosing = false;
+                }
+
+                if(!this.isClosing && this.nextSubsection != this.shownSubsection){
+                    
+
+                    let currentSubsection = this.subSections[this.shownSubsection];
+
+                    if(currentSubsection != undefined){
+                        //This close function needs to call the show function of the subsection that is next to be shown.
+                        currentSubsection.close()
+                        this.isClosing = true;
+                    }else{
+                        //This was the first time any subsection was shown
+                        this.shownSubsection = index;
+                        this.nextSubsection = index;
+                        this.subSections[index].open();
+                    }
+                }
+
+                
+                
+                
+            }
+
+        }
+
+
+        window.addEventListener("load", function(){
+            calibrateSectionPercents();
+            stickySections.forEach(section=>{
+                section.showSubsection(0);
+            })
+        })
+
+        
+    
+    </script>
+
+    <script>
+        class BarChart{
+            constructor(){
+                this.data = [];
+
+                this.div = document.createElement("div");
+                this.div.classList.add("HorizontalContent");
+                this.div.classList.add("BarChartContainer");
+
+                this.bars = [];
+
+                this.animationTime = 0.6;//in seconds
+            }
+
+            addData(label, value, prefix, postfix){
+                if (typeof value === 'string' || value instanceof String){
+                    this.data.push({label: label, value: parseFloat(value.replace(",","")), valueLabel: value});
+                }else{
+                    this.data.push({label: label, value: value, valueLabel: value});
+                }
+
+                
+                let barContainer = document.createElement("div");
+                barContainer.classList.add("BarChartBarContainer");
+
+
+                let labelDiv = document.createElement("div");
+                labelDiv.classList.add("BarChartLabel");
+                labelDiv.innerText = label;
+
+                let barBarContainer = document.createElement("div");
+                barBarContainer.classList.add("BarChartBarBarContainer");
+
+
+                let bar = document.createElement("div");
+                bar.classList.add("BarChartBar");
+
+                let barData = document.createElement("div");
+                barData.classList.add("BarChartLabel");
+                barData.innerText = prefix + value + postfix;
+
+                this.bars.push(barContainer);
+
+
+                barBarContainer.appendChild(bar);
+                barBarContainer.appendChild(barData);
+
+                barContainer.appendChild(labelDiv);
+                barContainer.appendChild(barBarContainer);
+
+                this.div.appendChild(barContainer);
+
+            }
+
+            updateHeights(){
+                let max = this.data.reduce((a,value)=>{
+                    return Math.max(a, value.value);
+                }, -Infinity);
+
+                //console.log(max)
+                this.bars.forEach((bar, index)=>{
+                    bar.getElementsByClassName("BarChartBar")[0].style.height = (this.data[index].value / max) * 100 + "%";
+
+                    let delay = (1 - this.data[index].value / max) / 2;
+                    bar.getElementsByClassName("BarChartBar")[0].style.transitionDelay = `${delay}s`;
+                    bar.getElementsByClassName("BarChartBar")[0].style.transitionDuration = `${this.animationTime - delay}s`;
+                    //console.log(bar.getElementsByClassName("BarChartBar")[0].style.height)
+                })
+            }
+
+
+            getAnimatedElements(){
+                return this.bars.map((bar)=>{
+                    return bar.getElementsByClassName("BarChartBar")[0];
+                })
+            }
+        }
+    
+        
+    </script>
+
+    <!-- Cars Section -->
+    <script>
+        let carSection = new StickySection("Cars");
+
+        carSection.addSubsection();
+
+        //First slide
+        {
+            let div = document.createElement("div");
+            carSection.getSubsection(0).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            carSection.getSubsection(0).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Car dependency in Florida comes at a massive societal cost";
+
+
+            let body = document.createElement("div");
+            carSection.getSubsection(0).addElement(body);
+            body.classList.add("HorizontalContent");
+
+            let textSection = document.createElement("div");
+            carSection.getSubsection(0).addElement(textSection);
+            textSection.classList.add("VerticalContent");
+            textSection.classList.add("TextContainer");
+
+            //Messages in the text section 
+            {
+                let message1 = document.createElement("div");
+                carSection.getSubsection(0).addElement(message1);
+                message1.classList.add("Text");
+                message1.innerText = "Florida has spent around $5 billion per year on road infrastructure, for the past 5 years."
+
+                let message2 = document.createElement("div");
+                carSection.getSubsection(0).addElement(message2);
+                message2.classList.add("Text");
+                message2.innerText = "And this spending is only going to increase over the years, as Florida remains stuck in the car dependency cycle."
+
+                let message3 = document.createElement("div");
+                carSection.getSubsection(0).addElement(message3);
+                message3.classList.add("Text");
+                message3.innerText = "As more people use cars, the roads get more congested. And when the road gets congested the state builds more roads. But that just encourages more people to drive. And we end up back at the original problem."
+            
+                textSection.appendChild(message1);
+                textSection.appendChild(message2);
+                textSection.appendChild(message3);
+            }
+            
+            let chartSection = document.createElement("div");
+            carSection.getSubsection(0).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+
+            let chart = new BarChart();
+            chart.addData("2019", 3.6, "$", "B");
+            chart.addData("2020", 3.3, "$", "B");
+            chart.addData("2021", 4.8, "$", "B");
+            chart.addData("2022", 5.8, "$", "B");
+            chart.addData("2023", 7.8, "$", "B");
+
+            chart.updateHeights();
+
+            chart.getAnimatedElements().forEach(element=>{
+                carSection.getSubsection(0).addElement(element);
+            })
+            
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection);
+            body.appendChild(chart.div);
+            //body.appendChild(chartSection);
+
+
+            carSection.getSubsection(0).div.appendChild(div);
+        }
+
+        carSection.addSubsection();
+        {
+            let div = document.createElement("div");
+            carSection.getSubsection(1).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            carSection.getSubsection(1).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Car dependency in Florida comes at a massive societal cost";
+
+
+            let body = document.createElement("div");
+            carSection.getSubsection(1).addElement(body);
+            body.classList.add("HorizontalContent");
+
+            let textSection = document.createElement("div");
+            carSection.getSubsection(1).addElement(textSection);
+            textSection.classList.add("VerticalContent");
+            textSection.classList.add("TextContainer");
+
+            //Messages in the text section 
+            {
+                let message1 = document.createElement("div");
+                carSection.getSubsection(1).addElement(message1);
+                message1.classList.add("Text");
+                message1.innerText = "In additional to governmental costs, cars demand a substantial price for their continued use due to continued refueling and maintenance costs."
+
+
+                textSection.appendChild(message1);
+
+            }
+            
+            let chartSection = document.createElement("div");
+            carSection.getSubsection(1).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+
+            let chart = new BarChart();
+            chart.addData("2019", "9,282", "$", "");
+            chart.addData("2020", "9,561", "$", "");
+            chart.addData("2021", "9,666", "$", "");
+            chart.addData("2022", "10,800", "$", "");
+            chart.addData("2023", "12,150", "$", "");
+
+            chart.updateHeights();
+
+            chart.getAnimatedElements().forEach(element=>{
+                carSection.getSubsection(1).addElement(element);
+            })
+            
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection);
+            body.appendChild(chart.div);
+            //body.appendChild(chartSection);
+
+
+            carSection.getSubsection(1).div.appendChild(div);
+        }
+
+        carSection.addSubsection();
+        {
+            let sectionIndex = 2;
+
+            let div = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Car dependency in Florida comes at a massive societal cost";
+
+
+            let body = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+            let textSection = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(textSection);
+            textSection.classList.add("VerticalContent");
+            textSection.classList.add("TextContainer");
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                carSection.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Car accidents account for 387,332 deaths and $340 billion in damages every year."
+
+
+                textSection.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                carSection.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "The most common cause for accidents is driver error due to negligence."
+
+
+                textSection.appendChild(message);
+            }
+
+            let image = document.createElement("img");
+            carSection.getSubsection(sectionIndex).addElement(image);
+            image.classList.add("Text");
+            image.src = "https://www.ocala.com/gcdn/presto/2022/10/28/NOSB/69c190f0-b0fc-4dfe-bea6-dd5cb5283462-White_Hyundai.jpg?width=660&height=495&fit=crop&format=pjpg&auto=webp";
+            textSection.appendChild(image);
+
+
+
+            let chartSection = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+
+            let chart = new BarChart();
+            chart.addData("2019", "401,867", "", "\nCrashes");
+            chart.addData("2020", "341,399", "", "\nCrashes");
+            chart.addData("2021", "401,540", "", "\nCrashes");
+            chart.addData("2022", "397,620", "", "\nCrashes");
+            chart.addData("2023", "394,230", "", "\nCrashes");
+
+            chart.updateHeights();
+
+            chart.getAnimatedElements().forEach(element=>{
+                carSection.getSubsection(sectionIndex).addElement(element);
+            })
+            
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection);
+            body.appendChild(chart.div);
+            //body.appendChild(chartSection);
+
+
+            carSection.getSubsection(sectionIndex).div.appendChild(div);
+        }
+
+
+        
+    </script>
+</html>
