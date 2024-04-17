@@ -157,6 +157,69 @@
     </style>
 
     <style>
+            
+
+        .PieChartContainer{
+            overflow: hidden;
+            width: 100%;
+            display: inline-block;
+            height: 0px;
+            padding-bottom: 100%;
+        }
+
+        .PieChartSlice{
+            /*Make it a circle*/
+            display: block;
+            justify-content: center;
+
+            position: relative;
+            left: 0px;
+
+
+            width: 100%;
+            height: 0px;
+            padding-top: 50%;
+            padding-bottom: 50%;
+            border-radius: 50%;
+            /*The pie shape comes from the javascript provided animation*/
+
+            transition: 0.5s;
+
+            overflow: hidden;
+        }
+
+        .PieChartSlice.Closed{
+            opacity: 0;
+        }
+
+
+        .PieChartSliceLabelContainer{
+            translate: 50% 0px;
+            transform-origin: top left;
+            overflow:visible;
+        }
+
+        .PieChartSliceLabelContainer.Closed{
+            opacity: 0;
+        }
+
+        .PieChartSliceLabel{
+            /*transform-origin: bottom left;*/
+            text-align: center;
+            translate: 50% 0px;
+            width: 30%;
+            
+        }
+
+        .PieChartSliceLabel.Closed{
+            opacity: 0;
+        }
+
+        
+        
+    </style>
+
+    <style>
         .Text{
             transition: opacity 0.5s;
         }
@@ -223,7 +286,7 @@
             height: 100%;
             justify-content: space-evenly;
             font-size: 2vw;
-            max-width: 50%;
+            max-width: 50vw;
             margin: 1em;
             align-items: flex-start;
         }
@@ -570,6 +633,7 @@
     
     </script>
 
+    <!-- Bar Chart -->
     <script>
         class BarChart{
             constructor(){
@@ -651,9 +715,283 @@
         
     </script>
 
-    <!-- Cars Section -->
+    <!-- Pie Chart -->
     <script>
-        let carSection = new StickySection("Cars");
+
+    function sampleEaseCurve(x){
+        function curve(p){
+            let ip = 1- p;
+            let p1 = [0.42, 0]
+            let p2 = [1,1]
+            let x = ip*ip*ip * 0 + 3 * ip * ip * p * p1[0] + 3 * ip * p * p * p2[0] + p*p*p*1;
+            let y = ip*ip*ip * 0 + 3 * ip * ip * p * p1[1] + 3 * ip * p * p * p2[1] + p*p*p*1;
+            return [x, y]
+        }
+
+        let lower = 0;
+        let upper = 1;
+
+        for(let i = 0; i < 30; i++){
+            let middle = (lower + upper) * 0.5;
+            if(curve(middle)[0] > x){
+                upper = middle;
+            }else{
+                lower = middle;
+            }
+        }
+        
+        return curve((lower + upper) / 2)[1]
+    }
+
+
+    function createAnimation(startAngle1, endAngle1, startAngle2, endAngle2){
+        const styleSheet = document.createElement('style');
+        document.head.appendChild(styleSheet);
+
+        if(this.animationCount == undefined){
+            this.animationCount = 0;
+        }
+
+        let animationName = `ANIMATION${this.animationCount}`;
+        this.animationCount++;
+
+        let keyframes = `@keyframes ${animationName}{`;
+        const frames = 10;
+        for(let i = 0; i <= frames; i++){
+            let percent = i / frames;
+
+            let angle = percent * (endAngle1 - startAngle1) + startAngle1;
+
+            let points = [];
+
+
+            if(i == frames){
+                keyframes += `${100}% {`;
+            }else if(i == 0){
+                keyframes += `${0}% {`;
+            }else{
+                keyframes += `${sampleEaseCurve(percent) * 100}% {`;
+            }
+            
+            //keyframes += `transform: rotate(${(endAngle2 - startAngle2) * percent + startAngle2}rad);`;
+            keyframes += `transform: rotate(-${angle / 2}rad);`;
+            
+            keyframes += "}\n";
+        }
+
+        keyframes += "}"
+
+
+        styleSheet.appendChild(document.createTextNode(keyframes));
+
+        return animationName;
+    }
+
+    function createAnimation3(startAngle1, endAngle1, startAngle2, endAngle2){
+        const styleSheet = document.createElement('style');
+        document.head.appendChild(styleSheet);
+
+        if(this.animationCount == undefined){
+            this.animationCount = 0;
+        }
+
+        let animationName = `ANIMATION${this.animationCount}`;
+        this.animationCount++;
+
+        let keyframes = `@keyframes ${animationName}{`;
+        const frames = 10;
+        for(let i = 0; i <= frames; i++){
+            let percent = i / frames;
+
+            let angle = percent * (endAngle1 - startAngle1) + startAngle1;
+
+            let points = [];
+
+
+            if(i == frames){
+                keyframes += `${100}% {`;
+            }else if(i == 0){
+                keyframes += `${0}% {`;
+            }else{
+                keyframes += `${sampleEaseCurve(percent) * 100}% {`;
+            }
+            
+            keyframes += `transform: rotate(${(endAngle2 - startAngle2) * percent + startAngle2 + angle / 2}rad);`;
+            //keyframes += `transform: rotate(${angle2}rad);`;
+            
+            keyframes += "}\n";
+        }
+
+        keyframes += "}"
+
+
+        styleSheet.appendChild(document.createTextNode(keyframes));
+
+        return animationName;
+    }
+
+    
+    function createAnimation2(startAngle1, endAngle1, startAngle2, endAngle2){
+        const styleSheet = document.createElement('style');
+        document.head.appendChild(styleSheet);
+
+        if(this.animationCount == undefined){
+            this.animationCount = 0;
+        }
+
+        let animationName = `ANIMATION${this.animationCount}`;
+        this.animationCount++;
+
+        let keyframes = `@keyframes ${animationName}{`;
+        const frames = 10;
+        const pointCount = 2;
+        for(let i = 0; i <= frames; i++){
+            let percent = i / frames;
+
+            let angle = percent * (endAngle1 - startAngle1) + startAngle1;
+
+            let points = [];
+
+            for(let j = 0; j <= pointCount; j++){
+                let p = j / pointCount; 
+
+                let x = 0.5 + Math.cos(angle * p) * 0.5 * 1.1;
+                let y = 0.5 - Math.sin(angle * p) * 0.5 * 1.1;
+
+                points.push([x, y])
+            }
+
+            if(i == frames){
+                keyframes += `${100}% {`;
+            }else if(i == 0){
+                keyframes += `${0}% {`;
+            }else{
+                keyframes += `${sampleEaseCurve(percent) * 100}% {`;
+            }
+            keyframes += `clip-path: polygon(50% 50%,`;// 100% 50%, 100% 100%, 50% 100%);}`;
+
+            points.forEach(point=>{
+                keyframes += `${point[0] * 100}% ${point[1] * 100}%,`
+            })
+            keyframes = keyframes.slice(0, keyframes.length-1);
+            keyframes += ")";
+            
+            keyframes += `;\n transform: rotate(-${(endAngle2 - startAngle2) * percent + startAngle2}rad);`;
+            
+            keyframes += "}\n";
+        }
+
+        keyframes += "}"
+
+
+        styleSheet.appendChild(document.createTextNode(keyframes));
+
+        return animationName;
+    }
+
+    class PieChart{
+        constructor(){
+            this.data = [];
+
+            this.div = document.createElement("div");
+            //this.div.classList.add("HorizontalContent");
+            this.div.classList.add("PieChartContainer");
+
+
+            this.values = [];
+
+            this.slices = [];
+            this.text = [];
+
+            this.animationTime = 0.5;//in seconds
+        }
+
+        addData(label, value, prefix, postfix, color){
+            if (typeof value === 'string' || value instanceof String){
+                this.data.push({label: label, value: parseFloat(value.replace(",","")), valueLabel: value});
+            }else{
+                this.data.push({label: label, value: value, valueLabel: value});
+            }
+
+
+            let temp = this.data[this.data.length - 1];
+            
+            this.values.push(temp.value);
+
+            let circle = document.createElement("div");
+
+            let labelContainer = document.createElement("div");
+            labelContainer.classList.add("PieChartSliceLabelContainer")
+
+
+            let text = document.createElement("div");
+
+            text.innerText = label;
+            text.style.position = "relative";
+            //text.style.translate = "75% -1em";
+            text.classList.add("PieChartSliceLabel");
+
+
+            labelContainer.appendChild(text);
+            circle.appendChild(labelContainer);
+
+            circle.style.backgroundColor = color;
+            circle.style.translate = `0px -${100 * (this.data.length - 1)}%`;
+
+            //console.log(circle.style)
+            circle.classList = "PieChartSlice";
+
+            
+
+            this.div.appendChild(circle);
+
+            this.slices.push(circle);
+            this.text.push(labelContainer);
+            
+            //console.log("HJ")
+        }
+
+        updatePercents(){
+            //This actually generates new animations and assigns them
+            let total = this.values.reduce((sum, cur)=>{
+                return sum + cur;
+            }, 0);
+
+            let percents = this.values.map(value=>{
+                return value / total;
+            })
+
+            let previousAngle = 0;
+
+            this.slices.forEach((element, index)=>{
+                let anim = createAnimation2(0, percents[index] * Math.PI * 2, 0, previousAngle);
+                let anim2 = createAnimation(0, percents[index] * Math.PI * 2, 0, previousAngle);
+                let anim3 = createAnimation3(0, percents[index] * Math.PI * 2, 0, previousAngle);
+                console.log(previousAngle)
+                previousAngle += percents[index] * Math.PI * 2;
+
+                this.text[index].style.animation = `${anim2} ${this.animationTime}s linear both`;
+
+                this.text[index].childNodes[0].style.animation = `${anim3} ${this.animationTime}s linear both`;
+                
+                this.text[index].childNodes[0].innerText = `${this.data[index].label}\n${Math.round(percents[index] * 1000) / 10}%`;
+
+                element.style.animation = `${anim} ${this.animationTime}s linear both`;
+            });
+        }
+
+
+        getAnimatedElements(){
+            return this.slices;
+        }
+    }
+
+    
+</script>
+
+    <!-- Problem Section -->
+    <script>
+        let carSection = new StickySection("Problem");
 
         carSection.addSubsection();
 
@@ -879,6 +1217,299 @@
             carSection.getSubsection(sectionIndex).div.appendChild(div);
         }
 
+        carSection.addSubsection();
+        {
+            let sectionIndex = 3;
+
+            let div = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Car dependency in Florida comes at a massive societal cost";
+
+
+            let body = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+            let textSection = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(textSection);
+            textSection.classList.add("VerticalContent");
+            textSection.classList.add("TextContainer");
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                carSection.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Pollution"
+
+
+                textSection.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                carSection.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Pollution"
+
+
+                textSection.appendChild(message);
+            }
+
+            let image = document.createElement("img");
+            carSection.getSubsection(sectionIndex).addElement(image);
+            image.classList.add("Text");
+            image.src = "https://www.ocala.com/gcdn/presto/2022/10/28/NOSB/69c190f0-b0fc-4dfe-bea6-dd5cb5283462-White_Hyundai.jpg?width=660&height=495&fit=crop&format=pjpg&auto=webp";
+            textSection.appendChild(image);
+
+
+
+            let chartSection = document.createElement("div");
+            carSection.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+
+            let chart = new BarChart();
+            chart.addData("2019", "401,867", "", "\nCrashes");
+            chart.addData("2020", "341,399", "", "\nCrashes");
+            chart.addData("2021", "401,540", "", "\nCrashes");
+            chart.addData("2022", "397,620", "", "\nCrashes");
+            chart.addData("2023", "394,230", "", "\nCrashes");
+
+            chart.updateHeights();
+
+            chart.getAnimatedElements().forEach(element=>{
+                carSection.getSubsection(sectionIndex).addElement(element);
+            })
+            
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection);
+            body.appendChild(chart.div);
+            //body.appendChild(chartSection);
+
+
+            carSection.getSubsection(sectionIndex).div.appendChild(div);
+        }
+
+
+        
+    </script>
+
+    <!-- Solution Section -->
+    <script>
+        let solutionSection = new StickySection("Solution");
+
+
+        let section = solutionSection
+
+        section.addSubsection();
+        {
+            let sectionIndex = 0;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Trains could be the solution";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+            let textSide = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSide);
+            textSide.classList.add("VerticalContent");
+            textSide.classList.add("TextContainer");
+            textSide.style.margin = "unset"
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+            let textSection2 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection2);
+            textSection2.classList.add("VerticalContent");
+            textSection2.classList.add("TextContainer");
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Currently there are four passenger rain services in Florida: Amtrak, Brightline, SunRail, Tri-Rail."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Something about the current state of trains in florida."
+
+
+                textSection1.appendChild(message);
+            }
+
+
+            //Section 2
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Some comparison to Japan"
+
+
+                textSection2.appendChild(message);
+            }
+
+            
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            
+            {
+                let image = document.createElement("img");
+                section.getSubsection(sectionIndex).addElement(image);
+                image.classList.add("Text");
+                image.src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/BrightLine_train_test.jpg";
+                image.style.width = "100%";
+
+                chartSection.appendChild(image);
+            }
+
+            {
+                let image = document.createElement("img");
+                section.getSubsection(sectionIndex).addElement(image);
+                image.classList.add("Text");
+                image.src = "https://upload.wikimedia.org/wikipedia/commons/8/88/Series-N700S-J2.jpg";
+                image.style.width = "100%";
+                
+                chartSection.appendChild(image);
+            }
+            
+            
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSide);
+            textSide.appendChild(textSection1);
+            textSide.appendChild(textSection2);
+            body.appendChild(chartSection);
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+
+        section.addSubsection();
+        {
+            let sectionIndex = 1;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Trains could be the solution";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Currently there are four passenger rain services in Florida: Amtrak, Brightline, SunRail, Tri-Rail."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Something about the current state of trains in florida."
+
+
+                textSection1.appendChild(message);
+            }
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+        
+
+            let chart = new PieChart();
+            chart.addData("2019", "9,282", "$", "", "green");
+            chart.addData("2020", "9,561", "$", "", "magenta");
+            chart.addData("2021", "9,666", "$", "", "pink");
+            chart.addData("2022", "10,800", "$", "", "blue");
+            chart.addData("2023", "12,150", "$", "", "red");
+
+            chart.updatePercents();
+
+            chart.getAnimatedElements().forEach(element=>{
+                section.getSubsection(1).addElement(element);
+            })
+            
+            chartSection.appendChild(chart.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
 
         
     </script>
