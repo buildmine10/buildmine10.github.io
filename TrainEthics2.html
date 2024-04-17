@@ -161,10 +161,9 @@
 
         .PieChartContainer{
             overflow: hidden;
-            width: 100%;
             display: inline-block;
-            height: 0px;
-            padding-bottom: 100%;
+            height: 100%;
+            aspect-ratio: 1;
         }
 
         .PieChartSlice{
@@ -206,8 +205,9 @@
         .PieChartSliceLabel{
             /*transform-origin: bottom left;*/
             text-align: center;
-            translate: 50% 0px;
-            width: 30%;
+            translate: 80% -50%;
+            width: 25%;
+            
             
         }
 
@@ -222,6 +222,7 @@
     <style>
         .Text{
             transition: opacity 0.5s;
+            overflow: visible;
         }
 
         .Text.Opened{
@@ -240,6 +241,8 @@
             padding-top: 0.5em;
             padding-bottom: 0.5em;
             box-sizing: border-box;
+            height:fit-content;
+            overflow: visible;
         }
 
         .Slide{
@@ -285,10 +288,11 @@
         .TextContainer{
             height: 100%;
             justify-content: space-evenly;
-            font-size: 2vw;
+            font-size: min(2vw, 3vh);
             max-width: 50vw;
             margin: 1em;
             align-items: flex-start;
+            overflow: visible;
         }
 
     </style>
@@ -743,7 +747,7 @@
         return curve((lower + upper) / 2)[1]
     }
 
-
+    //Rotates the text to follow the slices
     function createAnimation(startAngle1, endAngle1, startAngle2, endAngle2){
         const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
@@ -787,6 +791,7 @@
         return animationName;
     }
 
+    //Rotates the text so it stays level
     function createAnimation3(startAngle1, endAngle1, startAngle2, endAngle2){
         const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
@@ -830,7 +835,7 @@
         return animationName;
     }
 
-    
+    //Grows the slices
     function createAnimation2(startAngle1, endAngle1, startAngle2, endAngle2){
         const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
@@ -844,7 +849,7 @@
 
         let keyframes = `@keyframes ${animationName}{`;
         const frames = 10;
-        const pointCount = 2;
+        const pointCount = 10;
         for(let i = 0; i <= frames; i++){
             let percent = i / frames;
 
@@ -906,11 +911,11 @@
             this.animationTime = 0.5;//in seconds
         }
 
-        addData(label, value, prefix, postfix, color){
+        addData(label, value, prefix, postfix, color, textColor){
             if (typeof value === 'string' || value instanceof String){
-                this.data.push({label: label, value: parseFloat(value.replace(",","")), valueLabel: value});
+                this.data.push({label: label, value: parseFloat(value.replace(",","")), valueLabel: prefix + value + postfix});
             }else{
-                this.data.push({label: label, value: value, valueLabel: value});
+                this.data.push({label: label, value: value, valueLabel: prefix + value + postfix});
             }
 
 
@@ -926,6 +931,7 @@
 
             let text = document.createElement("div");
 
+            text.style.color = textColor;
             text.innerText = label;
             text.style.position = "relative";
             //text.style.translate = "75% -1em";
@@ -974,7 +980,7 @@
 
                 this.text[index].childNodes[0].style.animation = `${anim3} ${this.animationTime}s linear both`;
                 
-                this.text[index].childNodes[0].innerText = `${this.data[index].label}\n${Math.round(percents[index] * 1000) / 10}%`;
+                this.text[index].childNodes[0].innerText = `${this.data[index].label}\n${this.data[index].valueLabel}`;
 
                 element.style.animation = `${anim} ${this.animationTime}s linear both`;
             });
@@ -1353,7 +1359,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Currently there are four passenger rain services in Florida: Amtrak, Brightline, SunRail, Tri-Rail."
+                message.innerText = "Currently there are four passenger rain services in Florida: Amtrak, Brightline, SunRail, Tri-Rail. Unfortunately due to underuse, the rail network has been shrunken significanty from its historical high."
 
 
                 textSection1.appendChild(message);
@@ -1364,7 +1370,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Something about the current state of trains in florida."
+                message.innerText = "These trains connect up the east coast of Flordia, providing travel times faster than you can achieve by driving on the highway."
 
 
                 textSection1.appendChild(message);
@@ -1377,7 +1383,17 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Some comparison to Japan"
+                message.innerText = "However in Japan a thorough rail network has been established and well maintained. This network has nearly entirely replaced roads both for moving within cities and between them."
+
+
+                textSection2.appendChild(message);
+            }
+
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "A famous rail network in Japan is the Shinkansen like of trains. These trains replace airplanes in the service they provide, that is cross country travel comparable to the length of the east coast of the US."
 
 
                 textSection2.appendChild(message);
@@ -1391,13 +1407,14 @@
             section.getSubsection(sectionIndex).addElement(chartSection);
             chartSection.classList.add("VerticalContent");
             chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
             
             {
                 let image = document.createElement("img");
                 section.getSubsection(sectionIndex).addElement(image);
                 image.classList.add("Text");
                 image.src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/BrightLine_train_test.jpg";
-                image.style.width = "100%";
+                image.style.height = "50%";
 
                 chartSection.appendChild(image);
             }
@@ -1407,7 +1424,8 @@
                 section.getSubsection(sectionIndex).addElement(image);
                 image.classList.add("Text");
                 image.src = "https://upload.wikimedia.org/wikipedia/commons/8/88/Series-N700S-J2.jpg";
-                image.style.width = "100%";
+                image.style.height = "50%";
+
                 
                 chartSection.appendChild(image);
             }
@@ -1459,7 +1477,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Currently there are four passenger rain services in Florida: Amtrak, Brightline, SunRail, Tri-Rail."
+                message.innerText = "By comparing Japan's train network to Florida's roads we can get an understanding of how a well developed train system in Florida might impact our world."
 
 
                 textSection1.appendChild(message);
@@ -1470,7 +1488,20 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Something about the current state of trains in florida."
+                
+                message.innerText = "A surprising metric from Japan is that on 4.1% of their transportation pollution is from trains; whereas, 86% is from cars. This is mainly a surprise because train use is overwhelmingly more common in Japan than car use. Much like how car use trounces all other forms of transportation in the US, but reversed. This means that the minority of cars in Japan are producing the majority of the transportation pollution."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "This should signal to you that Florida must create aburd amounts of transportation pollution than Japan even though Japan's population is larger, and the scale of the environmental impact we could make by shifting to trains."
 
 
                 textSection1.appendChild(message);
@@ -1482,22 +1513,135 @@
             section.getSubsection(sectionIndex).addElement(chartSection);
             chartSection.classList.add("VerticalContent");
             chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
         
 
-            let chart = new PieChart();
-            chart.addData("2019", "9,282", "$", "", "green");
-            chart.addData("2020", "9,561", "$", "", "magenta");
-            chart.addData("2021", "9,666", "$", "", "pink");
-            chart.addData("2022", "10,800", "$", "", "blue");
-            chart.addData("2023", "12,150", "$", "", "red");
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Pollution per person\nGrams of Co2 per person per km"
 
+
+                chartSection.appendChild(message);
+            }
+
+            let chart = new PieChart();
+            chart.addData("Trains in Japan", "25", "", "", "#0021A5", "white");
+            chart.addData("Cars in Florida", "132", "", "", "#FA4616", "black");
             chart.updatePercents();
 
             chart.getAnimatedElements().forEach(element=>{
-                section.getSubsection(1).addElement(element);
+                section.getSubsection(sectionIndex).addElement(element);
             })
             
             chartSection.appendChild(chart.div)
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+
+
+        section.addSubsection();
+        {
+            let sectionIndex = 2;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Trains could be the solution";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "placeholder"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "placeholder"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "placeholder"
+
+
+                textSection1.appendChild(message);
+            }
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Price of daily work commute"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
 
 
 
@@ -1510,7 +1654,6 @@
 
             section.getSubsection(sectionIndex).div.appendChild(div);
         }
-
         
     </script>
 </html>
