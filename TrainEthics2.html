@@ -1445,6 +1445,7 @@
             section.getSubsection(sectionIndex).div.appendChild(div);
         }
 
+        //Pollution
         section.addSubsection();
         {
             let sectionIndex = 1;
@@ -1548,7 +1549,7 @@
             section.getSubsection(sectionIndex).div.appendChild(div);
         }
 
-
+        //Cost of commute
         section.addSubsection();
         {
             let sectionIndex = 2;
@@ -1581,7 +1582,19 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "placeholder"
+                message.innerText = "Another consideration when moving to trains is the price."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "In Florida the average gas cost of the daily commute between work and home comes out to about $5.89. This is taking into account the price of gas and the distance needed to be traveled."
 
 
                 textSection1.appendChild(message);
@@ -1593,7 +1606,7 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "placeholder"
+                message.innerText = "If we compare this to the projected price of taking a train, we can see that the trains have significantly cheaper commute price of $2.72. This price was found using the prices of Tokyo's intracity transport system, and extrapolating it out to the commuting distances found in Florida. Unfortunately, the average commute distance is further than the Tokyo railline go because Florida is less densly populated; however, it isn't much further and the upper bound of the extrapolation was used."
 
 
                 textSection1.appendChild(message);
@@ -1605,7 +1618,7 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "placeholder"
+                message.innerText = "Sadly, Florida doesn't have an analogous system of public transporation between cities to use as comparison. So if we use New York's subway because its also a dense metropolitan area, then we see that a train system in America capable of meeting your daily commuting needs would cost $2.90."
 
 
                 textSection1.appendChild(message);
@@ -1655,5 +1668,125 @@
             section.getSubsection(sectionIndex).div.appendChild(div);
         }
         
+        //Speed
+        section.addSubsection();
+        {
+            let sectionIndex = 3;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Trains could be the solution";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "In addition to daily commutes, trains would also be used for long distance trips. This is the first use case that would see improvement if society decided to transition towards trains. It is also the area where trains hold the title for cleanest and most energy efficient way to get places quickly."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "These types of trains would connect major cities together. And we will once again look to Japan to see how they did their long distance rail network, specifically we will look at the Shinkansen."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "The Shinkansen spans the length of Japan, which is the same as the height of the US east coast. The shinkansen can take you from Toyko to Osaka in 2 hours and 33 minutes. If the existing rail network in America supported the Shinkansen, these speeds would have you going from Orlando to Jacksonville in 1 hour."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = ""
+
+
+                textSection1.appendChild(message);
+            }
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Price of daily work commute"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+
     </script>
 </html>
