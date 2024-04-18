@@ -518,7 +518,7 @@
                 name = name.replace(/\s/, "");
                 name = name.charAt(0).toLowerCase() + name.slice(1);
 
-                this.sectionDiv.id = name;
+                this.sectionDiv.id = name.replace(" ", "");
 
                 //stickyDiv is the inner container
                 //This is where the slides are put
@@ -1731,13 +1731,131 @@
                 textSection1.appendChild(message);
             }
 
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Placeholder"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+
+    </script>
+
+    <!-- Ethics Section -->
+    <script>
+        let ethicsSection = new StickySection("Ethics");
+
+
+        section = ethicsSection;
+
+        //Speed
+        section.addSubsection();
+        {
+            let sectionIndex = 0;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Ethics Breakdown";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Placeholder"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Placeholder";
+
+
+                textSection1.appendChild(message);
+            }
+
             //Messages in the text section 
             {
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = ""
+                message.innerText = "Placeholder";
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "placeholder"
 
 
                 textSection1.appendChild(message);
@@ -1789,4 +1907,134 @@
         
 
     </script>
+
+
+<!-- Ethics Section -->
+<script>
+    let actionSection = new StickySection("What to do");
+
+
+    section = actionSection;
+
+    //Speed
+    section.addSubsection();
+    {
+        let sectionIndex = 0;
+
+        let div = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(div);
+        div.classList.add("Slide");
+
+
+        let header = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(header);
+        header.classList.add("Header");
+        header.innerText = "What you can do";
+
+
+        let body = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(body);
+        body.classList.add("HorizontalContent");
+
+
+        let textSection1 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection1);
+        textSection1.classList.add("VerticalContent");
+        textSection1.classList.add("TextContainer");
+
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "Placeholder"
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "Placeholder";
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerText = "Placeholder";
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerText = "placeholder"
+
+
+            textSection1.appendChild(message);
+        }
+
+
+
+        let chartSection = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(chartSection);
+        chartSection.classList.add("VerticalContent");
+        chartSection.style.width = "50%";
+        chartSection.style.height = "100%";
+    
+        
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.style.textAlign = "center";
+            message.innerText = "Placeholder"
+
+
+            chartSection.appendChild(message);
+        }
+
+        let chart2 = new PieChart();
+        chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+        chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+        
+        chart2.updatePercents();
+        
+        chart2.getAnimatedElements().forEach(element=>{
+            section.getSubsection(sectionIndex).addElement(element);
+        })
+        
+        chartSection.appendChild(chart2.div)
+
+
+
+        div.appendChild(header);
+        div.appendChild(body);
+        body.appendChild(textSection1);
+        body.appendChild(chartSection);
+
+
+
+        section.getSubsection(sectionIndex).div.appendChild(div);
+    }
+    
+
+</script>
 </html>
