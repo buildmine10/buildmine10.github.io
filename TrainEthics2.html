@@ -1786,7 +1786,7 @@
 
         section = ethicsSection;
 
-        //Speed
+        //Intro
         section.addSubsection();
         {
             let sectionIndex = 0;
@@ -1819,7 +1819,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Placeholder"
+                message.innerText = "The ethical considerations that push us to push you towards trains can be userstood from 5 ethical frameworks: The Greater Good, Utilitarianism, Rights, Virtue, and Fairness."
 
 
                 textSection1.appendChild(message);
@@ -1831,7 +1831,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Placeholder";
+                message.innerText = "Each of these frameworks analyze different aspects of the isse and priorizise different entities in their decision making, which produces quirks that don't always align with our expectations of proper behavior.";
 
 
                 textSection1.appendChild(message);
@@ -1843,19 +1843,7 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "Placeholder";
-
-
-                textSection1.appendChild(message);
-            }
-
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                
-                message.innerText = "placeholder"
+                message.innerText = "This is why we utilize multiple frameworks, so that we can see these quirks and better understand what we beleive to be the ethical decision.";
 
 
                 textSection1.appendChild(message);
@@ -1875,7 +1863,554 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 message.style.textAlign = "center";
-                message.innerText = "Placeholder"
+                message.innerText = "Placeholder. What should be put here?"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+        //Greater good
+        section.addSubsection();
+        {
+            let sectionIndex = 1;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Greater Good";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "The Greater Good framework has us looking out for those most at risk from our actions. The idea being that if those most at risk are helped, then all get helped."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "When viewed this way, the reductions in air and noise pollution alongside cheaper transit both help the environment and the poor.";
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Air pollution is well known to be the cause of climate changes, so all reductions to air pollution are viewed as giving a positive benefit to the entire world. Slowing climate change, reduces the disasters experience in countries all around the world; milder storms, less frequent and smaller droughts, and a stopping of the ever encroaching shore.";
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "For the poor, cheaper transit allowed them to better hold a job. One of the major obstacles to job security among the poor is solving the problem of how to get to and from work. By using the previously stated statistic for the price of commuting and perform some simple math we can see that driving to work costs 17% of their income before tax. This is unaffordable when houseing then costs 70% of their income.";
+
+
+                textSection1.appendChild(message);
+            }
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Costs of the poor. (Replace housing percent with measured percentage) (get better working hours of the poor, assumed 40)"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Housing", "336", "$", "", "#0021A5", "white");
+            chart2.addData("Driving", "82.46", "$", "", "#FA4616", "black");
+            chart2.addData("Other", "61", "$", "", "#888888", "white");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+        //Utilitarianism
+        section.addSubsection();
+        {
+            let sectionIndex = 2;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Utilitarianism";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p";
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Placeholder. What should be put here?"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+        //Rights
+        section.addSubsection();
+        {
+            let sectionIndex = 3;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Rights";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Placeholder. What should be put here?"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+        //Virtue
+        section.addSubsection();
+        {
+            let sectionIndex = 4;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Virtue";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Placeholder. What should be put here?"
+
+
+                chartSection.appendChild(message);
+            }
+
+            let chart2 = new PieChart();
+            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            
+            chart2.updatePercents();
+            
+            chart2.getAnimatedElements().forEach(element=>{
+                section.getSubsection(sectionIndex).addElement(element);
+            })
+            
+            chartSection.appendChild(chart2.div)
+
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+            body.appendChild(chartSection);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+        //Fairness
+        section.addSubsection();
+        {
+            let sectionIndex = 5;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Fairness";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "p"
+
+
+                textSection1.appendChild(message);
+            }
+
+
+
+            let chartSection = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(chartSection);
+            chartSection.classList.add("VerticalContent");
+            chartSection.style.width = "50%";
+            chartSection.style.height = "100%";
+        
+            
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.style.textAlign = "center";
+                message.innerText = "Placeholder. What should be put here?"
 
 
                 chartSection.appendChild(message);
