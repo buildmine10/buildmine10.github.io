@@ -1906,7 +1906,7 @@
             let header = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(header);
             header.classList.add("Header");
-            header.innerText = "Greater Good (Condensing this would be good. I didn't have room to pitch trains as the solution)";
+            header.innerText = "Greater Good";
 
 
             let body = document.createElement("div");
@@ -1926,7 +1926,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "The Greater Good framework has us looking out for those most at risk from our actions. The idea being that if those most at risk are helped, then all get helped."
+                message.innerText = "The Greater Good framework has us looking out for those most at risk from our actions. The idea being that if those most at risk are helped, then all get helped. When viewed this way, the reductions in air and noise pollution alongside cheaper transit both help the environment and the poor."
 
 
                 textSection1.appendChild(message);
@@ -1938,20 +1938,12 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "When viewed this way, the reductions in air and noise pollution alongside cheaper transit both help the environment and the poor.";
 
-
-                textSection1.appendChild(message);
-            }
-
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                
+                //message.innerText = "Reducing air pollution helps combat climate change, which in turn reduces the frequency and severity of disasters such as milder storms, smaller droughts, and slower coastal erosion.";
                 message.innerText = "Air pollution is well known to be the cause of climate changes, so all reductions to air pollution are viewed as giving a positive benefit to the entire world. Slowing climate change, reduces the disasters experience in countries all around the world; milder storms, less frequent and smaller droughts, and a stopping of the ever encroaching shore.";
 
+                
+
 
                 textSection1.appendChild(message);
             }
@@ -1962,8 +1954,19 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "For the poor, cheaper transit allowed them to better hold a job. One of the major obstacles to job security among the poor is solving the problem of how to get to and from work. By using the previously stated statistic for the price of commuting and perform some simple math we can see that driving to work costs 17% of their income before tax. This is unaffordable when houseing then costs 70% of their income.";
+                message.innerText = "For the poor, cheaper transit allowed them to better hold a job. One of the major obstacles to job security among the poor is solving the problem of how to get to and from work. By using the previously stated statistic for the price of commuting, we can see that commuting costs 17% of their income, which is unaffordable when housing costs 70%";
 
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Thus we are ethically compelled to use trains as they lessen both of those problems, by making less pollution and costing less to use.";
 
                 textSection1.appendChild(message);
             }
