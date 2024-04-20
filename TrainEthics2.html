@@ -1746,15 +1746,15 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 message.style.textAlign = "center";
-                message.innerText = "Placeholder"
+                message.innerText = "Time needed to go from Orlando to Jacksonville"
 
 
                 chartSection.appendChild(message);
             }
 
             let chart2 = new PieChart();
-            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            chart2.addData("Projected High Speed Rail Time", "1", "", " Hour", "#0021A5", "white");
+            chart2.addData("Time Needed to Drive in a Car", "2", "", " Hours", "#FA4616", "black");
             
             chart2.updatePercents();
             
@@ -1819,7 +1819,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "The ethical considerations that push us to push you towards trains can be userstood from 5 ethical frameworks: The Greater Good, Utilitarianism, Rights, Virtue, and Fairness."
+                message.innerText = "The ethical considerations that push us to push you towards trains can be userstood from 5 ethical frameworks: The Common Good, Utilitarianism, Rights, Virtue, and Fairness."
 
 
                 textSection1.appendChild(message);
@@ -1906,7 +1906,7 @@
             let header = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(header);
             header.classList.add("Header");
-            header.innerText = "Greater Good";
+            header.innerText = "Common Good";
 
 
             let body = document.createElement("div");
@@ -1926,7 +1926,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "The Greater Good framework has us looking out for those most at risk from our actions. The idea being that if those most at risk are helped, then all get helped. When viewed this way, the reductions in air and noise pollution alongside cheaper transit both help the environment and the poor."
+                message.innerText = "The Common Good framework has us looking out for those most at risk from our actions. The idea being that if those most at risk are helped, then all get helped. When viewed this way, the reductions in air and noise pollution alongside cheaper transit both help the environment and the poor."
 
 
                 textSection1.appendChild(message);
@@ -2040,6 +2040,7 @@
             section.getSubsection(sectionIndex).addElement(textSection1);
             textSection1.classList.add("VerticalContent");
             textSection1.classList.add("TextContainer");
+            textSection1.style.maxWidth = "unset";
 
 
             //Section 1
@@ -2048,7 +2049,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "p"
+                message.innerText = "The Utilitarianism framework is unique in that it can be described with a mathematical formula. But as it turns out actually using this formula is impossible as it requires perfect knowledge of the furture and the ability to determine what is supposed to be optimized by a system of ethics. Should happiness be optimized or saddness minimized? Is it a combination of the two? And are there false ways to achieve this goal, such as with mind altering drugs?"
 
 
                 textSection1.appendChild(message);
@@ -2060,7 +2061,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "p";
+                message.innerText = "Luckily, Utilitarianism can also be defined as maximizing future enjoyment. However, this does not always mean putting off enjoyment now for more enjoyment later. After all it's possible for a small amount enjoyment over a long period of time to outweight a large amount of enjoyment surounded by disatisfaction.";
 
 
                 textSection1.appendChild(message);
@@ -2072,7 +2073,19 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "p"
+                message.innerText = "The reason why Utilitarianism is associated with practicallity is because the same equation that used to defined Utilitarianism when applied to ethics can also be applied to engineering and economic problems by changing the target we optimize. For example, in economics Utilitarianism is called a Cost-Benefit analysis."
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "We decided to include a Utilitarian analysis because it can incorporate variables that are often overlooked by other frameworks. Utilitarianism is uniquely able to directly prioritize the health of the economy and free time by arbitrarily deciding that those are things we want to optimize. As such we have decided to just that.";
 
 
                 textSection1.appendChild(message);
@@ -2080,42 +2093,207 @@
 
 
 
-            let chartSection = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(chartSection);
-            chartSection.classList.add("VerticalContent");
-            chartSection.style.width = "50%";
-            chartSection.style.height = "100%";
-        
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(textSection1);
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+
+        //Utilitarianism 2
+        section.addSubsection();
+        {
+            let sectionIndex = 3;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Utilitarianism - Impact on the Economy";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("HorizontalContent");
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
             
+
+            //Section 1
+            //Messages in the text section 
             {
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.style.textAlign = "center";
-                message.innerText = "Placeholder. What should be put here?"
+                message.innerText = "As mentioned earlier widespread car use entails a massive economic cost. These costs are something we should seek to minimize. But more importantly than that, in this analysis we want to choose the option that most benefits the economy from the perspecitve of the normal person."
 
 
-                chartSection.appendChild(message);
+                textSection1.appendChild(message);
             }
 
-            let chart2 = new PieChart();
-            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "If we look to Japan for the cost of trains per person, we see that for the government spends significantly less per person on their train network. A large part of this is because the majority of the rail network is profitable.";
+
+
+                textSection1.appendChild(message);
+            }
+
             
-            chart2.updatePercents();
             
-            chart2.getAnimatedElements().forEach(element=>{
-                section.getSubsection(sectionIndex).addElement(element);
-            })
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "If Florida developed such a train network, it would provide thousands of jobs, lower the price of transit for the individual, and reduce the tax burden. And all of those benefits would be by a significant amount.";
+
+
+                textSection1.appendChild(message);
+            }
+
+
+            let textSection2 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection2);
+            textSection2.classList.add("VerticalContent");
+            textSection2.classList.add("TextContainer");
+
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Cars\n\nYearly cost to the government: $350 per person"
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Yearly cost to individuals: $12,150 per person";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Trains\n\nYearly cost to the government: $5.51 per person";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Yearly cost to individuals: $2,200 per person";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
             
-            chartSection.appendChild(chart2.div)
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
 
 
 
             div.appendChild(header);
             div.appendChild(body);
             body.appendChild(textSection1);
-            body.appendChild(chartSection);
+            body.append(textSection2)
 
 
 
@@ -2125,7 +2303,7 @@
         //Rights
         section.addSubsection();
         {
-            let sectionIndex = 3;
+            let sectionIndex = 4;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2232,7 +2410,7 @@
         //Virtue
         section.addSubsection();
         {
-            let sectionIndex = 4;
+            let sectionIndex = 5;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2339,7 +2517,7 @@
         //Fairness
         section.addSubsection();
         {
-            let sectionIndex = 5;
+            let sectionIndex = 6;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2447,7 +2625,7 @@
     </script>
 
 
-<!-- Ethics Section -->
+<!-- What to do Section -->
 <script>
     let actionSection = new StickySection("What to do");
 
