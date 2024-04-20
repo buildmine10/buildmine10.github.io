@@ -1785,11 +1785,12 @@
 
 
         section = ethicsSection;
+        let sectionIndex = -1;
 
         //Intro
         section.addSubsection();
         {
-            let sectionIndex = 0;
+            sectionIndex++;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -1896,7 +1897,7 @@
         //Greater good
         section.addSubsection();
         {
-            let sectionIndex = 1;
+            sectionIndex++;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2018,7 +2019,7 @@
         //Utilitarianism
         section.addSubsection();
         {
-            let sectionIndex = 2;
+            sectionIndex++;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2106,7 +2107,7 @@
         //Utilitarianism 2
         section.addSubsection();
         {
-            let sectionIndex = 3;
+            sectionIndex++;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2126,7 +2127,8 @@
             let body2 = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(body2);
             body2.classList.add("HorizontalContent");
-
+            body2.style.width = "100%";
+            
 
             let textSection1 = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(textSection1);
@@ -2328,10 +2330,237 @@
             section.getSubsection(sectionIndex).div.appendChild(div);
         }
         
+        //Utilitarianism 3
+        section.addSubsection();
+        {
+            sectionIndex++;
+
+            let div = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(div);
+            div.classList.add("Slide");
+
+
+            let header = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(header);
+            header.classList.add("Header");
+            header.innerText = "Utilitarianism - Impact on the Person";
+
+
+            let body = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body);
+            body.classList.add("VerticalContent");
+
+            let body2 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(body2);
+            body2.classList.add("HorizontalContent");
+            body2.style.width = "100%";
+
+
+            let textSection1 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection1);
+            textSection1.classList.add("VerticalContent");
+            textSection1.classList.add("TextContainer");
+
+            
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Placeholder"
+
+
+                textSection1.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Placeholder"
+
+
+                textSection1.appendChild(message);
+            }
+
+            
+            
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Placeholder"
+
+
+                textSection1.appendChild(message);
+            }
+
+            
+
+
+            let textSection2 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection2);
+            textSection2.classList.add("VerticalContent");
+            textSection2.classList.add("TextContainer");
+
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Cars\n\nYearly cost to the government: $350 per person"
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Yearly cost to individuals: $12,150 per person";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Trains\n\nYearly cost to the government: $5.51 per person";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Yearly cost to individuals: $2,200 per person";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+            
+            //DUMMY SECTION TO CONTROL SPACING
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "";
+
+
+                textSection2.appendChild(message);
+            }
+
+
+
+            let textSection3 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection3);
+            textSection3.classList.add("VerticalContent");
+            textSection3.classList.add("TextContainer");
+            textSection3.style.maxWidth = "unset";
+            textSection3.style.height = "fit-content";
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Now to compare the economic value of the current car system to a future train system. The current car system creates most of its jobs on the paperwork side of this: making standards and performing inspections. And the car system also has significant higher monetary costs to society. If we were to largely replacing the car system with a train network, this would not likely remove many jobs from that the current car system creates. After all, cars are still on the road so regulations and paperwork must still be performed. Thus switching to a train system, would likely make more jobs than it destroys and it would free up money to be used for other purposes. This seems like a clear win for trains.";
+
+
+                textSection3.appendChild(message);
+            }
+
+
+            div.appendChild(header);
+            div.appendChild(body);
+            body.appendChild(body2)
+            body.appendChild(textSection3);
+            body2.appendChild(textSection1);
+            body2.append(textSection2)
+
+
+
+            section.getSubsection(sectionIndex).div.appendChild(div);
+        }
+        
+
         //Rights
         section.addSubsection();
         {
-            let sectionIndex = 4;
+            sectionIndex++;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2438,7 +2667,7 @@
         //Virtue
         section.addSubsection();
         {
-            let sectionIndex = 5;
+            sectionIndex++;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
@@ -2545,7 +2774,7 @@
         //Fairness
         section.addSubsection();
         {
-            let sectionIndex = 6;
+            sectionIndex++;
 
             let div = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(div);
