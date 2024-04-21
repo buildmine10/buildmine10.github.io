@@ -2607,6 +2607,7 @@
         }
         
 
+
         //Rights
         section.addSubsection();
         {
@@ -2672,42 +2673,54 @@
 
 
 
-            let chartSection = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(chartSection);
-            chartSection.classList.add("VerticalContent");
-            chartSection.style.width = "50%";
-            chartSection.style.height = "100%";
-        
-            
+            let textSection2 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection2);
+            textSection2.classList.add("VerticalContent");
+            textSection2.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
             {
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.style.textAlign = "center";
-                message.innerText = "Placeholder. This should probably be a breakdown of the prohibitive cost of cars."
+                message.innerText = "A break down of the cost of living for minimum wage workers, to show how cars (an, unfortunately, necessary expense) struggle to fit in to their finaces.";
 
 
-                chartSection.appendChild(message);
+                textSection2.appendChild(message);
             }
 
-            let chart2 = new PieChart();
-            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
-            
-            chart2.updatePercents();
-            
-            chart2.getAnimatedElements().forEach(element=>{
-                section.getSubsection(sectionIndex).addElement(element);
-            })
-            
-            chartSection.appendChild(chart2.div)
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "Placeholder";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Placeholder";
+
+
+                textSection2.appendChild(message);
+            }
 
 
 
             div.appendChild(header);
             div.appendChild(body);
             body.appendChild(textSection1);
-            body.appendChild(chartSection);
+            body.appendChild(textSection2);
 
 
 
@@ -3013,7 +3026,7 @@
         let header = document.createElement("div");
         section.getSubsection(sectionIndex).addElement(header);
         header.classList.add("Header");
-        header.innerText = "What you can do";
+        header.innerText = "Petition to local representatives";
 
 
         let body = document.createElement("div");
@@ -3132,7 +3145,7 @@
         let header = document.createElement("div");
         section.getSubsection(sectionIndex).addElement(header);
         header.classList.add("Header");
-        header.innerText = "What you can do";
+        header.innerText = "Share this with everyone";
 
 
         let body = document.createElement("div");
