@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 
 <html>
+    <head>
+        <meta property="og:title" content="Title of Your Article" />
+        <meta property="og:description" content="Description of your content" />
+        <meta property="og:image" content="URL of image to show" />
+        <meta property="og:url" content="URL of your page" />
+        <meta property="og:type" content="website" />
+    </head>
     <style>
         *{
             font-family: Arial;
@@ -3251,7 +3258,7 @@
             let message = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
-            message.innerText = "Placeholder"
+            message.innerText = "Now this you definitely know how to do. (I hope)"
 
 
             textSection1.appendChild(message);
@@ -3263,7 +3270,7 @@
             let message = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
-            message.innerText = "Placeholder";
+            message.innerText = "By sharing this website with everyone you know it will raise awareness towards the issue. And the more people that know about the issue, the more likely that at least one of you will actually do something to cause change, rather than just read this and move on.";
 
 
             textSection1.appendChild(message);
@@ -3275,7 +3282,7 @@
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
             
-            message.innerText = "Placeholder";
+            message.innerHTML = `<a href="https://twitter.com/intent/tweet?url=https://buildmine10.github.io/TrainEthics2.html" target="_blank">Share on Twitter</a>`;
 
 
             textSection1.appendChild(message);
@@ -3287,7 +3294,8 @@
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
             
-            message.innerText = "placeholder"
+            message.innerHTML = `
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://buildmine10.github.io/TrainEthics2.html" target="_blank">Share on Facebook</a>`;
 
 
             textSection1.appendChild(message);
@@ -3390,7 +3398,7 @@
 
 <script>
     setTimeout(()=>{
-        scrollToPercentageOfHeight(getLocalRepresentativesScroll());
+        scrollToPercentageOfHeight(95);
     }, 100)
     
 </script>
