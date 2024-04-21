@@ -3308,21 +3308,41 @@
         }
 
 
+        let textSection2 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection2);
+        textSection2.classList.add("VerticalContent");
+        textSection2.classList.add("TextContainer");
+        textSection2.style.alignItems = "center"
+
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "QR Code to this site"
+
+
+            textSection2.appendChild(message);
+        }
+
+
 
         let image = document.createElement("img");
         carSection.getSubsection(sectionIndex).addElement(image);
         image.classList.add("Text");
         image.src = "https://buildmine10.github.io/TrainEthics.png";
-        image.style.width = "25%"
-        image.style.flexGrow = "1"
-        //textSection.appendChild(image);
+        image.style.width = "100%"
+        textSection2.appendChild(image);
 
 
 
         div.appendChild(header);
         div.appendChild(body);
         body.appendChild(textSection1);
-        body.appendChild(image);
+        body.appendChild(textSection2);
+        
 
 
 
