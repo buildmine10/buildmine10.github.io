@@ -3301,8 +3301,7 @@
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
             
-            message.innerHTML = `
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://buildmine10.github.io/TrainEthics2.html" target="_blank">Share on Facebook</a>`;
+            message.innerHTML = `<a href="https://www.facebook.com/sharer/sharer.php?u=https://buildmine10.github.io/TrainEthics2.html" target="_blank">Share on Facebook</a>`;
 
 
             textSection1.appendChild(message);
@@ -3314,6 +3313,8 @@
         carSection.getSubsection(sectionIndex).addElement(image);
         image.classList.add("Text");
         image.src = "https://buildmine10.github.io/TrainEthics.png";
+        image.style.width = "25%"
+        image.style.flexGrow = "1"
         //textSection.appendChild(image);
 
 
