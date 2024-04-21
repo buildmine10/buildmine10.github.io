@@ -2410,7 +2410,7 @@
             section.getSubsection(sectionIndex).addElement(textSection1);
             textSection1.classList.add("VerticalContent");
             textSection1.classList.add("TextContainer");
-
+            textSection1.style.overflow = "visible";
             
 
             //Section 1
@@ -2419,7 +2419,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Placeholder"
+                message.innerText = "When considering a mode of transportation, you need to consider the experience of using that mode of transportation and how that impacts the person."
 
 
                 textSection1.appendChild(message);
@@ -2431,7 +2431,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Placeholder"
+                message.innerText = "Driving a car entails an extended period of hightened alertness while performing a monotonous task. We already know full well that driving causes increased stress that is bad for the body over long periods of time. But another major impact on the person is time lost. Drivers are not free to do what they want to be doing when they drive, which takes hours of free time away from them."
 
 
                 textSection1.appendChild(message);
@@ -2445,7 +2445,7 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "Placeholder"
+                message.innerText = "If we look at the experience of using a train, we see that it suffers from neither of those problems. The passengers don't need to be constantly vigilent during the entirety of the drive, and they are free to do what every they want while the train moves them from place to place."
 
 
                 textSection1.appendChild(message);
@@ -2479,7 +2479,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Cars\n\nYearly cost to the government: $350 per person"
+                message.innerText = "Not sure what to put here"
 
 
                 textSection2.appendChild(message);
@@ -2490,20 +2490,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Yearly cost to individuals: $12,150 per person";
-
-
-                textSection2.appendChild(message);
-            }
-
-            //DUMMY SECTION TO CONTROL SPACING
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                
-                message.innerText = "";
+                message.innerText = "Placeholder";
 
 
                 textSection2.appendChild(message);
@@ -2522,13 +2509,14 @@
                 textSection2.appendChild(message);
             }
 
+            //DUMMY SECTION TO CONTROL SPACING
             //Messages in the text section 
             {
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "Trains\n\nYearly cost to the government: $5.51 per person";
+                message.innerText = "";
 
 
                 textSection2.appendChild(message);
@@ -2540,7 +2528,19 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "Yearly cost to individuals: $2,200 per person";
+                message.innerText = "Placeholder";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Placeholder";
 
 
                 textSection2.appendChild(message);
@@ -2587,7 +2587,7 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "Now to compare the economic value of the current car system to a future train system. The current car system creates most of its jobs on the paperwork side of this: making standards and performing inspections. And the car system also has significant higher monetary costs to society. If we were to largely replacing the car system with a train network, this would not likely remove many jobs from that the current car system creates. After all, cars are still on the road so regulations and paperwork must still be performed. Thus switching to a train system, would likely make more jobs than it destroys and it would free up money to be used for other purposes. This seems like a clear win for trains.";
+                message.innerText = "However, this doesn't mean that trains don't cause stressors, they most certainly do. Metropolitan train are often crowded, and the stress that causes can be easily seen by the stereotypes surrounding the New York subway.";
 
 
                 textSection3.appendChild(message);
@@ -3277,5 +3277,10 @@
 
 
     
+</script>
+
+
+<script>
+    scrollToPercentageOfHeight(65);
 </script>
 </html>
