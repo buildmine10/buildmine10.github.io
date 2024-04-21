@@ -130,6 +130,7 @@
         .BarChartLabel{
             display: flex;
             justify-content: center;
+            overflow: visible;
         }
 
         /*Immeadiately around the bar*/
@@ -306,6 +307,27 @@
 
     <!-- Storage of the Sticky Sections and Scroll Behavior -->
     <script>
+
+        //Allows the URL to automatically scroll to a location
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const scrollTo = urlParams.get('scrollTo');
+            if (scrollTo) {
+                scrollToPercentageOfHeight(parseInt(scrollTo));
+            }
+        });
+
+        function scrollToPercentageOfHeight(percent) {
+            const scrollableHeight = document.getElementById("main").scrollHeight;
+            const targetScrollY = scrollableHeight * (percent / 100);
+            document.getElementById("main").scrollTo({
+                top: targetScrollY,
+                behavior: 'smooth'
+            });
+        }
+
+
+        //Defines how the sticky sections work
         var stickySections = []
 
                 
@@ -634,14 +656,16 @@
         })
 
         
+        
     
     </script>
 
     <!-- Bar Chart -->
     <script>
         class BarChart{
-            constructor(){
+            constructor(minValue){
                 this.data = [];
+                this.minValue = minValue;
 
                 this.div = document.createElement("div");
                 this.div.classList.add("HorizontalContent");
@@ -699,7 +723,13 @@
 
                 //console.log(max)
                 this.bars.forEach((bar, index)=>{
-                    bar.getElementsByClassName("BarChartBar")[0].style.height = (this.data[index].value / max) * 100 + "%";
+                    let percent = (this.data[index].value / max);
+                    if(this.minValue != undefined){
+                        percent = (this.data[index].value - this.minValue) / (max - this.minValue);
+                    }
+                    
+                    
+                    bar.getElementsByClassName("BarChartBar")[0].style.height = percent * 100 + "%";
 
                     let delay = (1 - this.data[index].value / max) / 2;
                     bar.getElementsByClassName("BarChartBar")[0].style.transitionDelay = `${delay}s`;
@@ -973,7 +1003,7 @@
                 let anim = createAnimation2(0, percents[index] * Math.PI * 2, 0, previousAngle);
                 let anim2 = createAnimation(0, percents[index] * Math.PI * 2, 0, previousAngle);
                 let anim3 = createAnimation3(0, percents[index] * Math.PI * 2, 0, previousAngle);
-                console.log(previousAngle)
+                //console.log(previousAngle)
                 previousAngle += percents[index] * Math.PI * 2;
 
                 this.text[index].style.animation = `${anim2} ${this.animationTime}s linear both`;
@@ -1113,7 +1143,7 @@
             carSection.getSubsection(1).addElement(chartSection);
             chartSection.classList.add("VerticalContent");
 
-            let chart = new BarChart();
+            let chart = new BarChart(8000);
             chart.addData("2019", "9,282", "$", "");
             chart.addData("2020", "9,561", "$", "");
             chart.addData("2021", "9,666", "$", "");
@@ -1197,7 +1227,7 @@
             carSection.getSubsection(sectionIndex).addElement(chartSection);
             chartSection.classList.add("VerticalContent");
 
-            let chart = new BarChart();
+            let chart = new BarChart(300000);
             chart.addData("2019", "401,867", "", "\nCrashes");
             chart.addData("2020", "341,399", "", "\nCrashes");
             chart.addData("2021", "401,540", "", "\nCrashes");
@@ -1222,6 +1252,7 @@
 
             carSection.getSubsection(sectionIndex).div.appendChild(div);
         }
+
 
         carSection.addSubsection();
         {
@@ -1252,7 +1283,7 @@
                 let message = document.createElement("div");
                 carSection.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Pollution"
+                message.innerText = "A highly talked about problem with car is their contributions to climate change. Whilst driving has decrease after COVID, the contributions to climate change are still quite high."
 
 
                 textSection.appendChild(message);
@@ -1263,17 +1294,23 @@
                 let message = document.createElement("div");
                 carSection.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Pollution"
+                message.innerText = "These contributions are measured in Grams of CO2 Equivalent. The equivalent represents how not all greenhouse gasses contribute the same to climate changes. For example 1 gram of methane has the same impact as 30 grams of CO2."
 
 
                 textSection.appendChild(message);
             }
 
-            let image = document.createElement("img");
-            carSection.getSubsection(sectionIndex).addElement(image);
-            image.classList.add("Text");
-            image.src = "https://www.ocala.com/gcdn/presto/2022/10/28/NOSB/69c190f0-b0fc-4dfe-bea6-dd5cb5283462-White_Hyundai.jpg?width=660&height=495&fit=crop&format=pjpg&auto=webp";
-            textSection.appendChild(image);
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                carSection.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerText = "If we compare the greenhouse gas emissions from transportation we can see that 29% of greenhouse gas emissions come from transportation alone. This the same amount that the entire industrial sector produces!"
+
+
+                textSection.appendChild(message);
+            }
+
 
 
 
@@ -1281,12 +1318,12 @@
             carSection.getSubsection(sectionIndex).addElement(chartSection);
             chartSection.classList.add("VerticalContent");
 
-            let chart = new BarChart();
-            chart.addData("2019", "401,867", "", "\nCrashes");
-            chart.addData("2020", "341,399", "", "\nCrashes");
-            chart.addData("2021", "401,540", "", "\nCrashes");
-            chart.addData("2022", "397,620", "", "\nCrashes");
-            chart.addData("2023", "394,230", "", "\nCrashes");
+            let chart = new BarChart(1500);
+            chart.addData("2018", "1,813.1", "", "\nMillion Metric\nTons of CO2");
+            chart.addData("2019", "1,816.6", "", "\nMillion Metric\nTons of CO2");
+            chart.addData("2020", "1,572.8", "", "\nMillion Metric\nTons of CO2");
+            chart.addData("2021", "1,753.5", "", "\nMillion Metric\nTons of CO2");
+            chart.addData("2022", "1,751.3", "", "\nMillion Metric\nTons of CO2");
 
             chart.updateHeights();
 
@@ -1820,7 +1857,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "The ethical considerations that push us to push you towards trains can be userstood from 5 ethical frameworks: The Common Good, Utilitarianism, Rights, Virtue, and Fairness."
+                message.innerText = "The ethical considerations that push us to push you towards trains can be userstood from 3 ethical frameworks: Common Good, Utilitarianism, and Rights."
 
 
                 textSection1.appendChild(message);
@@ -1852,49 +1889,61 @@
 
 
 
-            let chartSection = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(chartSection);
-            chartSection.classList.add("VerticalContent");
-            chartSection.style.width = "50%";
-            chartSection.style.height = "100%";
-        
-            
+            let textSection2 = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(textSection2);
+            textSection2.classList.add("VerticalContent");
+            textSection2.classList.add("TextContainer");
+
+
+            //Section 1
+            //Messages in the text section 
             {
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.style.textAlign = "center";
-                message.innerText = "Placeholder. What should be put here?"
+                message.innerHTML = "<b>Common Good</b><br>"
+                message.innerHTML += "We should combat climate change because it benefits everyone. Especially those that are most affected by it, namely people in developing countries."
 
-
-                chartSection.appendChild(message);
+                textSection2.appendChild(message);
             }
 
-            let chart2 = new PieChart();
-            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
-            
-            chart2.updatePercents();
-            
-            chart2.getAnimatedElements().forEach(element=>{
-                section.getSubsection(sectionIndex).addElement(element);
-            })
-            
-            chartSection.appendChild(chart2.div)
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerHTML = "<b>Utilitarianism</b><br>"
+                message.innerHTML += "We should combat climate change because it would reduce the economic burden created by worsening natural disasters. It would also keep the biosphere stable, which ensures that we don't encounter mass extinctions."
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerHTML = "<b>Rights</b><br>"
+                message.innerHTML += "We should combat climate change because the effects of climate change are threatening many people's right to food and water."
+
+                textSection2.appendChild(message);
+            }
 
 
 
             div.appendChild(header);
             div.appendChild(body);
             body.appendChild(textSection1);
-            body.appendChild(chartSection);
+            body.appendChild(textSection2);
 
 
 
             section.getSubsection(sectionIndex).div.appendChild(div);
         }
         
-        //Greater good
+        //Common good
         section.addSubsection();
         {
             sectionIndex++;
@@ -1919,6 +1968,7 @@
             section.getSubsection(sectionIndex).addElement(textSection1);
             textSection1.classList.add("VerticalContent");
             textSection1.classList.add("TextContainer");
+            textSection1.style.fontSize = "min(2vw, 2.5vh)"
 
 
             //Section 1
@@ -2134,7 +2184,7 @@
             section.getSubsection(sectionIndex).addElement(textSection1);
             textSection1.classList.add("VerticalContent");
             textSection1.classList.add("TextContainer");
-
+            textSection1.style.fontSize = "min(2vw, 2.5vh)"
             
 
             //Section 1
@@ -2664,220 +2714,6 @@
             section.getSubsection(sectionIndex).div.appendChild(div);
         }
         
-        //Virtue
-        section.addSubsection();
-        {
-            sectionIndex++;
-
-            let div = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(div);
-            div.classList.add("Slide");
-
-
-            let header = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(header);
-            header.classList.add("Header");
-            header.innerText = "Virtue";
-
-
-            let body = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(body);
-            body.classList.add("HorizontalContent");
-
-
-            let textSection1 = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(textSection1);
-            textSection1.classList.add("VerticalContent");
-            textSection1.classList.add("TextContainer");
-
-
-            //Section 1
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                message.innerText = "p"
-
-
-                textSection1.appendChild(message);
-            }
-
-            //Section 1
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                message.innerText = "p"
-
-
-                textSection1.appendChild(message);
-            }
-
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                
-                message.innerText = "p"
-
-
-                textSection1.appendChild(message);
-            }
-
-
-
-            let chartSection = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(chartSection);
-            chartSection.classList.add("VerticalContent");
-            chartSection.style.width = "50%";
-            chartSection.style.height = "100%";
-        
-            
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                message.style.textAlign = "center";
-                message.innerText = "Placeholder. What should be put here?"
-
-
-                chartSection.appendChild(message);
-            }
-
-            let chart2 = new PieChart();
-            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
-            
-            chart2.updatePercents();
-            
-            chart2.getAnimatedElements().forEach(element=>{
-                section.getSubsection(sectionIndex).addElement(element);
-            })
-            
-            chartSection.appendChild(chart2.div)
-
-
-
-            div.appendChild(header);
-            div.appendChild(body);
-            body.appendChild(textSection1);
-            body.appendChild(chartSection);
-
-
-
-            section.getSubsection(sectionIndex).div.appendChild(div);
-        }
-        
-        //Fairness
-        section.addSubsection();
-        {
-            sectionIndex++;
-
-            let div = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(div);
-            div.classList.add("Slide");
-
-
-            let header = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(header);
-            header.classList.add("Header");
-            header.innerText = "Fairness";
-
-
-            let body = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(body);
-            body.classList.add("HorizontalContent");
-
-
-            let textSection1 = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(textSection1);
-            textSection1.classList.add("VerticalContent");
-            textSection1.classList.add("TextContainer");
-
-
-            //Section 1
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                message.innerText = "p"
-
-
-                textSection1.appendChild(message);
-            }
-
-            //Section 1
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                message.innerText = "p"
-
-
-                textSection1.appendChild(message);
-            }
-
-            //Messages in the text section 
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                
-                message.innerText = "p"
-
-
-                textSection1.appendChild(message);
-            }
-
-
-
-            let chartSection = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(chartSection);
-            chartSection.classList.add("VerticalContent");
-            chartSection.style.width = "50%";
-            chartSection.style.height = "100%";
-        
-            
-            {
-                let message = document.createElement("div");
-                section.getSubsection(sectionIndex).addElement(message);
-                message.classList.add("Text");
-                message.style.textAlign = "center";
-                message.innerText = "Placeholder. What should be put here?"
-
-
-                chartSection.appendChild(message);
-            }
-
-            let chart2 = new PieChart();
-            chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-            chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
-            
-            chart2.updatePercents();
-            
-            chart2.getAnimatedElements().forEach(element=>{
-                section.getSubsection(sectionIndex).addElement(element);
-            })
-            
-            chartSection.appendChild(chart2.div)
-
-
-
-            div.appendChild(header);
-            div.appendChild(body);
-            body.appendChild(textSection1);
-            body.appendChild(chartSection);
-
-
-
-            section.getSubsection(sectionIndex).div.appendChild(div);
-        }
-        
 
     </script>
 
@@ -2889,10 +2725,404 @@
 
     section = actionSection;
 
-    //Speed
+    sectionIndex = -1;
+
+    //Intro
     section.addSubsection();
     {
-        let sectionIndex = 0;
+        sectionIndex++;
+
+        let div = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(div);
+        div.classList.add("Slide");
+
+
+        let header = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(header);
+        header.classList.add("Header");
+        header.innerText = "What you can do";
+
+
+        let body = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(body);
+        body.classList.add("HorizontalContent");
+
+
+        let textSection1 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection1);
+        textSection1.classList.add("VerticalContent");
+        textSection1.classList.add("TextContainer");
+        textSection1.style.maxWidth = "unset";
+        textSection1.style.fontSize = "min(2vw, 2.5vh)"
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "There are many ways you can contribute to solving Florida's car dependency problem. We are suggesting that we exchange cars for trains. However, just because we want to do this doesn't mean its going to happen. We need your help to see this through, and we've identified several ways you could contribute."
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "<b>Use existing public transportation</b><br>By using public transportation you are indicating that you want to see this type of transporation grow and improve. This will naturally cause more money to be invested into the public transportation sector. And while this won't immediatly result in the expasion of trains, it might do so a few generations down the line. ";
+            message.innerHTML += "At first you will see the improvement and expansion of bus systems that make traversing cities faster and easier. However, by looking at New York city's Metropolitan Transport Authority we can see that buses don't expand as well as trains, due to requiring more staff per person moved. So we should naturally see a shift to train systems, which require far less staff than buses.";
+
+            textSection1.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerHTML = "<b>Contact local representatives</b><br>";
+            message.innerHTML += "Just because you are using public transportation doesn't mean that government owned sources will expand. Politicians only do things if they believe it will cause their voters to vote for them again. And they probably won't pick up on the small increase in public transportation use that this website will generate. But if you contact your local representatives and directly tell them what you want, then that will directly put the idea in their head. ";
+            message.innerHTML += "This is important because the first step to solving a problem is knowing that it exists. And we need to ensure that our politicians know that we think there is a problem they can fix.";
+
+            textSection1.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerHTML = "<b>Share this with everyone</b><br>";
+            message.innerHTML += "As we just said, the first step to solving a problem is knowing it exists, so share this with everyone you know! As more people learn of the problem, more people are going to start working to fix the problem. So spread the message and bring a positive change to Florida for all!";
+
+            textSection1.appendChild(message);
+        }
+
+
+
+
+
+
+        div.appendChild(header);
+        div.appendChild(body);
+        body.appendChild(textSection1);
+
+
+        section.getSubsection(sectionIndex).div.appendChild(div);
+    }
+    
+    //Use public transportation
+    section.addSubsection();
+    {
+        sectionIndex++;
+
+        let div = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(div);
+        div.classList.add("Slide");
+        div.id = "publicTransportList"
+
+
+        let header = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(header);
+        header.classList.add("Header");
+        header.innerText = "Existing public transportation";
+
+
+        let body = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(body);
+        body.classList.add("VerticalContent");
+
+        let body2 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(body2);
+        body2.classList.add("HorizontalContent");
+        body2.style.width = "100%";
+
+
+        let textSection1 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection1);
+        textSection1.classList.add("VerticalContent");
+        textSection1.classList.add("TextContainer");
+        textSection1.style.fontSize = "min(2vw, 2.5vh)"
+
+        
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "I know that you probably don't know how to use the public transportation that may or may not exist in your area. So we've coallated several sites that will help you use your local public transportation system."
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "If you don't live in or near any of these cities, try google or apple maps. They often integrate themselves with the local transport authority to provide easy access to the local public transport system."
+
+
+            textSection1.appendChild(message);
+        }
+
+        
+        
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerText = "The most common public transport in Florida are busses, and while it is true that you can probably get to where you need to go faster using a car, please don't dismiss these systems. If we want to see travel times compete with cars, then we need to increase the amount of funding that public transit recieves."
+
+
+            textSection1.appendChild(message);
+        }
+
+        
+
+
+        let textSection2 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection2);
+        textSection2.classList.add("VerticalContent");
+        textSection2.classList.add("TextContainer");
+        //textSection2.style.fontSize = "min(2vw, 2.5vh)"
+        
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Gainesville: <a href='https://go-rts.com/'>RTS</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Orlando: <a href='https://www.orlando.gov/Parking-Transportation/Public-Transit'>Public Tansit</a> <a href='https://www.orlando.gov/Parking-Transportation/Public-Transit/LYNX'>LYNX</a> <a href='https://www.golynx.com/plan-trip/riding-lynx/lymmo/'>LYMMO</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Jacksonville: <a href='https://www.jtafla.com/'>JTA</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Tallahassee: <a href='https://www.talgov.com/starmetro/starmetroHome'>Star Metro</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Miami: <a href='https://www.miamidade.gov/global/transportation/home.page'>Miami-Dade Transit</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Tampa: <a href='https://www.gohart.org/'>HART</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+
+        let textSection3 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection3);
+        textSection3.classList.add("VerticalContent");
+        textSection3.classList.add("TextContainer");
+        textSection3.style.maxWidth = "unset";
+        textSection3.style.height = "fit-content";
+        //textSection3.style.fontSize = "min(2vw, 2.5vh)"
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerText = "It's probably not obvious to all of you why using busses would lead to the creation of train networks. As we mentioned earlier, New York's public transit explains why bus networks won't grow, but rather be replaced by trains. Aside from the fact the New York's public transit give very large employment benefits that have placed them in debt to thousands of people that aren't currently working for them, even if the city was only paying the people it currently employed, busses require far more employees than trains do. ";
+            message.innerText += "This means the amount of revenue they generate vs the amount of costs they incur is worse than that of trains. And due to economic pressures, you should expect any growing public transport system to shift towards trains as a cost saving measure. Replacing an expesive system with a cheaper one that still accomplishes the same task. After all, no one wants to spend more money than they need to."
+
+            textSection3.appendChild(message);
+        }
+
+        div.appendChild(header);
+        div.appendChild(body);
+        body.appendChild(body2)
+        body.appendChild(textSection3);
+        body2.appendChild(textSection1);
+        body2.append(textSection2)
+
+
+
+        section.getSubsection(sectionIndex).div.appendChild(div);
+    }
+        
+    //Contact local representative
+    section.addSubsection();
+    {
+        sectionIndex++;
+
+        let div = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(div);
+        div.classList.add("Slide");
+
+
+        let header = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(header);
+        header.classList.add("Header");
+        header.innerText = "What you can do";
+
+
+        let body = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(body);
+        body.classList.add("HorizontalContent");
+
+
+        let textSection1 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection1);
+        textSection1.classList.add("VerticalContent");
+        textSection1.classList.add("TextContainer");
+
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "Placeholder"
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "Placeholder";
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerText = "Placeholder";
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerText = "placeholder"
+
+
+            textSection1.appendChild(message);
+        }
+
+
+
+        let chartSection = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(chartSection);
+        chartSection.classList.add("VerticalContent");
+        chartSection.style.width = "50%";
+        chartSection.style.height = "100%";
+    
+        
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.style.textAlign = "center";
+            message.innerText = "Placeholder"
+
+
+            chartSection.appendChild(message);
+        }
+
+        let chart2 = new PieChart();
+        chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
+        chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
+        
+        chart2.updatePercents();
+        
+        chart2.getAnimatedElements().forEach(element=>{
+            section.getSubsection(sectionIndex).addElement(element);
+        })
+        
+        chartSection.appendChild(chart2.div)
+
+
+
+        div.appendChild(header);
+        div.appendChild(body);
+        body.appendChild(textSection1);
+        body.appendChild(chartSection);
+
+
+
+        section.getSubsection(sectionIndex).div.appendChild(div);
+    }
+    
+    //Use Share
+    section.addSubsection();
+    {
+        sectionIndex++;
 
         let div = document.createElement("div");
         section.getSubsection(sectionIndex).addElement(div);
@@ -3009,5 +3239,30 @@
     }
     
 
+    function getPublicTransportListScroll(){
+        let start = sectionPercents[3].start;
+        let end = sectionPercents[3].end;
+        let percentToScrollTo = (end - start) * (1 / actionSection.subSections.length) + start;
+        return percentToScrollTo * 100;
+    }
+
+    //Add a button to quickly get to the list of public transit sites
+    {
+        let button = document.createElement("a");
+        //button.href = "#" + "publicTransportList";
+
+        button.innerText = "Public transit sites";
+
+        //Make it scroll smoothly
+        button.addEventListener("click", function(e){
+            scrollToPercentageOfHeight(getPublicTransportListScroll())
+        });
+
+
+        document.getElementById("topBar").appendChild(button);
+    }
+
+
+    
 </script>
 </html>
