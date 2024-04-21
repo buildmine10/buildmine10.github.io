@@ -3310,42 +3310,18 @@
 
 
 
-        let chartSection = document.createElement("div");
-        section.getSubsection(sectionIndex).addElement(chartSection);
-        chartSection.classList.add("VerticalContent");
-        chartSection.style.width = "50%";
-        chartSection.style.height = "100%";
-    
-        
-        {
-            let message = document.createElement("div");
-            section.getSubsection(sectionIndex).addElement(message);
-            message.classList.add("Text");
-            message.style.textAlign = "center";
-            message.innerText = "Placeholder"
-
-
-            chartSection.appendChild(message);
-        }
-
-        let chart2 = new PieChart();
-        chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-        chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
-        
-        chart2.updatePercents();
-        
-        chart2.getAnimatedElements().forEach(element=>{
-            section.getSubsection(sectionIndex).addElement(element);
-        })
-        
-        chartSection.appendChild(chart2.div)
+        let image = document.createElement("img");
+        carSection.getSubsection(sectionIndex).addElement(image);
+        image.classList.add("Text");
+        image.src = "https://buildmine10.github.io/TrainEthics.png";
+        //textSection.appendChild(image);
 
 
 
         div.appendChild(header);
         div.appendChild(body);
         body.appendChild(textSection1);
-        body.appendChild(chartSection);
+        body.appendChild(image);
 
 
 
