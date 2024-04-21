@@ -3013,7 +3013,7 @@
         section.getSubsection(sectionIndex).div.appendChild(div);
     }
         
-    //Contact local representative
+    //Use petition to local representative
     section.addSubsection();
     {
         sectionIndex++;
@@ -3026,19 +3026,26 @@
         let header = document.createElement("div");
         section.getSubsection(sectionIndex).addElement(header);
         header.classList.add("Header");
-        header.innerText = "Petition to local representatives";
+        header.innerText = "Petition to a local representative";
 
 
         let body = document.createElement("div");
         section.getSubsection(sectionIndex).addElement(body);
-        body.classList.add("HorizontalContent");
+        body.classList.add("VerticalContent");
+
+        let body2 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(body2);
+        body2.classList.add("HorizontalContent");
+        body2.style.width = "100%";
 
 
         let textSection1 = document.createElement("div");
         section.getSubsection(sectionIndex).addElement(textSection1);
         textSection1.classList.add("VerticalContent");
         textSection1.classList.add("TextContainer");
+        textSection1.style.fontSize = "min(2vw, 2.5vh)"
 
+        
 
         //Section 1
         //Messages in the text section 
@@ -3046,7 +3053,7 @@
             let message = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
-            message.innerText = "Placeholder"
+            message.innerText = "The chances are also pretty high that you don't know how to petition to your local representative. So once again, here are some helpful tips and links to get you started.";
 
 
             textSection1.appendChild(message);
@@ -3058,10 +3065,46 @@
             let message = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
-            message.innerText = "Placeholder";
+            message.innerText = "To actually perform a petition you will first need to devise the petition letter. This doesn't need to be an actual letter, but those are usually taken more seriously. ";
+            message.innerText += "You are most likely to see action if your letter contains specifics and evidence that supports the claim that these actions should be taken, much like how this website has formatted itself. ";
+            message.innerText += "However, unlike this website, your letter should be specific to your region. There are many specifics we couldn't cover because they would be limited to individual cities.";
+
+            textSection1.appendChild(message);
+        }
+
+        
+        
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerText = "If you are unable to send a letter, try calling, emailing, or actually making a petition (You go around getting signed support for the contents of your letter). Calling an emailing your representatives is the easiest thing you can do. I would think that calling your representative would have the strongest imact on their behavior just after a petition.";
 
 
             textSection1.appendChild(message);
+        }
+
+        
+
+
+        let textSection2 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection2);
+        textSection2.classList.add("VerticalContent");
+        textSection2.classList.add("TextContainer");
+        //textSection2.style.fontSize = "min(2vw, 2.5vh)"
+        
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "House of Representatives: <a href='https://www.myfloridahouse.gov/'>Main page</a> <a href='https://www.myfloridahouse.gov/representatives'>List</a>"
+
+
+            textSection2.appendChild(message);
         }
 
         //Messages in the text section 
@@ -3069,11 +3112,10 @@
             let message = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
-            
-            message.innerText = "Placeholder";
+            message.innerHTML = "Senate: <a href='https://www.flsenate.gov/'>Main page</a> <a href='https://www.flsenate.gov/Senators'>List</a>"
 
 
-            textSection1.appendChild(message);
+            textSection2.appendChild(message);
         }
 
         //Messages in the text section 
@@ -3081,57 +3123,101 @@
             let message = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
-            
-            message.innerText = "placeholder"
+            message.innerHTML = "Gainesville: <a href='https://www.gainesvillefl.gov/City-Commission'>City Commision</a>"
 
 
-            textSection1.appendChild(message);
+            textSection2.appendChild(message);
         }
 
-
-
-        let chartSection = document.createElement("div");
-        section.getSubsection(sectionIndex).addElement(chartSection);
-        chartSection.classList.add("VerticalContent");
-        chartSection.style.width = "50%";
-        chartSection.style.height = "100%";
-    
-        
+        //Messages in the text section 
         {
             let message = document.createElement("div");
             section.getSubsection(sectionIndex).addElement(message);
             message.classList.add("Text");
-            message.style.textAlign = "center";
-            message.innerText = "Placeholder"
+            message.innerHTML = "Orlando: <a href='https://www.orlando.gov/Our-Government/Mayor-City-Council'>City Council</a>";
 
 
-            chartSection.appendChild(message);
+            textSection2.appendChild(message);
         }
 
-        let chart2 = new PieChart();
-        chart2.addData("Trains in Japan", "2.72", "$", "", "#0021A5", "white");
-        chart2.addData("Cars in Florida", "5.89", "$", "", "#FA4616", "black");
-        
-        chart2.updatePercents();
-        
-        chart2.getAnimatedElements().forEach(element=>{
-            section.getSubsection(sectionIndex).addElement(element);
-        })
-        
-        chartSection.appendChild(chart2.div)
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Jacksonville: <a href='https://www.jacksonville.gov/city-council/city-council-members'>City Council</a>"
 
 
+            textSection2.appendChild(message);
+        }
+
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Tallahassee: <a href='https://www.talgov.com/cityleadership/CityLeadership'>City Leadership</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Miami: <a href='https://www.miami.gov/My-Government/City-Officials'>City Officials</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerHTML = "Tampa: <a href='https://www.tampa.gov/city-council'>City Council</a>"
+
+
+            textSection2.appendChild(message);
+        }
+
+
+        let textSection3 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection3);
+        textSection3.classList.add("VerticalContent");
+        textSection3.classList.add("TextContainer");
+        textSection3.style.maxWidth = "unset";
+        textSection3.style.height = "fit-content";
+        //textSection3.style.fontSize = "min(2vw, 2.5vh)"
+
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            
+            message.innerHTML = "If you wish to get make a petition so you can show your representative that people actually want this you can try to use the website <a href='https://www.change.org/''>change.org</a>. It makes petitioning easy, it even includes the ability to narrow the scope of a petition to the local level, so you know that that people aren't falsely voting from outside your city. The website claims that local petitions are 50% more likely to succeed.";
+            
+
+            textSection3.appendChild(message);
+        }
 
         div.appendChild(header);
         div.appendChild(body);
-        body.appendChild(textSection1);
-        body.appendChild(chartSection);
+        body.appendChild(body2)
+        body.appendChild(textSection3);
+        body2.appendChild(textSection1);
+        body2.append(textSection2)
 
 
 
         section.getSubsection(sectionIndex).div.appendChild(div);
     }
-    
+       
     //Use Share
     section.addSubsection();
     {
@@ -3259,12 +3345,19 @@
         return percentToScrollTo * 100;
     }
 
+    function getLocalRepresentativesScroll(){
+        let start = sectionPercents[3].start;
+        let end = sectionPercents[3].end;
+        let percentToScrollTo = (end - start) * (2 / actionSection.subSections.length) + start;
+        return percentToScrollTo * 100;
+    }
+
     //Add a button to quickly get to the list of public transit sites
     {
         let button = document.createElement("a");
         //button.href = "#" + "publicTransportList";
 
-        button.innerText = "Public transit sites";
+        button.innerText = "Public Transit";
 
         //Make it scroll smoothly
         button.addEventListener("click", function(e){
@@ -3275,12 +3368,30 @@
         document.getElementById("topBar").appendChild(button);
     }
 
+    //Add a button to quickly get to the list of local representative sites
+    {
+        let button = document.createElement("a");
+        //button.href = "#" + "publicTransportList";
+
+        button.innerText = "Local Representatives";
+
+        //Make it scroll smoothly
+        button.addEventListener("click", function(e){
+            scrollToPercentageOfHeight(getLocalRepresentativesScroll())
+        });
+
+
+        document.getElementById("topBar").appendChild(button);
+    }
 
     
 </script>
 
 
 <script>
-    scrollToPercentageOfHeight(65);
+    setTimeout(()=>{
+        scrollToPercentageOfHeight(getLocalRepresentativesScroll());
+    }, 100)
+    
 </script>
 </html>
