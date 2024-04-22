@@ -2654,6 +2654,7 @@
             section.getSubsection(sectionIndex).addElement(textSection2);
             textSection2.classList.add("VerticalContent");
             textSection2.classList.add("TextContainer");
+            textSection2.style.fontSize = "min(2vw, 2.5vh)"
 
 
             //Section 1
@@ -2699,7 +2700,7 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerHTML = "Car / Train commuting:<br>&emsp;$358.31 / <font color='purple'>$165.47</font>";
+                message.innerHTML = "Car / <font color='purple'>Train</font> commuting:<br>&emsp;$358.31 / <font color='purple'>$165.47</font>";
 
 
                 textSection2.appendChild(message);
