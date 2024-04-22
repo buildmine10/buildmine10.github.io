@@ -2050,16 +2050,16 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 message.style.textAlign = "center";
-                message.innerText = "Costs of the poor. (Replace housing percent with measured percentage) (get better working hours of the poor, assumed 40)"
+                message.innerText = "Costs of the poor"
 
 
                 chartSection.appendChild(message);
             }
 
             let chart2 = new PieChart();
-            chart2.addData("Housing", "336", "$", "", "#0021A5", "white");
-            chart2.addData("Driving", "82.46", "$", "", "#FA4616", "black");
-            chart2.addData("Other", "61", "$", "", "#888888", "white");
+            chart2.addData("Housing", "1,360", "$", "", "#0021A5", "white");
+            chart2.addData("Driving", "358.31", "$", "", "#FA4616", "black");
+            chart2.addData("Other", "367.41", "$", "", "#888888", "white");
             
             chart2.updatePercents();
             
@@ -2700,7 +2700,20 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "A break down of the cost of living for minimum wage workers, to show how cars (an, unfortunately, necessary expense) struggle to fit in to their finaces.";
+                message.innerHTML = "Breakdown of the monthly expenses of a minimum wage worker, working 40 hours a week.";
+
+
+                textSection2.appendChild(message);
+            }
+
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                message.innerHTML = "Income:<br>&emsp;$2,085.72";
 
 
                 textSection2.appendChild(message);
@@ -2712,7 +2725,7 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
-                message.innerText = "Placeholder";
+                message.innerHTML = "Cheapest rent available (alone / with 3 roomates):<br>&emsp;$1,360 / $770";
 
 
                 textSection2.appendChild(message);
@@ -2724,7 +2737,55 @@
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
                 
-                message.innerText = "Placeholder";
+                message.innerHTML = "Car / Train commuting:<br>&emsp;$358.31 / <font color='purple'>$165.47</font>";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerHTML = "Cheapest utilities available:<br>&emsp;$214.61";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerHTML = "Food cost:<br>&emsp;$304.17";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerHTML = "Remaining income:<br>&emsp;Alone: &emsp;&emsp;&emsp;&ensp;-$151.37 / <font color='purple'>$41.47</font><br>&emsp;3 Roommates:&nbsp; $438.61 / <font color='purple'>$631.47</font>";
+
+
+                textSection2.appendChild(message);
+            }
+
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerHTML = "Food cost is calculated as 30 days, 2 meals per day, $5 per meal. This is less than they are probably spending.";
 
 
                 textSection2.appendChild(message);
@@ -3334,7 +3395,7 @@
         carSection.getSubsection(sectionIndex).addElement(image);
         image.classList.add("Text");
         image.src = "https://buildmine10.github.io/TrainEthics.png";
-        image.style.width = "100%"
+        image.style.width = "75%"
         textSection2.appendChild(image);
 
 
@@ -3362,6 +3423,13 @@
         let start = sectionPercents[3].start;
         let end = sectionPercents[3].end;
         let percentToScrollTo = (end - start) * (2 / actionSection.subSections.length) + start;
+        return percentToScrollTo * 100;
+    }
+
+    function getShareScroll(){
+        let start = sectionPercents[3].start;
+        let end = sectionPercents[3].end;
+        let percentToScrollTo = (end - start) * (3 / actionSection.subSections.length) + start;
         return percentToScrollTo * 100;
     }
 
@@ -3397,13 +3465,30 @@
         document.getElementById("topBar").appendChild(button);
     }
 
+
+    //Add a button to quickly get to the list of local representative sites
+    {
+        let button = document.createElement("a");
+        //button.href = "#" + "publicTransportList";
+
+        button.innerText = "Share";
+
+        //Make it scroll smoothly
+        button.addEventListener("click", function(e){
+            scrollToPercentageOfHeight(getShareScroll())
+        });
+
+
+        document.getElementById("topBar").appendChild(button);
+    }
+
     
 </script>
 
 
 <script>
     //setTimeout(()=>{
-    //    scrollToPercentageOfHeight(35);
+    //    scrollToPercentageOfHeight(75);
     //}, 100)
     
 </script>
