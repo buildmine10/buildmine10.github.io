@@ -2648,6 +2648,18 @@
                 textSection1.appendChild(message);
             }
 
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
+                
+                message.innerText = "Additional rights that the car based system denies are the right to safety and the right to a clean environment. But we've already details those benefits - no need to repeat ourselves."
+
+
+                textSection1.appendChild(message);
+            }
+
 
 
             let textSection2 = document.createElement("div");
