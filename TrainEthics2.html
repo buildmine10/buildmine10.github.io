@@ -1916,6 +1916,18 @@
                 let message = document.createElement("div");
                 section.getSubsection(sectionIndex).addElement(message);
                 message.classList.add("Text");
+                message.innerHTML = "<u><b>Examples</b></u>"
+                //message.innerHTML += "We should combat climate change because it benefits everyone. Especially those that are most affected by it, namely people in developing countries."
+
+                textSection2.appendChild(message);
+            }
+
+            //Section 1
+            //Messages in the text section 
+            {
+                let message = document.createElement("div");
+                section.getSubsection(sectionIndex).addElement(message);
+                message.classList.add("Text");
                 message.innerHTML = "<b>Common Good</b><br>"
                 message.innerHTML += "We should combat climate change because it benefits everyone. Especially those that are most affected by it, namely people in developing countries."
 
@@ -3387,6 +3399,82 @@
     }
     
 
+    
+     //Special thanks
+     section.addSubsection();
+    {
+        sectionIndex++;
+
+        let div = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(div);
+        div.classList.add("Slide");
+
+
+        let header = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(header);
+        header.classList.add("Header");
+        header.innerText = "Special Thanks";
+
+
+        let body = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(body);
+        body.classList.add("HorizontalContent");
+
+
+        let textSection1 = document.createElement("div");
+        section.getSubsection(sectionIndex).addElement(textSection1);
+        textSection1.classList.add("VerticalContent");
+        textSection1.classList.add("TextContainer");
+
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "Special thanks to Daryl Goss, the Community Outreach Specialist at the FDOT.\n\n(386) 984-5392 | daryl.goss@dot.state.fl.us"
+
+
+            textSection1.appendChild(message);
+        }
+
+        //Section 1
+        //Messages in the text section 
+        {
+            let message = document.createElement("div");
+            section.getSubsection(sectionIndex).addElement(message);
+            message.classList.add("Text");
+            message.innerText = "Special thanks to Chris A. Wiglesworth, the Planning Administrator from the Transit Office of the FDOT.\n\n850-414-4532 | chris.wiglesworth@dot.state.fl.us"
+
+
+            textSection1.appendChild(message);
+        }
+
+
+
+
+        //let image = document.createElement("img");
+        //carSection.getSubsection(sectionIndex).addElement(image);
+        //image.classList.add("Text");
+        //image.src = "https://buildmine10.github.io/TrainEthics.png";
+        //image.style.width = "75%"
+        //textSection2.appendChild(image);
+
+
+
+        div.appendChild(header);
+        div.appendChild(body);
+        body.appendChild(textSection1);
+        
+
+
+
+        section.getSubsection(sectionIndex).div.appendChild(div);
+    }
+    
+    
+
     function getPublicTransportListScroll(){
         let start = sectionPercents[3].start;
         let end = sectionPercents[3].end;
@@ -3405,6 +3493,13 @@
         let start = sectionPercents[3].start;
         let end = sectionPercents[3].end;
         let percentToScrollTo = (end - start) * (3 / actionSection.subSections.length) + start;
+        return percentToScrollTo * 100;
+    }
+
+    function getThanksScroll(){
+        let start = sectionPercents[3].start;
+        let end = sectionPercents[3].end;
+        let percentToScrollTo = (end - start) * (4 / actionSection.subSections.length) + start;
         return percentToScrollTo * 100;
     }
 
@@ -3451,6 +3546,22 @@
         //Make it scroll smoothly
         button.addEventListener("click", function(e){
             scrollToPercentageOfHeight(getShareScroll())
+        });
+
+
+        document.getElementById("topBar").appendChild(button);
+    }
+
+    //Add a button to quickly get to the list of local representative sites
+    {
+        let button = document.createElement("a");
+        //button.href = "#" + "publicTransportList";
+
+        button.innerText = "Special Thanks";
+
+        //Make it scroll smoothly
+        button.addEventListener("click", function(e){
+            scrollToPercentageOfHeight(getThanksScroll())
         });
 
 
