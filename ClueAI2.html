@@ -1201,7 +1201,7 @@
 
         
 
-        document.onmouseup = ()=>{
+        document.onpointerup = ()=>{
             (()=>{
                 isMouseDown = false;
 
@@ -1274,6 +1274,79 @@
             })();
         }
 
+        //document.ontouchend = ()=>{
+        //    (()=>{
+        //        isMouseDown = false;
+//
+        //        if(mouseStartCard == "") return;
+//
+        //        recordData();
+        //        for(let i = 0; i < playerCount; i++){
+        //            dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+        //        }
+//
+        //        if(mouseStartCard == mouseCardOver){
+        //            if(mouseStartIndex != mouseIndexOver){
+        //                let temp = mouseIndexOver;
+        //                if(temp < mouseStartIndex){
+        //                    temp += playerCount;
+        //                }
+//
+//
+        //                for(let i = mouseStartIndex + 1; i < temp; i++){
+        //                    if(dataBoxes[mouseStartCard][i % playerCount].innerText != 2){
+        //                        dataBoxes[mouseStartCard][i % playerCount].innerText = -1;
+        //                    }                        
+        //                }
+//
+        //                if(dataBoxes[mouseStartCard][temp % playerCount].innerText == 0){
+        //                    dataBoxes[mouseStartCard][temp % playerCount].innerText = 1;
+        //                }
+        //                
+        //            }else{
+        //                let current = parseInt(dataBoxes[mouseStartCard][mouseStartIndex].innerText);
+//
+        //                for(let i = 0; i < playerCount; i++){
+        //                    dataBoxes[mouseStartCard][i].innerText = -1;
+        //                }
+//
+        //                
+        //                switch(current){
+        //                    case 0:
+        //                        dataBoxes[mouseStartCard][mouseStartIndex].innerText = 1;
+        //                        break;
+        //                    case 1:
+        //                        dataBoxes[mouseStartCard][mouseStartIndex].innerText = 2;
+        //                        break;
+        //                    case 2:
+        //                        dataBoxes[mouseStartCard][mouseStartIndex].innerText = -1;
+        //                        break;
+        //                    case -1:
+        //                        dataBoxes[mouseStartCard][mouseStartIndex].innerText = 1;
+        //                        break;
+        //                }
+        //            }
+//
+        //            onDataChange();
+        //        }
+        //    
+        //        mouseStartCard = "";
+        //        mouseStartIndex = -1;
+        //    })();
+        //    
+        //    (()=>{
+        //        if(startLocation == null) return;
+//
+        //        if(event.clientX - startLocation > window.innerWidth / 4 && isUndoGesture){
+        //            console.log("undo")
+        //            undo();
+        //        }
+//
+        //        startLocation = null;
+        //        pastLocation = null;
+        //    })();
+        //}
+
         //populate data sheet
         function makeDataSheet(playerCount){
 
@@ -1336,7 +1409,7 @@
                     let box = document.createElement("div");
                     box.innerText = "0";
                     box.onclick = ()=>{onClickDataBox(person, i);};
-                    box.onmousedown = ()=>{
+                    box.onpointerdown = ()=>{
                         if(mouseStartCard != ""){
                             for(let i = 0; i < playerCount; i++){
                                 dataBoxes[mouseStartCard][i].classList.remove("DataHover");
@@ -1350,11 +1423,53 @@
 
                         dataBoxes[mouseStartCard][i].classList.add("DataHover");
                     }
-                    box.onmouseenter = ()=>{
+                    box.onpointerenter = ()=>{
                         mouseCardOver = person;
                         mouseIndexOver = i;
                         onMouseOverDataBox();
                     }
+                    //box.ontouchstart = ()=>{
+                    //    if(mouseStartCard != ""){
+                    //        for(let i = 0; i < playerCount; i++){
+                    //            dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+                    //        }
+                    //    }
+                    //    
+//
+                    //    mouseStartCard = person;
+                    //    mouseStartIndex = i;
+                    //    isMouseDown = true;
+//
+                    //    dataBoxes[mouseStartCard][i].classList.add("DataHover");
+                    //}
+                    //box.ontouchmove = (event)=>{
+                    //    const rect = box.getBoundingClientRect();
+                    //    
+                    //    // Get the touch point (assuming single touch)
+                    //    const touch = event.touches[0];
+                    //    const touchX = touch.clientX;
+                    //    const touchY = touch.clientY;
+//
+                    //    console.log(touch, rect)
+                    //    
+                    //    // Check if the touch point is within the box's bounds
+                    //    const isTouchInside = (
+                    //        touchX >= rect.left &&
+                    //        touchX <= rect.right &&
+                    //        touchY >= rect.top &&
+                    //        touchY <= rect.bottom
+                    //    );
+//
+                    //    if (isTouchInside) {
+                    //        console.log("H")
+                    //        if(!(mouseCardOver == person && mouseIndexOver == i)){
+                    //            mouseCardOver = person;
+                    //            mouseIndexOver = i;
+                    //            onMouseOverDataBox();
+                    //        }
+                    //    }
+                    //}
+                    
                     dataBoxes[person].push(box);
                     div2.appendChild(box);
                 }
@@ -1390,7 +1505,7 @@
                     let box = document.createElement("div");
                     box.innerText = "0";
                     box.onclick = ()=>{onClickDataBox(weapon, i);};
-                    box.onmousedown = ()=>{
+                    box.onpointerdown = ()=>{
                         if(mouseStartCard != ""){
                             for(let i = 0; i < playerCount; i++){
                                 dataBoxes[mouseStartCard][i].classList.remove("DataHover");
@@ -1404,11 +1519,50 @@
 
                         dataBoxes[mouseStartCard][i].classList.add("DataHover");
                     }
-                    box.onmouseenter = ()=>{
+                    box.onpointerover = ()=>{
                         mouseCardOver = weapon;
                         mouseIndexOver = i;
                         onMouseOverDataBox();
                     }
+                    //box.ontouchstart = ()=>{
+                    //    if(mouseStartCard != ""){
+                    //        for(let i = 0; i < playerCount; i++){
+                    //            dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+                    //        }
+                    //    }
+                    //    
+//
+                    //    mouseStartCard = person;
+                    //    mouseStartIndex = i;
+                    //    isMouseDown = true;
+//
+                    //    dataBoxes[mouseStartCard][i].classList.add("DataHover");
+                    //}
+                    //box.ontouchmove = (event)=>{
+                    //    const rect = box.getBoundingClientRect();
+                    //    
+                    //    // Get the touch point (assuming single touch)
+                    //    const touch = event.touches[0];
+                    //    const touchX = touch.clientX;
+                    //    const touchY = touch.clientY;
+                    //    
+                    //    // Check if the touch point is within the box's bounds
+                    //    const isTouchInside = (
+                    //        touchX >= rect.left &&
+                    //        touchX <= rect.right &&
+                    //        touchY >= rect.top &&
+                    //        touchY <= rect.bottom
+                    //    );
+//
+                    //    if (isTouchInside) {
+                    //        if(!(mouseCardOver == weapon && mouseIndexOver == i)){
+                    //            mouseCardOver = weapon;
+                    //            mouseIndexOver = i;
+                    //            onMouseOverDataBox();
+                    //        }
+                    //    }
+                    //}
+                    
                     dataBoxes[weapon].push(box);
                     div2.appendChild(box);
                 }
@@ -1443,7 +1597,7 @@
                     let box = document.createElement("div");
                     box.innerText = "0";
                     box.onclick = ()=>{onClickDataBox(room, i);};
-                    box.onmousedown = ()=>{
+                    box.onpointerdown = ()=>{
                         if(mouseStartCard != ""){
                             for(let i = 0; i < playerCount; i++){
                                 dataBoxes[mouseStartCard][i].classList.remove("DataHover");
@@ -1457,11 +1611,50 @@
 
                         dataBoxes[mouseStartCard][i].classList.add("DataHover");
                     }
-                    box.onmouseenter = ()=>{
+                    box.onpointerenter = ()=>{
                         mouseCardOver = room;
                         mouseIndexOver = i;
                         onMouseOverDataBox();
                     }
+                    //box.ontouchstart = ()=>{
+                    //    if(mouseStartCard != ""){
+                    //        for(let i = 0; i < playerCount; i++){
+                    //            dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+                    //        }
+                    //    }
+                    //    
+//
+                    //    mouseStartCard = person;
+                    //    mouseStartIndex = i;
+                    //    isMouseDown = true;
+//
+                    //    dataBoxes[mouseStartCard][i].classList.add("DataHover");
+                    //}
+                    //box.ontouchmove = (event)=>{
+                    //    const rect = box.getBoundingClientRect();
+                    //    
+                    //    // Get the touch point (assuming single touch)
+                    //    const touch = event.touches[0];
+                    //    const touchX = touch.clientX;
+                    //    const touchY = touch.clientY;
+                    //    
+                    //    // Check if the touch point is within the box's bounds
+                    //    const isTouchInside = (
+                    //        touchX >= rect.left &&
+                    //        touchX <= rect.right &&
+                    //        touchY >= rect.top &&
+                    //        touchY <= rect.bottom
+                    //    );
+//
+                    //    if (isTouchInside) {
+                    //        if(!(mouseCardOver == room && mouseIndexOver == i)){
+                    //            mouseCardOver = room;
+                    //            mouseIndexOver = i;
+                    //            onMouseOverDataBox();
+                    //        }
+                    //    }
+                    //}
+                    
                     dataBoxes[room].push(box);
                     div2.appendChild(box);
                 }
@@ -1477,13 +1670,13 @@
         let isUndoGesture = false;
         let pastLocation = null;
         let startLocation = null;
-        document.getElementById("dataSheetLabels").onmousedown = (event)=>{
+        document.getElementById("dataSheetLabels").onpointerdown = (event)=>{
             isUndoGesture = true;
             startLocation = event.clientX;
             pastLocation = [event.clientX, event.clientY];
         }
         
-        document.onmousemove = (event)=>{
+        document.onpointermove = (event)=>{
             if(pastLocation != null){
                 let diff = [event.clientX - pastLocation[0], event.clientY - pastLocation[1]];
                 let mag = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
@@ -1499,13 +1692,35 @@
 
                     pastLocation = [event.clientX, event.clientY];
                 }
-
-                
             }
-
-            
         }
 
+
+
+        //document.getElementById("dataSheetLabels").ontouchstart = (event)=>{
+        //    isUndoGesture = true;
+        //    startLocation = event.clientX;
+        //    pastLocation = [event.clientX, event.clientY];
+        //}
+//
+        //document.ontouchmove = (event)=>{
+        //    if(pastLocation != null){
+        //        let diff = [event.clientX - pastLocation[0], event.clientY - pastLocation[1]];
+        //        let mag = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+//
+        //        if(mag > 3){
+        //            diff[0] /= mag;
+        //            diff[1] /= mag;
+//
+        //            //Allow 20 degrees of variance from horizontal
+        //            if(diff[0] < 0.939692620786){
+        //                isUndoGesture = false;
+        //            }
+//
+        //            pastLocation = [event.clientX, event.clientY];
+        //        }
+        //    }
+        //}
 
 
 
