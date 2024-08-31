@@ -632,8 +632,6 @@
         }
 
         function onDataChange(){
-            console.log("data change")
-
             //See if inferences can be made
 
             //Check to see if a card is definitly guilty or not guilty
@@ -1657,7 +1655,14 @@
 
         menuState.setPlayerCount(6)
 
-        document.body.style.height = window.visualViewport.height;
+        function preventIosScrolling() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollTop}px`;
+            document.body.style.width = '100%';
+        }
+
+        preventIosScrolling();
     </script>
 
 
