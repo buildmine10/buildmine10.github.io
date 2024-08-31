@@ -638,10 +638,13 @@
             //Check to see if a card is definitly guilty or not guilty
             document.getElementById("dataSheetLabels").childNodes.forEach(node=>{
                 if(!(node instanceof HTMLDivElement)) return;//If it is not a div, then it isn't a label
+                if(!Object.hasOwn(dataBoxes, node.innerText)) return;
+                if(node.innerText == undefined || node.innerText == "") return;
 
                 let bar = node.getElementsByClassName("ProgressBar")[0];
                 let inverseBar = node.getElementsByClassName("InverseBar")[0];
 
+                
                 if(dataBoxes[node.innerText].some((element)=>{return element.innerText == 2;})){
                     //Then this card is not guilty
                     bar.classList.add("Red");
