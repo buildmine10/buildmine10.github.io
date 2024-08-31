@@ -638,30 +638,34 @@
             //Check to see if a card is definitly guilty or not guilty
             document.getElementById("dataSheetLabels").childNodes.forEach(node=>{
                 if(!(node instanceof HTMLDivElement)) return;//If it is not a div, then it isn't a label
-                if(!Object.hasOwn(dataBoxes, node.innerText)) return;
-                if(node.innerText == undefined || node.innerText == "") return;
+
+                let card = "";
+                node.childNodes.forEach(element=>{
+                    if(element.innerText != ""){
+                        card = element.innerText;
+                    }
+                });
 
                 let bar = node.getElementsByClassName("ProgressBar")[0];
                 let inverseBar = node.getElementsByClassName("InverseBar")[0];
-
                 
-                if(dataBoxes[node.innerText].some((element)=>{return element.innerText == 2;})){
+                if(dataBoxes[card].some((element)=>{return element.innerText == 2;})){
                     //Then this card is not guilty
                     bar.classList.add("Red");
                     bar.style.width = "100%";
                 }else{
                     bar.classList.remove("Red");
-                    bar.style.width = `${dataBoxes[node.innerText].reduce((sum, curr)=>{return sum + (curr.innerText == -1);}, 0) / playerCount * 100}%`;
+                    bar.style.width = `${dataBoxes[card].reduce((sum, curr)=>{return sum + (curr.innerText == -1);}, 0) / playerCount * 100}%`;
                 }
 
-                if(dataBoxes[node.innerText].every((element)=>{return element.innerText == -1;})){
+                if(dataBoxes[card].every((element)=>{return element.innerText == -1;})){
                     //Then this card is not guilty
                     node.classList.add("Green");
                 }else{
                     node.classList.remove("Green");
                 }
 
-                inverseBar.style.width = `${dataBoxes[node.innerText].reduce((sum, curr)=>{return sum + (curr.innerText == 1);}, 0) / playerCount * 100}%`;
+                inverseBar.style.width = `${dataBoxes[card].reduce((sum, curr)=>{return sum + (curr.innerText == 1);}, 0) / playerCount * 100}%`;
             });
 
             //Check to see if we can infer which cards another player has
