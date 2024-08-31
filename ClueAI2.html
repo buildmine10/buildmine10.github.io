@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+            user-select: none;
+        }
+
+        html{
+
+        }
+
+        body{
+            margin: 0px;
+
+            display:flex;
+            flex-direction: column;
+
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+
+
+            background-color: grey;
+            overflow: hidden;
+        }
+
+        #protector{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+
+            display: none;
+
+            overflow: hidden;
+            
+
+            z-index: 100;
+        }
+
+        #darkener{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+
+            display: contents;
+
+            overflow: hidden;
+            background-color: #000000aa;
+            opacity: 0;
+            z-index: 1;
+
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+        }
+
+
+        #screen1{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+             
+
+
+        #dataSheet{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            margin: 0.5vh;
+            /*background-color: lightgrey;*/
+        }
+
+        
+        #dataSheetLabels{
+            height: 100%;
+            box-sizing: border-box;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding-right: 0.5vh;
+            margin-right: 0.5vh;
+            border-right: 0.5vh solid black;
+        }
+
+        #dataSheetLabels>div{
+            height: 3.5vh;
+            background-color: lightgray;
+            font-size: min(2vh);
+            padding: 0px 1vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        #dataSheetLabels>span{
+            height: 1vh;
+        }
+
+
+        #dataSheetBoxes{
+            height: 100%;
+            box-sizing: border-box;
+
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            justify-content: space-evenly;
+            /*border-right: 2px solid black;*/
+        }
+
+        #dataSheetBoxes>div{
+            height: 3.5vh;
+            width: 100%;
+            font-size: 2vw;
+            display: flex;
+            flex-direction: row;
+            gap: 0.5vh;
+            justify-content: space-evenly;
+            
+        }
+
+        #dataSheetBoxes>div>div{
+            height: 100%;
+            max-width: 3.5vh;
+            background-color: lightgray;
+            font-size: 2vh;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        #dataSheetBoxes>span{
+            height: 1vh;
+        }
+
+
+
+        button{
+            height: 10vh;
+            font-size: 5vh;
+            box-shadow: none;
+            border: none;
+            background-color: lightgrey;
+            z-index: inherit;
+        }
+    </style>
+
+    <style>
+
+        .OffScreenShown{
+            top: 0px !important; 
+            left: 0px !important; 
+        }
+
+        .Opaque{
+            opacity: 1 !important;
+        }
+
+        .Hidden{
+            display: none !important;
+        }
+
+        .FullContainer{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+            z-index: 2;
+
+
+            display: contents;
+        }
+
+        .BottomScreenMenu{
+            position: absolute;
+            top: 100vh;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+    
+            display: flex;
+            flex-direction: column-reverse;
+            
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+
+            z-index: 2;
+            gap: 1vh;
+        }
+
+        .TopScreenMenu{
+            position: absolute;
+            top: -100vh;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+    
+            display: flex;
+            flex-direction: column-reverse;
+            
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+
+            z-index: 2;
+            gap: 1vh;
+        }
+
+        .LeftScreenMenu{
+            position: absolute;
+            top: 0vh;
+            left: -100vw;
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+    
+            display: flex;
+            flex-direction: column-reverse;
+            
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+
+            z-index: 2;
+            gap: 1vh;
+        }
+
+        .RightScreenMenu{
+            position: absolute;
+            top: 0vh;
+            left: 100vw;
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+    
+            display: flex;
+            flex-direction: column-reverse;
+            
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+
+            z-index: 2;
+            gap: 1vh;
+        }
+
+        #closeButton{
+            position: absolute;
+            bottom: -10vh;
+            height: 10vh;
+            width: 100vw;
+
+
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+        }
+
+        #closeButton.OffScreenShown{
+            bottom: 0vh !important;
+            top: unset !important;
+        }
+
+        #screen2Area{
+            width: 100vw;
+            height: 89vh;
+            position:absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 2;
+            display: contents;
+            overflow: hidden;
+        }
+
+        .TextPrompt{
+            height: 10vh;
+            width: 100%;
+            font-size: 5vh;
+            background-color: lightgrey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .PlayerSelect{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .CardSelect{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+            margin: 2vh;
+        }
+
+        .CardSelect>div{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+            background-color: darkgrey;
+            
+        }
+
+        .CardSelect button{
+            padding: 0px 2vh;
+            font-size: 2vh;
+            height: 5vh;
+            margin: 1vh;
+        }
+        
+
+        .CardSelect2{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1vh;
+            justify-content: space-evenly;
+        }
+
+        .CardSelect2 button{
+            margin: 0px 1vh;
+        }
+
+        #recordGuessStage4 button{
+            height: 7vh;
+            font-size: 3vh;
+        }
+
+    </style>
+
+    <style>
+        .DataHover{
+            background-color: aqua !important;
+        }
+
+        .Red{
+            background-color: red !important;
+        }
+
+        .Green{
+            background-color: limegreen !important;
+        }
+
+
+        .ProgressBar{
+            position: absolute;
+            background-color: limegreen;
+            width: 0%;
+            height: 100%;
+            left: 0px;
+        }
+
+        .InverseBar{
+            position: absolute;
+            background-color: red;
+            width: 0%;
+            height: 100%;
+            right: 0px;
+        }
+
+        .Text{
+            flex-grow: 1;
+            font-size: 2vh;
+            margin: 1vh 1vh 0vh 1vh;
+            padding: 1vh;
+            background-color: lightgrey;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+        }
+    </style>
+
+    <body>
+        <div id="protector"></div>
+        <div id="darkener"></div>
+
+        <div id="screen1">
+            <div id="dataSheet">
+                <div id="dataSheetLabels">
+
+                </div>
+                <div id="dataSheetBoxes">
+                    
+                </div>
+            </div>
+            <button id="openMenu">≡</button>
+        </div>
+
+        
+        <div id="screen2" class="FullContainer">
+            <!--All other screens are in this-->
+            <button id="closeButton">X</button>
+            <div id="screen2Area">
+                <div id="mainMenu" class="FullContainer LeftScreenMenu">
+                    <button id="revealCardButton">Reveal Card</button>
+                    <button id="recordGuessButton">Record Guess</button>
+                    <button onclick=undo()>Undo</button>
+                    <button id="helpButton">Help</button>
+                </div>
+                <div id="revealCardMenu" class="FullContainer LeftScreenMenu">
+                    <div id="revealCardStage1" class="FullContainer">
+                        <div class="TextPrompt">Who has the card?</div>
+                        <div class="PlayerSelect"></div>
+                    </div>
+                    <div id="revealCardStage2" class="FullContainer Hidden">
+                        <div class="TextPrompt">Which card?</div>
+                        <div class="CardSelect">
+                            <div>
+                                <button onclick="revealCard('Miss Scarlet')">Scarlet</button>
+                                <button onclick="revealCard('Colonel Mustard')">Mustard</button>
+                                <button onclick="revealCard('Mrs. White')">White</button>
+                                <button onclick="revealCard('Mr. Green')">Green</button>
+                                <button onclick="revealCard('Mrs. Peacock')">Peacock</button>
+                                <button onclick="revealCard('Prof. Plum')">Plum</button>
+                            </div>
+                            <div>
+                                <button onclick="revealCard('Candlestick')">Candlestick</button>
+                                <button onclick="revealCard('Knife')">Knife</button>
+                                <button onclick="revealCard('Lead Pipe')">Lead Pipe</button>
+                                <button onclick="revealCard('Gun')">Gun</button>
+                                <button onclick="revealCard('Rope')">Rope</button>
+                                <button onclick="revealCard('Wrench')">Wrench</button>
+                            </div>
+                            <div>
+                                <button onclick="revealCard('Kitchen')">Kitchen</button>
+                                <button onclick="revealCard('Ballroom')">Ballroom</button>
+                                <button onclick="revealCard('Conservatory')">Conservatory</button>
+                                <button onclick="revealCard('Dining Room')">Dining Room</button>
+                                <button onclick="revealCard('Billiard Room')">Billiard Room</button>
+                                <button onclick="revealCard('Library')">Library</button>
+                                <button onclick="revealCard('Lounge')">Lounge</button>
+                                <button onclick="revealCard('Hall')">Hall</button>
+                                <button onclick="revealCard('Study')">Study</button>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+                <div id="recordGuessMenu" class="FullContainer LeftScreenMenu">
+                    <div id="recordGuessStage1" class="FullContainer">
+                        <div class="TextPrompt">Who asked?</div>
+                        <div class="PlayerSelect"></div>
+                    </div>
+                    <div id="recordGuessStage2" class="FullContainer Hidden">
+                        <div class="TextPrompt">What Person?</div>
+                        <div class="CardSelect2">
+                            <button onclick="recordPerson('Miss Scarlet')">Scarlet</button>
+                            <button onclick="recordPerson('Colonel Mustard')">Mustard</button>
+                            <button onclick="recordPerson('Mrs. White')">White</button>
+                            <button onclick="recordPerson('Mr. Green')">Green</button>
+                            <button onclick="recordPerson('Mrs. Peacock')">Peacock</button>
+                            <button onclick="recordPerson('Prof. Plum')">Plum</button>
+                        </div>
+                    </div>
+                    <div id="recordGuessStage3" class="FullContainer  Hidden">
+                        <div class="TextPrompt">What Weapon</div>
+                        <div class="CardSelect2">
+                            <button onclick="recordWeapon('Candlestick')">Candlestick</button>
+                            <button onclick="recordWeapon('Knife')">Knife</button>
+                            <button onclick="recordWeapon('Lead Pipe')">Lead Pipe</button>
+                            <button onclick="recordWeapon('Gun')">Gun</button>
+                            <button onclick="recordWeapon('Rope')">Rope</button>
+                            <button onclick="recordWeapon('Wrench')">Wrench</button>
+                        </div>
+                    </div>
+                    <div id="recordGuessStage4" class="FullContainer  Hidden">
+                        <div class="TextPrompt">What Room?</div>
+                        <div class="CardSelect2">
+                                <button onclick="recordRoom('Kitchen')">Kitchen</button>
+                                <button onclick="recordRoom('Ballroom')">Ballroom</button>
+                                <button onclick="recordRoom('Conservatory')">Conservatory</button>
+                                <button onclick="recordRoom('Dining Room')">Dining Room</button>
+                                <button onclick="recordRoom('Billiard Room')">Billiard Room</button>
+                                <button onclick="recordRoom('Library')">Library</button>
+                                <button onclick="recordRoom('Lounge')">Lounge</button>
+                                <button onclick="recordRoom('Hall')">Hall</button>
+                                <button onclick="recordRoom('Study')">Study</button>
+                        </div>
+                    </div>
+                    <div id="recordGuessStage5" class="FullContainer  Hidden">
+                        <div class="TextPrompt">Who answered?</div>
+                        <div class="PlayerSelect"></div>
+                    </div>
+                    <div id="recordGuessStage6" class="FullContainer  Hidden">
+                        <div class="TextPrompt">Which Card?</div>
+                        <div class="CardSelect2"></div>
+                    </div>
+                </div>
+                <div id="helpMenu" class="FullContainer LeftScreenMenu">
+                    <div class="Text">
+                        -1 = They don't have this card<br>
+                        0 = No information<br>
+                        1 = They might have this card<br>
+                        2 = They have this card<br>
+                        <br>
+                        You are the first column. The players are listed in turn order from left to right.<br>
+                        <br>
+                        Click and drag to select who asked and who answered.<br>
+                        <br>
+                        Click the asker if no one answered.<br>
+                        <br>
+                        Click a player twice if they showed you their card.<br>
+                        <br>
+                        Click a player three times if you believe nobody has that card.<br>
+                        <br>
+                        Alternatively you can use the other buttons in the menu.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+
+    <script>
+        const rooms = ["Kitchen", "Ballroom", "Conservatory", "Dining Room", "Billiard Room", "Library", "Lounge", "Hall", "Study"];
+        const weapons = ["Candlestick", "Knife", "Lead Pipe", "Gun", "Rope", "Wrench"];
+        const people = ["Miss Scarlet", "Colonel Mustard", "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum"];
+
+        const shortened = {
+            "Scarlet": "Miss Scarlet",
+            "Mustard": "Colonel Mustard", 
+            "White": "Mrs. White", 
+            "Green": "Mr. Green", 
+            "Peacock": "Mrs. Peacock", 
+            "Plum": "Prof. Plum",
+            "Candlestick" :"Candlestick", 
+            "Knife": "Knife", 
+            "Lead Pipe": "Lead Pipe", 
+            "Gun": "Gun", 
+            "Rope": "Rope", 
+            "Wrench": "Wrench",
+            "Kitchen": "Kitchen", 
+            "Ballroom": "Ballroom", 
+            "Conservatory": "Conservatory", 
+            "Dining Room": "Dining Room", 
+            "Billiard Room": "Billiard Room", 
+            "Library": "Library", 
+            "Lounge": "Lounge", 
+            "Hall": "Hall", 
+            "Study": "Study" 
+        }
+    </script>
+
+    <script>
+
+        let dataBoxes = {};
+
+        let dataRecord = [];
+
+        //0 = clockwise
+        //1 = counterclockwise
+        let turnDirection = 0;
+
+        let clockwiseArrow = "↻";
+        let counterClockwiseArrow = "↺";
+
+        let playerCount = 6;
+        let revealCardPlayer = -1;
+
+
+
+        let recordGuessAsker = -1;
+        let recordGuessAnswerer = -1;
+        let recordGuessPerson = "";
+        let recordGuessWeapon = "";
+        let recordGuessRoom = "";
+
+        function recordData(){
+            let record = {};
+            for(card in dataBoxes){
+                
+                record[card] = dataBoxes[card].map(element=>{
+                    return element.innerText;
+                })
+            }
+
+            dataRecord.push(record);
+        }
+
+
+        function undo(){
+            if(dataRecord.length > 0){
+                let record = dataRecord.pop();
+
+
+                for(card in record){
+                    record[card].forEach((entry, index)=>{
+                        dataBoxes[card][index].innerText = entry; 
+                    })
+                }
+                onDataChange();
+            }
+        }
+
+
+
+        function onClickDataBox(fieldName, playerIndex){
+
+        }
+
+        function onDataChange(){
+            console.log("data change")
+
+            //See if inferences can be made
+
+            //Check to see if a card is definitly guilty or not guilty
+            document.getElementById("dataSheetLabels").childNodes.forEach(node=>{
+                if(!(node instanceof HTMLDivElement)) return;//If it is not a div, then it isn't a label
+
+                let bar = node.getElementsByClassName("ProgressBar")[0];
+                let inverseBar = node.getElementsByClassName("InverseBar")[0];
+
+                if(dataBoxes[node.innerText].some((element)=>{return element.innerText == 2;})){
+                    //Then this card is not guilty
+                    bar.classList.add("Red");
+                    bar.style.width = "100%";
+                }else{
+                    bar.classList.remove("Red");
+                    bar.style.width = `${dataBoxes[node.innerText].reduce((sum, curr)=>{return sum + (curr.innerText == -1);}, 0) / playerCount * 100}%`;
+                }
+
+                if(dataBoxes[node.innerText].every((element)=>{return element.innerText == -1;})){
+                    //Then this card is not guilty
+                    node.classList.add("Green");
+                }else{
+                    node.classList.remove("Green");
+                }
+
+                inverseBar.style.width = `${dataBoxes[node.innerText].reduce((sum, curr)=>{return sum + (curr.innerText == 1);}, 0) / playerCount * 100}%`;
+            });
+
+            //Check to see if we can infer which cards another player has
+
+            
+            let playerCardCounts = [];
+            for(let i = 0; i < playerCount; i++){
+                playerCardCounts.push(0);
+            }
+
+            for(let card in dataBoxes){
+                dataBoxes[card].forEach((entry, index)=>{
+                    if(entry.innerText == 2){
+                        playerCardCounts[index]++;
+                    }
+                })
+            }
+
+            for(let i = 0; i < playerCount; i++){
+                if(playerCardCounts[i] == math.floor(21 / playerCount) - 1){
+                    //Then all but one of there cards is known
+                }
+            }
+            console.log(playerCardCounts)
+        }
+        
+
+        function makePlayerSelectMenu(playerCount, func){
+            let div = document.createElement("div");
+            div.classList.add("FullContainer");
+
+            
+            let bottom = document.createElement("div");
+            bottom.style.display = "flex";
+            bottom.style.alignItems = "center";
+            bottom.style.fontSize = "5vh";
+            bottom.style.color = "lightgrey";
+            bottom.style.justifyContent = "center";
+            bottom.innerText = "You";
+            bottom.style.margin = "2vh";
+            
+
+            let top2 = document.createElement("div");
+            top2.style.width = "100%";
+            top2.style.display = "flex";
+            top2.style.justifyContent = "center";
+
+            let top = document.createElement("div");
+            
+            top2.appendChild(top);
+            //top.style.flexGrow = 1;
+            top.style.height = "min(100vw, 60vh)";
+            top.style.width = "min(100vw, 60vh)";
+            top.style.position = "relative";
+            
+            for(let i = 0; i < playerCount; i++){
+                let box = document.createElement("button");
+                box.style.width = "5vh";
+                box.style.height = "5vh";
+                box.style.borderRadius = "50%";
+                box.style.translate = "-50% 50%";
+
+                box.style.position = "absolute";
+
+                //Calculate postions in a circle
+                let x = 0.5 * Math.sin(i / playerCount * Math.PI * 2);
+                let y = -0.5 * Math.cos(i / playerCount * Math.PI * 2);
+                x += 1;
+                y += 1;
+                x /= 2;
+                y /= 2;
+                y -= 0.2;
+
+                box.style.left = `${x * 100}%`;
+                box.style.bottom = `${y * 100}%`;
+
+                box.onclick = ()=>{
+                    func(i);
+                }
+
+                top.appendChild(box);
+            }
+
+            let arrow = document.createElement("button");
+
+            arrow.style.position = "absolute";
+            arrow.style.top = "70%";
+            arrow.style.left = "50%";
+            arrow.style.width = "6vh";
+            arrow.style.height = "6vh";
+            arrow.style.borderRadius = "50%";
+            arrow.style.translate = "-50% -50%";
+            if(turnDirection == 0){
+                arrow.innerText = clockwiseArrow;
+            }else if(turnDirection == 1){
+                arrow.innerText = counterClockwiseArrow;
+            }
+            
+
+            arrow.onclick = ()=>{
+                turnDirection = 1 - turnDirection;
+                if(turnDirection == 0){
+                    arrow.innerText = clockwiseArrow;
+                }else if(turnDirection == 1){
+                    arrow.innerText = counterClockwiseArrow;
+                }
+            }
+            //arrow.style.fontSize = "5vh";
+            //arrow.style.color = "lightgrey";
+
+
+            top.appendChild(arrow);
+
+
+
+
+            div.appendChild(bottom);
+            div.appendChild(top2);
+
+            return div;
+        }
+
+        
+        
+
+        class MenuState {
+            constructor(){
+                //0 = everything is closed
+                //1 = main menu is shown
+                //2 = reveal card is shown
+                //3 = record guess is shown
+                //4 = help is shown
+                this.value = 0;
+                this.isProtectorActive = 0;
+
+                //Valid transitions
+
+                //0 -> 1
+                //1 -> 0
+                //1 -> 2
+                //2 -> 1
+                //1 -> 3
+                //3 -> 1
+                //1 -> 4
+                //4 -> 1
+
+
+                //Only change the display mode back to content after the transition back to clear
+
+                //Have the darkener disapear when the transition ends
+                document.getElementById("darkener").ontransitionend = ()=>{
+                    if(!document.getElementById("darkener").classList.contains("Opaque")){
+                        document.getElementById("darkener").style.display = "contents";
+                        document.getElementById("screen2Area").style.display = "contents";
+                    }
+                }
+
+                document.getElementById("closeButton").onclick = ()=>{this.onCloseClick()};
+
+                document.getElementById("openMenu").onclick = ()=>{this.openMainMenu()};
+             
+
+                document.getElementById("revealCardButton").onclick = ()=>{
+                    this.openRevealCard();
+                }
+
+                document.getElementById("recordGuessButton").onclick = ()=>{
+                    this.openRecordGuess();
+                }
+                
+                document.getElementById("helpButton").onclick = ()=>{
+                    this.openHelp();
+                }
+            }
+
+            setPlayerCount(number){
+                playerCount = number;
+                makeDataSheet(playerCount);
+                this.generateRevealCardPlayerSelector();
+                this.generateRecordGuessPlayerSelectors();
+            }
+
+            generateRevealCardPlayerSelector(){
+                let element = document.getElementById("revealCardStage1").getElementsByClassName("PlayerSelect")[0];
+                element.innerHTML = "";
+                element.appendChild(makePlayerSelectMenu(playerCount, (playerIndex)=>{
+                    if(turnDirection == 0){
+                        playerIndex = (playerCount - playerIndex) % playerCount;
+                    }
+
+                    revealCardPlayer = playerIndex;
+                    document.getElementById("revealCardStage1").classList.add("Hidden");
+                    document.getElementById("revealCardStage2").classList.remove("Hidden");
+                }));
+            }
+
+            generateRecordGuessPlayerSelectors(){
+                let element = document.getElementById("recordGuessStage1").getElementsByClassName("PlayerSelect")[0];
+                element.innerHTML = "";
+                element.appendChild(makePlayerSelectMenu(playerCount, (playerIndex)=>{
+                    if(turnDirection == 0){
+                        playerIndex = (playerCount - playerIndex) % playerCount;
+                    }
+
+                    recordGuessAsker = playerIndex;
+                    document.getElementById("recordGuessStage1").classList.add("Hidden");
+                    document.getElementById("recordGuessStage2").classList.remove("Hidden");
+                }));
+
+                element = document.getElementById("recordGuessStage5").getElementsByClassName("PlayerSelect")[0];
+                element.innerHTML = "";
+                element.appendChild(makePlayerSelectMenu(playerCount, (playerIndex)=>{
+                    if(turnDirection == 0){
+                        playerIndex = (playerCount - playerIndex) % playerCount;
+                    }
+
+                    recordGuessAnswerer = playerIndex;
+                    recordGuess();
+                }));
+            }
+            
+            
+            //Activates the protector for 0.5 seconds
+            triggerProtector(){
+                if(this.isProtectorActive) return;//Only runs if the protector is not already active
+
+                document.getElementById("protector").style.display = "flex";
+                this.isProtectorActive = true;
+                setTimeout(()=>{
+                    document.getElementById("protector").style.display = "none";
+                    this.isProtectorActive = false;
+                }, 500);
+            }
+
+            onCloseClick(){
+                switch(this.value){
+                    case 1:
+                        this.closeMainMenu();
+                        break;
+                    case 2:
+                        this.closeRevealCard();
+                        break;
+                    case 3:
+                        this.closeRecordGuess();
+                        break;
+                    case 4:
+                        this.closeHelp();
+                        break;
+                }
+            }
+
+            showCloseButton(){
+                document.getElementById("closeButton").classList.add("OffScreenShown");
+            }
+
+            hideCloseButton(){
+                document.getElementById("closeButton").classList.remove("OffScreenShown");
+            }
+
+            openDarkener(){
+                let darkener = document.getElementById("darkener");
+                darkener.style.display = "flex";
+                darkener.classList.add("Opaque");
+            }
+
+            closeDarkener(){
+                let darkener = document.getElementById("darkener");
+                
+                darkener.classList.remove("Opaque");
+            }
+
+            openMainMenu(){
+                if(this.value != 0) return;
+                this.value = 1;
+                this.openDarkener();
+                this.showCloseButton();
+                document.getElementById("mainMenu").classList.add("OffScreenShown");
+                document.getElementById("screen2Area").style.display = "flex";
+                this.triggerProtector();
+            }
+
+            closeMainMenu(){
+                if(this.value != 1) return;
+                this.value = 0;
+                this.closeDarkener();
+                this.hideCloseButton();
+                document.getElementById("mainMenu").classList.remove("OffScreenShown");
+                this.triggerProtector();
+            }
+
+
+            openRevealCard(){
+                if(this.value != 1) return;
+                this.value = 2;
+                document.getElementById("mainMenu").classList.remove("OffScreenShown");
+                document.getElementById("mainMenu").classList.add("RightScreenMenu");
+                document.getElementById("revealCardMenu").classList.add("OffScreenShown");
+                document.getElementById("revealCardStage1").classList.remove("Hidden");
+                document.getElementById("revealCardStage2").classList.add("Hidden");
+                this.triggerProtector();
+            }
+
+            closeRevealCard(){
+                if(this.value != 2) return;
+                this.value = 1;
+                document.getElementById("revealCardMenu").classList.remove("OffScreenShown");
+                document.getElementById("mainMenu").classList.add("OffScreenShown");
+                document.getElementById("mainMenu").classList.remove("RightScreenMenu");
+                document.getElementById("mainMenu").classList.add("LeftScreenMenu");
+                this.triggerProtector();
+            }
+
+            openRecordGuess(){
+                if(this.value != 1) return;
+                this.value = 3;
+                document.getElementById("mainMenu").classList.remove("OffScreenShown");
+                document.getElementById("mainMenu").classList.add("RightScreenMenu");
+                document.getElementById("recordGuessMenu").classList.add("OffScreenShown");
+                document.getElementById("recordGuessStage1").classList.remove("Hidden");
+                document.getElementById("recordGuessStage2").classList.add("Hidden");
+                document.getElementById("recordGuessStage3").classList.add("Hidden");
+                document.getElementById("recordGuessStage4").classList.add("Hidden");
+                document.getElementById("recordGuessStage5").classList.add("Hidden");
+                document.getElementById("recordGuessStage6").classList.add("Hidden");
+                this.triggerProtector();
+            }
+
+            closeRecordGuess(){
+                if(this.value != 3) return;
+                this.value = 1;
+                document.getElementById("recordGuessMenu").classList.remove("OffScreenShown");
+                document.getElementById("mainMenu").classList.add("OffScreenShown");
+                document.getElementById("mainMenu").classList.remove("RightScreenMenu");
+                document.getElementById("mainMenu").classList.add("LeftScreenMenu");
+                this.triggerProtector();
+            }
+        
+            openHelp(){
+                if(this.value != 1) return;
+                this.value = 4;
+                document.getElementById("mainMenu").classList.remove("OffScreenShown");
+                document.getElementById("mainMenu").classList.add("RightScreenMenu");
+                document.getElementById("helpMenu").classList.add("OffScreenShown");
+
+                this.triggerProtector();
+            }
+
+            closeHelp(){
+                if(this.value != 4) return;
+                this.value = 1;
+                document.getElementById("helpMenu").classList.remove("OffScreenShown");
+                document.getElementById("mainMenu").classList.add("OffScreenShown");
+                document.getElementById("mainMenu").classList.remove("RightScreenMenu");
+                document.getElementById("mainMenu").classList.add("LeftScreenMenu");
+                this.triggerProtector();
+            }
+        
+        }
+        let menuState = new MenuState();
+        
+
+        function revealCard(cardName){
+            if(revealCardPlayer < 0 || revealCardPlayer >= playerCount) return;
+
+            recordData();
+
+            //console.log(revealCardPlayer, cardName)
+            menuState.closeRevealCard();
+
+            for(let i = 0; i < playerCount; i++){
+                dataBoxes[cardName][i].innerText = -1; 
+            }
+
+            dataBoxes[cardName][revealCardPlayer].innerText = 2;
+            revealCardPlayer = -1;
+            menuState.closeMainMenu();
+            onDataChange();
+        }
+
+        function recordGuess(){
+            //console.log(recordGuessAsker, recordGuessAnswerer, recordGuessPerson, recordGuessWeapon, recordGuessRoom)
+
+            if(recordGuessAsker < 0 || recordGuessAsker >= playerCount) return;
+            if(recordGuessAnswerer < 0 || recordGuessAnswerer >= playerCount) return;
+            if(recordGuessPerson == "") return;
+            if(recordGuessWeapon == "") return;
+            if(recordGuessRoom == "") return;
+
+            recordData();
+
+            //This make looping easier
+            if (recordGuessAnswerer <= recordGuessAsker) {
+                recordGuessAnswerer += playerCount;
+            }
+
+            //This is where we determine who does not have specific cards
+            //It starts just after the asking player and ends just before the answering player
+            for (var i = recordGuessAsker + 1; i < recordGuessAnswerer; i++) {
+
+                dataBoxes[recordGuessPerson][i % playerCount].innerText = -1;
+                dataBoxes[recordGuessWeapon][i % playerCount].innerText = -1;
+                dataBoxes[recordGuessRoom][i % playerCount].innerText = -1;
+            }
+
+
+            //For each of the cards that were guessed.
+            //If the answering player doesn't have the card, don't set the state to 1 (meaning that they might have the card)
+            //If the answering player definitly has the card, don't set the state to 1 (meaning that they might have the card)
+            //This will alter the state of the data in a way that increases the informaion available
+
+            //If I am the asker, I know exactly which card was shown, so marking this as a 1 doesn't make sense to do
+            if(recordGuessAsker != 0){
+                let answerPlayerCharacter = parseInt(dataBoxes[recordGuessPerson][recordGuessAnswerer % playerCount].innerText);//characterCards[answeringPlayer % numberOfPlayers].get(guess.character);
+                if (answerPlayerCharacter != -1 && answerPlayerCharacter != 2) {
+                    dataBoxes[recordGuessPerson][recordGuessAnswerer % playerCount].innerText = 1;
+                }
+
+
+                answerPlayerWeapon = parseInt(dataBoxes[recordGuessWeapon][recordGuessAnswerer % playerCount].innerText);//weaponCards[answeringPlayer % numberOfPlayers].get(guess.weapon);
+                if (answerPlayerWeapon != -1 && answerPlayerWeapon != 2) {
+                    dataBoxes[recordGuessWeapon][recordGuessAnswerer % playerCount].innerText = 1;
+                }
+
+                answerPlayerRoom = parseInt(dataBoxes[recordGuessRoom][recordGuessAnswerer % playerCount].innerText);//roomCards[answeringPlayer % numberOfPlayers].get(guess.room);
+                if (answerPlayerRoom != -1 && answerPlayerRoom != 2) {
+                    dataBoxes[recordGuessRoom][recordGuessAnswerer % playerCount].innerText = 1;
+                }
+            }
+            
+            if(recordGuessAnswerer == playerCount){
+                dataBoxes[recordGuessPerson][0].innerText = -1;
+                dataBoxes[recordGuessWeapon][0].innerText = -1;
+                dataBoxes[recordGuessRoom][0].innerText = -1;
+            }
+
+            onDataChange();
+            
+
+            if(recordGuessAsker == 0 && recordGuessAnswerer != playerCount){
+                revealCardPlayer = recordGuessAnswerer % playerCount;
+                let element = document.getElementById("recordGuessStage6").getElementsByClassName("CardSelect2")[0];
+                element.innerHTML = "";
+
+                let person = document.createElement("button");
+                person.innerText = recordGuessPerson;
+                person.onclick = ()=>{
+                    revealCard(person.innerText);
+                    menuState.closeRecordGuess();
+                    menuState.closeMainMenu();
+                    revealCardPlayer = -1;
+                };
+
+                let weapon = document.createElement("button");
+                weapon.innerText = recordGuessWeapon;
+                weapon.onclick = ()=>{
+                    revealCard(weapon.innerText);
+                    menuState.closeRecordGuess();
+                    menuState.closeMainMenu();
+                    revealCardPlayer = -1;
+                };
+
+                let room = document.createElement("button");
+                room.innerText = recordGuessRoom;
+                room.onclick = ()=>{
+                    revealCard(room.innerText);
+                    menuState.closeRecordGuess();
+                    menuState.closeMainMenu();
+                    revealCardPlayer = -1;
+                };
+                
+                element.appendChild(person);
+                element.appendChild(weapon);
+                element.appendChild(room);
+
+                document.getElementById("recordGuessStage5").classList.add("Hidden");
+                document.getElementById("recordGuessStage6").classList.remove("Hidden");
+
+            }else{
+                menuState.closeRecordGuess();
+                menuState.closeMainMenu();
+            }
+
+            recordGuessAsker = -1;
+            recordGuessAnswerer = -1;
+            recordGuessPerson = "";
+            recordGuessWeapon = "";
+            recordGuessRoom = "";
+
+            
+        }
+
+
+        function recordPerson(personName){
+            recordGuessPerson = personName;
+            document.getElementById("recordGuessStage2").classList.add("Hidden");
+            document.getElementById("recordGuessStage3").classList.remove("Hidden");
+        }
+
+        function recordWeapon(name){
+            recordGuessWeapon = name;
+            document.getElementById("recordGuessStage3").classList.add("Hidden");
+            document.getElementById("recordGuessStage4").classList.remove("Hidden");
+        }
+
+        function recordRoom(name){
+            recordGuessRoom = name;
+            document.getElementById("recordGuessStage4").classList.add("Hidden");
+            document.getElementById("recordGuessStage5").classList.remove("Hidden");
+        }
+
+
+
+
+        let mouseStartCard = "";
+        let mouseStartIndex = -1;
+        let isMouseDown = false;
+
+        let mouseCardOver = "";
+        let mouseIndexOver = -1;
+
+        function onMouseOverDataBox(){
+            if(mouseStartCard == "" || !isMouseDown) return;
+            
+
+            for(let i = 0; i < playerCount; i++){
+                dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+            }
+
+            if(mouseStartCard == mouseCardOver){
+                let temp = mouseIndexOver;
+                if(temp < mouseStartIndex){
+                    temp += playerCount;
+                }
+                for(let i = mouseStartIndex; i <= temp; i++){
+                    dataBoxes[mouseStartCard][i % playerCount].classList.add("DataHover");
+                }
+            }
+        }
+
+        
+
+        document.onmouseup = ()=>{
+            (()=>{
+                isMouseDown = false;
+
+                if(mouseStartCard == "") return;
+
+                recordData();
+                for(let i = 0; i < playerCount; i++){
+                    dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+                }
+
+                if(mouseStartCard == mouseCardOver){
+                    if(mouseStartIndex != mouseIndexOver){
+                        let temp = mouseIndexOver;
+                        if(temp < mouseStartIndex){
+                            temp += playerCount;
+                        }
+
+
+                        for(let i = mouseStartIndex + 1; i < temp; i++){
+                            if(dataBoxes[mouseStartCard][i % playerCount].innerText != 2){
+                                dataBoxes[mouseStartCard][i % playerCount].innerText = -1;
+                            }                        
+                        }
+
+                        if(dataBoxes[mouseStartCard][temp % playerCount].innerText == 0){
+                            dataBoxes[mouseStartCard][temp % playerCount].innerText = 1;
+                        }
+                        
+                    }else{
+                        let current = parseInt(dataBoxes[mouseStartCard][mouseStartIndex].innerText);
+
+                        for(let i = 0; i < playerCount; i++){
+                            dataBoxes[mouseStartCard][i].innerText = -1;
+                        }
+
+                        
+                        switch(current){
+                            case 0:
+                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = 1;
+                                break;
+                            case 1:
+                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = 2;
+                                break;
+                            case 2:
+                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = -1;
+                                break;
+                            case -1:
+                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = 1;
+                                break;
+                        }
+                    }
+
+                    onDataChange();
+                }
+            
+                mouseStartCard = "";
+                mouseStartIndex = -1;
+            })();
+            
+            (()=>{
+                if(startLocation == null) return;
+
+                if(event.clientX - startLocation > window.innerWidth / 4 && isUndoGesture){
+                    console.log("undo")
+                    undo();
+                }
+
+                startLocation = null;
+                pastLocation = null;
+            })();
+        }
+
+        //populate data sheet
+        function makeDataSheet(playerCount){
+
+            dataBoxes = {};
+            rooms.forEach(room=>{
+                dataBoxes[room] = [];
+            });
+
+            weapons.forEach(weapon=>{
+                dataBoxes[weapon] = [];
+            });
+
+            people.forEach(person=>{
+                dataBoxes[person] = [];
+            });
+
+
+            let dataSheet = document.getElementById("dataSheet");
+    
+            if(playerCount > 6){
+                console.log("Warning Clue cannot be played with more than 6 players.");
+                playerCount = 6;
+            }
+
+            if(playerCount < 2){
+                console.log("Warning Clue cannot be played with less than 2 players.");
+                playerCount = 2;
+            }
+
+
+
+
+            //Clear the data sheet
+            let dataSheetLabels = document.getElementById("dataSheetLabels");
+            dataSheetLabels.innerHTML = "";
+
+            let dataSheetBoxes = document.getElementById("dataSheetBoxes");
+            dataSheetBoxes.innerHTML = "";
+
+            //Add the people
+            people.forEach(person=>{
+                let div = document.createElement("div");
+                let innerDiv = document.createElement("div");
+                let progressDiv = document.createElement("div");
+                let progressDiv2 = document.createElement("div");
+                progressDiv.classList.add("ProgressBar")
+                progressDiv2.classList.add("InverseBar");
+
+                innerDiv.innerText = person;
+                innerDiv.style.zIndex += 1;
+                div.appendChild(innerDiv);
+                div.appendChild(progressDiv);
+                div.appendChild(progressDiv2);
+                dataSheetLabels.appendChild(div);
+
+
+                let div2 = document.createElement("div");
+
+                for(let i = 0; i < playerCount; i++){
+                    let box = document.createElement("div");
+                    box.innerText = "0";
+                    box.onclick = ()=>{onClickDataBox(person, i);};
+                    box.onmousedown = ()=>{
+                        if(mouseStartCard != ""){
+                            for(let i = 0; i < playerCount; i++){
+                                dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+                            }
+                        }
+                        
+
+                        mouseStartCard = person;
+                        mouseStartIndex = i;
+                        isMouseDown = true;
+
+                        dataBoxes[mouseStartCard][i].classList.add("DataHover");
+                    }
+                    box.onmouseenter = ()=>{
+                        mouseCardOver = person;
+                        mouseIndexOver = i;
+                        onMouseOverDataBox();
+                    }
+                    dataBoxes[person].push(box);
+                    div2.appendChild(box);
+                }
+
+                dataSheetBoxes.appendChild(div2);
+            });
+
+            //Add a line break between the sections
+            dataSheetLabels.appendChild(document.createElement("span"));
+            dataSheetBoxes.appendChild(document.createElement("span"));
+
+            //Add the weapons
+            weapons.forEach(weapon=>{
+                let div = document.createElement("div");
+                let innerDiv = document.createElement("div");
+                let progressDiv = document.createElement("div");
+                let progressDiv2 = document.createElement("div");
+                progressDiv.classList.add("ProgressBar")
+                progressDiv2.classList.add("InverseBar");
+                
+
+                innerDiv.innerText = weapon;
+                innerDiv.style.zIndex += 1;
+                div.appendChild(innerDiv);
+                div.appendChild(progressDiv);
+                div.appendChild(progressDiv2);
+                dataSheetLabels.appendChild(div);
+
+
+                let div2 =  document.createElement("div");
+
+                for(let i = 0; i < playerCount; i++){
+                    let box = document.createElement("div");
+                    box.innerText = "0";
+                    box.onclick = ()=>{onClickDataBox(weapon, i);};
+                    box.onmousedown = ()=>{
+                        if(mouseStartCard != ""){
+                            for(let i = 0; i < playerCount; i++){
+                                dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+                            }
+                        }
+                        
+
+                        mouseStartCard = weapon;
+                        mouseStartIndex = i;
+                        isMouseDown = true;
+
+                        dataBoxes[mouseStartCard][i].classList.add("DataHover");
+                    }
+                    box.onmouseenter = ()=>{
+                        mouseCardOver = weapon;
+                        mouseIndexOver = i;
+                        onMouseOverDataBox();
+                    }
+                    dataBoxes[weapon].push(box);
+                    div2.appendChild(box);
+                }
+
+                dataSheetBoxes.appendChild(div2);
+            });
+
+            //Add a line break between the sections
+            dataSheetLabels.appendChild(document.createElement("span"));
+            dataSheetBoxes.appendChild(document.createElement("span"));
+
+            //Add the rooms
+            rooms.forEach(room=>{
+                let div = document.createElement("div");
+                let innerDiv = document.createElement("div");
+                let progressDiv = document.createElement("div");
+                let progressDiv2 = document.createElement("div");
+                progressDiv.classList.add("ProgressBar")
+                progressDiv2.classList.add("InverseBar");
+                
+
+                innerDiv.innerText = room;
+                innerDiv.style.zIndex += 1;
+                div.appendChild(innerDiv);
+                div.appendChild(progressDiv);
+                div.appendChild(progressDiv2);
+                dataSheetLabels.appendChild(div);
+
+                let div2 =  document.createElement("div");
+
+                for(let i = 0; i < playerCount; i++){
+                    let box = document.createElement("div");
+                    box.innerText = "0";
+                    box.onclick = ()=>{onClickDataBox(room, i);};
+                    box.onmousedown = ()=>{
+                        if(mouseStartCard != ""){
+                            for(let i = 0; i < playerCount; i++){
+                                dataBoxes[mouseStartCard][i].classList.remove("DataHover");
+                            }
+                        }
+                        
+
+                        mouseStartCard = room;
+                        mouseStartIndex = i;
+                        isMouseDown = true;
+
+                        dataBoxes[mouseStartCard][i].classList.add("DataHover");
+                    }
+                    box.onmouseenter = ()=>{
+                        mouseCardOver = room;
+                        mouseIndexOver = i;
+                        onMouseOverDataBox();
+                    }
+                    dataBoxes[room].push(box);
+                    div2.appendChild(box);
+                }
+
+                dataSheetBoxes.appendChild(div2);
+            });
+        }
+
+        
+        
+
+
+        let isUndoGesture = false;
+        let pastLocation = null;
+        let startLocation = null;
+        document.getElementById("dataSheetLabels").onmousedown = (event)=>{
+            isUndoGesture = true;
+            startLocation = event.clientX;
+            pastLocation = [event.clientX, event.clientY];
+        }
+        
+        document.onmousemove = (event)=>{
+            if(pastLocation != null){
+                let diff = [event.clientX - pastLocation[0], event.clientY - pastLocation[1]];
+                let mag = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+
+                if(mag > 3){
+                    diff[0] /= mag;
+                    diff[1] /= mag;
+
+                    //Allow 20 degrees of variance from horizontal
+                    if(diff[0] < 0.939692620786){
+                        isUndoGesture = false;
+                    }
+
+                    pastLocation = [event.clientX, event.clientY];
+                }
+
+                
+            }
+
+            
+        }
+
+
+
+
+
+        menuState.setPlayerCount(6)
+    </script>
+
+
+    <script>
+        
+
+    </script>
+</html>
