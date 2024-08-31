@@ -716,12 +716,7 @@
             
             for(let i = 0; i < playerCount; i++){
                 let box = document.createElement("button");
-                if(window.devicePixelRatio > 1){
-                    box.style.width = "2.5vh";
-                }else{
-                    box.style.width = "5vh";
-                }
-                
+                box.style.width = "5vh";
                 box.style.height = "5vh";
                 //box.style.borderRadius ="50%";
                 box.style.translate = "-50% 50%";
@@ -752,12 +747,7 @@
             arrow.style.position = "absolute";
             arrow.style.top = "70%";
             arrow.style.left = "50%";
-            if(window.devicePixelRatio > 1){
-                    arrow.style.width = "3vh";
-                }else{
-                    arrow.style.width = "6vh";
-                }
-                
+            arrow.style.width = "6vh";
             arrow.style.height = "6vh";
             //arrow.style.borderRadius = "50%";
             arrow.style.translate = "-50% -50%";
