@@ -25,6 +25,8 @@
 
             background-color: grey;
             overflow: hidden;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         #protector{
@@ -1511,6 +1513,8 @@
 
 
         menuState.setPlayerCount(6)
+
+        document.body.style.height = window.visualViewport.height;
     </script>
 
 
