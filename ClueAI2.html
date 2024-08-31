@@ -4,6 +4,7 @@
         *{
             font-family: Arial, Helvetica, sans-serif;
             user-select: none;
+            color: #000; /* Black, or any other color you prefer */
         }
 
         html{
@@ -717,7 +718,7 @@
                 let box = document.createElement("button");
                 box.style.width = "5vh";
                 box.style.height = "5vh";
-                box.style.borderRadius = "50%";
+                box.style.borderRadius = "1000px";//50%";
                 box.style.translate = "-50% 50%";
 
                 box.style.position = "absolute";
@@ -748,7 +749,7 @@
             arrow.style.left = "50%";
             arrow.style.width = "6vh";
             arrow.style.height = "6vh";
-            arrow.style.borderRadius = "50%";
+            arrow.style.borderRadius = "1000px";
             arrow.style.translate = "-50% -50%";
             if(turnDirection == 0){
                 arrow.innerText = clockwiseArrow;
