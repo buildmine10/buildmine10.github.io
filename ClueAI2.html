@@ -422,6 +422,34 @@
             background-color: lightgrey;
             z-index: inherit;
         }
+
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+
+        /* Style the track (the bar itself) */
+        input[type="range"]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            background: darkgrey;
+            height: 2vh;
+            border-radius: 1vh;
+        }
+
+        /* Style the thumb (the slider button) */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            margin-top: -0.5vh; /* Centers thumb on the track */
+            background-color: grey;
+            height: 3vh;
+            width: 3vh; 
+            border-radius: 50%;
+        }
     </style>
 
     <body>
