@@ -401,6 +401,27 @@
             justify-content: flex-start;
 
         }
+
+        #playerCounter{
+           
+        }
+
+        #playerCounterDiv{
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            padding: 0vh 4vh;
+            gap: 1vh;
+            text-align: center;
+
+            height: 15vh;
+            font-size: 5vh;
+            box-shadow: none;
+            border: none;
+            background-color: lightgrey;
+            z-index: inherit;
+        }
     </style>
 
     <body>
@@ -428,6 +449,11 @@
                     <button id="revealCardButton">Reveal Card</button>
                     <button id="recordGuessButton">Record Guess</button>
                     <button onclick=undo()>Undo</button>
+                    <div id="playerCounterDiv">
+                        <input id="playerCounter" type="range" placeholder="Player Count" max="6" min="1" step="1" value="6">
+                        <label id="playerCounterLabel" for="playerCounter">Player Count: 6</label>
+                    </div>
+                    
                     <button id="helpButton">Help</button>
                 </div>
                 <div id="revealCardMenu" class="FullContainer LeftScreenMenu">
@@ -1680,6 +1706,12 @@
         //}
 
         menuState.setPlayerCount(6)
+
+
+        document.getElementById("playerCounter").onchange = ()=>{
+            menuState.setPlayerCount(parseInt(document.getElementById("playerCounter").value))
+            document.getElementById("playerCounterLabel").innerText = `Player Count: ${playerCount}`;
+        }
 
         function preventIosScrolling() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
