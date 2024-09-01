@@ -758,7 +758,7 @@
             arrow.style.width = "6vh";
             arrow.style.height = "6vh";
             arrow.style.padding = "0px";
-            //arrow.style.borderRadius = "50%";
+            arrow.style.borderRadius = "50%";
             arrow.style.translate = "-50% -50%";
             if(turnDirection == 0){
                 arrow.innerText = clockwiseArrow;
@@ -1066,10 +1066,15 @@
             //This is where we determine who does not have specific cards
             //It starts just after the asking player and ends just before the answering player
             for (var i = recordGuessAsker + 1; i < recordGuessAnswerer; i++) {
-
-                dataBoxes[recordGuessPerson][i % playerCount].innerText = -1;
-                dataBoxes[recordGuessWeapon][i % playerCount].innerText = -1;
-                dataBoxes[recordGuessRoom][i % playerCount].innerText = -1;
+                if(dataBoxes[recordGuessPerson][i % playerCount].innerText != 2){
+                    dataBoxes[recordGuessPerson][i % playerCount].innerText = -1;
+                }
+                if(dataBoxes[recordGuessWeapon][i % playerCount].innerText != 2){
+                    dataBoxes[recordGuessWeapon][i % playerCount].innerText = -1;
+                }
+                if(dataBoxes[recordGuessRoom][i % playerCount].innerText != 2){
+                    dataBoxes[recordGuessRoom][i % playerCount].innerText = -1;
+                }
             }
 
 
@@ -1209,11 +1214,13 @@
 
         
 
-        document.onmouseup = ()=>{
-            if(!isMouseDown){
-                return;
-            }
+        document.onmouseup = (event)=>{
+            
             (()=>{
+                if(!isMouseDown){
+                    return;
+                }
+
                 isMouseDown = false;
 
                 if(mouseStartCard == "") return;
@@ -1285,11 +1292,12 @@
             })();
         }
 
-        document.ontouchend = ()=>{
-            if(!isMouseDown){
-                return;
-            }
+        document.ontouchend = (event)=>{
+            
             (()=>{
+                if(!isMouseDown){
+                    return;
+                }
                 isMouseDown = false;
 
                 if(mouseStartCard == "") return;
@@ -1350,8 +1358,8 @@
             
             (()=>{
                 if(startLocation == null) return;
-
-                if(event.clientX - startLocation > window.innerWidth / 4 && isUndoGesture){
+                //console.log(pastLocation[0] - startLocation, window.innerWidth / 4, isUndoGesture)
+                if(pastLocation[0] - startLocation > window.innerWidth / 4 && isUndoGesture){
                     console.log("undo")
                     undo();
                 }
@@ -1570,30 +1578,12 @@
         let isUndoGesture = false;
         let pastLocation = null;
         let startLocation = null;
-        document.getElementById("dataSheetLabels").onpointerdown = (event)=>{
+        document.getElementById("dataSheetLabels").ontouchstart = (event)=>{
             isUndoGesture = true;
-            startLocation = event.clientX;
-            pastLocation = [event.clientX, event.clientY];
+            startLocation = event.touches[0].clientX;
+            pastLocation = [event.touches[0].clientX, event.touches[0].clientY];
         }
         
-        document.onpointermove = (event)=>{
-            if(pastLocation != null){
-                let diff = [event.clientX - pastLocation[0], event.clientY - pastLocation[1]];
-                let mag = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
-
-                if(mag > 3){
-                    diff[0] /= mag;
-                    diff[1] /= mag;
-
-                    //Allow 20 degrees of variance from horizontal
-                    if(diff[0] < 0.939692620786){
-                        isUndoGesture = false;
-                    }
-
-                    pastLocation = [event.clientX, event.clientY];
-                }
-            }
-        }
 
 
         function isInBounds(bounds, touch){
@@ -1613,20 +1603,46 @@
         }
 
         document.ontouchmove = (event)=>{
-            const touch = event.touches[0];
-            
-            //console.log(event.clientX, event.clientY)
-            for(let card in dataBoxes){
-                dataBoxes[card].forEach((element, index)=>{
-                    if(isInBounds(element.getBoundingClientRect(), touch)){
-                        if(!(mouseCardOver == card && mouseIndexOver == index)){
-                            mouseCardOver = card;
-                            mouseIndexOver = index;
-                            onMouseOverDataBox();
+            (()=>{
+                if(pastLocation != null){
+                    
+                    let diff = [event.touches[0].clientX - pastLocation[0], event.touches[0].clientY - pastLocation[1]];
+                    let mag = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+
+                    if(mag > 50){
+                        
+                        diff[0] /= mag;
+                        diff[1] /= mag;
+
+                        
+                        //Allow 20 degrees of variance from horizontal
+                        if(diff[0] < 0.9){
+                            isUndoGesture = false;
                         }
+
+                        pastLocation = [event.touches[0].clientX, event.touches[0].clientY];
                     }
-                });
-            }
+                }
+            })();
+
+
+            (()=>{
+                const touch = event.touches[0];
+            
+                //console.log(event.clientX, event.clientY)
+                for(let card in dataBoxes){
+                    dataBoxes[card].forEach((element, index)=>{
+                        if(isInBounds(element.getBoundingClientRect(), touch)){
+                            if(!(mouseCardOver == card && mouseIndexOver == index)){
+                                mouseCardOver = card;
+                                mouseIndexOver = index;
+                                onMouseOverDataBox();
+                            }
+                        }
+                    });
+                }
+            })();
+            
         }
 
         document.onmousemove = (event)=>{
