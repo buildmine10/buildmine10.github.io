@@ -21,7 +21,7 @@
             top: 0px;
             left: 0px;
             width: 100vw;
-            height: 100vh;
+            height: 100dvh;
 
 
             background-color: grey;
@@ -82,7 +82,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: row;
-            margin: 0.5vh;
+            margin: 0.5dvh;
             /*background-color: lightgrey;*/
         }
 
@@ -94,22 +94,22 @@
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
-            padding-right: 0.5vh;
-            margin-right: 0.5vh;
-            border-right: 0.5vh solid black;
+            padding-right: 0.5dvh;
+            margin-right: 0.5dvh;
+            border-right: 0.5dvh solid black;
         }
 
         #dataSheetLabels>div{
-            height: 3.5vh;
+            height: 3.5dvh;
             background-color: lightgray;
-            font-size: min(2vh);
-            padding: 0px 1vh;
+            font-size: min(2dvh);
+            padding: 0px 1dvh;
             display: flex;
             align-items: center;
             position: relative;
         }
         #dataSheetLabels>span{
-            height: 1vh;
+            height: 1dvh;
         }
 
 
@@ -125,21 +125,21 @@
         }
 
         #dataSheetBoxes>div{
-            height: 3.5vh;
+            height: 3.5dvh;
             width: 100%;
             font-size: 2vw;
             display: flex;
             flex-direction: row;
-            gap: 0.5vh;
+            gap: 0.5dvh;
             justify-content: space-evenly;
             
         }
 
         #dataSheetBoxes>div>div{
             height: 100%;
-            max-width: 3.5vh;
+            max-width: 3.5dvh;
             background-color: lightgray;
-            font-size: 2vh;
+            font-size: 2dvh;
             flex-grow: 1;
             display: flex;
             justify-content: center;
@@ -148,18 +148,22 @@
         }
 
         #dataSheetBoxes>span{
-            height: 1vh;
+            height: 1dvh;
         }
 
 
 
         button{
-            height: 10vh;
-            font-size: 5vh;
+            height: 10dvh;
+            font-size: 5dvh;
             box-shadow: none;
             border: none;
             background-color: lightgrey;
             z-index: inherit;
+        }
+
+        button:hover{
+            background-color: lightblue;
         }
     </style>
 
@@ -197,7 +201,7 @@
 
         .BottomScreenMenu{
             position: absolute;
-            top: 100vh;
+            top: 100dvh;
             left: 0px;
             width: 100%;
             height: 100%;
@@ -211,12 +215,12 @@
             transition-timing-function: ease;
 
             z-index: 2;
-            gap: 1vh;
+            gap: 1dvh;
         }
 
         .TopScreenMenu{
             position: absolute;
-            top: -100vh;
+            top: -100dvh;
             left: 0px;
             width: 100%;
             height: 100%;
@@ -301,11 +305,12 @@
         .TextPrompt{
             height: 10vh;
             width: 100%;
-            font-size: 5vh;
+            font-size: clamp(4vh, 5vw, 5vh);
             background-color: lightgrey;
             display: flex;
             align-items: center;
             justify-content: center;
+            
         }
 
         .PlayerSelect{
@@ -353,7 +358,7 @@
             margin: 0px 1vh;
         }
 
-        #recordGuessStage4 button{
+        #recordGuessStage2 button{
             height: 7vh;
             font-size: 3vh;
         }
@@ -396,10 +401,11 @@
             margin: 1vh 1vh 0vh 1vh;
             padding: 1vh;
             background-color: lightgrey;
-            display: flex;
+            /*display: flex;*/
             align-items: flex-start;
             justify-content: flex-start;
-
+            overflow-x:hidden;
+            overflow-y: auto;
         }
 
         #playerCounter{
@@ -468,6 +474,14 @@
             width: 10vh;
         }
 
+        #recordGuessButton{
+            flex-grow: 1;
+        }
+        
+        #helpButton{
+            width: 10vh;
+        }
+
         #existingGame{
             display: contents;
         }
@@ -478,6 +492,10 @@
             display: flex;
             flex-direction: column-reverse;
             gap: 1vh;
+        }
+
+        #newGameMenuStage1 button{
+            margin: 0px 1vh;
         }
 
         .Spacer{
@@ -553,7 +571,9 @@
                     </div>
                 </div>
                 <div id="screen1Bottom">
-                    <button id="openMenu">≡</button>
+                    <button id="helpButton">?</button>
+                    <!--<button id="openMenu">≡</button>-->
+                    <button id="recordGuessButton">≡</button>
                     <button id="undo" onclick=undo()>↺</button>
                 </div>
                 
@@ -565,9 +585,9 @@
                 <button id="closeButton">X</button>
                 <div id="screen2Area">
                     <div id="mainMenu" class="FullContainer LeftScreenMenu">
-                        <button id="recordGuessButton">Record Guess</button>
+                        <!--<button id="recordGuessButton">Record Guess</button>-->
                         
-                        <button id="helpButton">Help</button>
+                        <!--<button id="helpButton">Help</button>-->
                     </div>
 
 
@@ -576,29 +596,7 @@
                             <div class="TextPrompt">Who asked?</div>
                             <div class="PlayerSelect"></div>
                         </div>
-                        <div id="recordGuessStage2" class="FullContainer Hidden">
-                            <div class="TextPrompt">What Person?</div>
-                            <div class="CardSelect2">
-                                <button onclick="recordPerson('Miss Scarlet')">Scarlet</button>
-                                <button onclick="recordPerson('Colonel Mustard')">Mustard</button>
-                                <button onclick="recordPerson('Mrs. White')">White</button>
-                                <button onclick="recordPerson('Mr. Green')">Green</button>
-                                <button onclick="recordPerson('Mrs. Peacock')">Peacock</button>
-                                <button onclick="recordPerson('Prof. Plum')">Plum</button>
-                            </div>
-                        </div>
-                        <div id="recordGuessStage3" class="FullContainer  Hidden">
-                            <div class="TextPrompt">What Weapon</div>
-                            <div class="CardSelect2">
-                                <button onclick="recordWeapon('Candlestick')">Candlestick</button>
-                                <button onclick="recordWeapon('Knife')">Knife</button>
-                                <button onclick="recordWeapon('Lead Pipe')">Lead Pipe</button>
-                                <button onclick="recordWeapon('Gun')">Gun</button>
-                                <button onclick="recordWeapon('Rope')">Rope</button>
-                                <button onclick="recordWeapon('Wrench')">Wrench</button>
-                            </div>
-                        </div>
-                        <div id="recordGuessStage4" class="FullContainer  Hidden">
+                        <div id="recordGuessStage2" class="FullContainer  Hidden">
                             <div class="TextPrompt">What Room?</div>
                             <div class="CardSelect2">
                                     <button onclick="recordRoom('Kitchen')">Kitchen</button>
@@ -612,6 +610,29 @@
                                     <button onclick="recordRoom('Study')">Study</button>
                             </div>
                         </div>
+                        <div id="recordGuessStage3" class="FullContainer Hidden">
+                            <div class="TextPrompt">What Person?</div>
+                            <div class="CardSelect2">
+                                <button onclick="recordPerson('Miss Scarlet')">Scarlet</button>
+                                <button onclick="recordPerson('Colonel Mustard')">Mustard</button>
+                                <button onclick="recordPerson('Mrs. White')">White</button>
+                                <button onclick="recordPerson('Mr. Green')">Green</button>
+                                <button onclick="recordPerson('Mrs. Peacock')">Peacock</button>
+                                <button onclick="recordPerson('Prof. Plum')">Plum</button>
+                            </div>
+                        </div>
+                        <div id="recordGuessStage4" class="FullContainer  Hidden">
+                            <div class="TextPrompt">What Weapon?</div>
+                            <div class="CardSelect2">
+                                <button onclick="recordWeapon('Candlestick')">Candlestick</button>
+                                <button onclick="recordWeapon('Knife')">Knife</button>
+                                <button onclick="recordWeapon('Lead Pipe')">Lead Pipe</button>
+                                <button onclick="recordWeapon('Gun')">Gun</button>
+                                <button onclick="recordWeapon('Rope')">Rope</button>
+                                <button onclick="recordWeapon('Wrench')">Wrench</button>
+                            </div>
+                        </div>
+                        
                         <div id="recordGuessStage5" class="FullContainer  Hidden">
                             <div class="TextPrompt">Who answered?</div>
                             <div class="PlayerSelect"></div>
@@ -628,17 +649,29 @@
                             1 = They might have this card<br>
                             2 = They have this card<br>
                             <br>
+                            <span  style="background-color: red">Red</span> indicates the number of people that don't have a card.<br>
+                            <br>
+                            <span  style="background-color: limegreen">Green</span> indicates the number of people that might have a card.<br>
+                            If the bar is completely green then that means that card is guilty.<br>
+                            <br>
                             You are the first column. The players are listed in turn order from left to right.<br>
                             <br>
-                            Click and drag to select who asked and who answered.<br>
+                            There are two ways to input data: Click on ≡ or interact with the grid cells directly.<br>
                             <br>
-                            Click the asker if no one answered.<br>
+                            If you click on ≡, you will be walked through the data entry process. This needs to be done everytime a player makes a guess.<br>
+                            First you select the player that is asking. You are the bottom player, and the selector goes clockwise or counterclockwise depending on the arrow. You can change the direction by clicking on the arrow.<br>
+                            Next you will be asked the room the guess is in, followed by the character, and finally the weapon<br>
+                            Once the cards for the guess are known it will ask you who answered.<br>
+                            After this is completed the datasheet will change to reflect the guess.<br>
                             <br>
-                            Click a player twice if they showed you their card.<br>
+                            Alternatively you can directly click on the datasheet.<br>
+                            Clicking on a cell will cycle that cell through the 4 values it can take.<br>
+                            Clicking and draging across cells in the same row will input the result of a guess where the start is the asker and the end is the answerer.<br>
+                            Clicking on the card name will set all the entries of that row to -1.<br>
                             <br>
-                            Click a player three times if you believe nobody has that card.<br>
+                            Undo can be performed by clicking the undo button or by swiping right from the left side of the screen.<br>
                             <br>
-                            Alternatively you can use the other buttons in the menu.
+                            To start a new game refresh the page.
                         </div>
                     </div>
                 </div>
@@ -933,13 +966,15 @@
 
                 document.getElementById("closeButton").onclick = ()=>{this.onCloseClick()};
 
-                document.getElementById("openMenu").onclick = ()=>{this.openMainMenu()};
+                //document.getElementById("openMenu").onclick = ()=>{this.openMainMenu()};
              
                 document.getElementById("recordGuessButton").onclick = ()=>{
+                    this.openMainMenu();
                     this.openRecordGuess();
                 }
                 
                 document.getElementById("helpButton").onclick = ()=>{
+                    this.openMainMenu();
                     this.openHelp();
                 }
             }
@@ -995,12 +1030,15 @@
                         break;
                     case 2:
                         this.closeRevealCard();
+                        this.closeMainMenu();
                         break;
                     case 3:
                         this.closeRecordGuess();
+                        this.closeMainMenu();
                         break;
                     case 4:
                         this.closeHelp();
+                        this.closeMainMenu();
                         break;
                 }
             }
@@ -1132,6 +1170,21 @@
             onDataChange();
         }
 
+        function setAllCard(cardName, state){
+            if(state < -1 || state > 2) return;
+            recordData();
+
+            //console.log(player, cardName)
+            menuState.closeRevealCard();
+
+            for(let i = 0; i < playerCount; i++){
+                dataBoxes[cardName][i].innerText = state; 
+            }
+
+            menuState.closeMainMenu();
+            onDataChange();
+        }
+
         function recordGuess(){
             //console.log(recordGuessAsker, recordGuessAnswerer, recordGuessPerson, recordGuessWeapon, recordGuessRoom)
 
@@ -1252,20 +1305,20 @@
 
         function recordPerson(personName){
             recordGuessPerson = personName;
-            document.getElementById("recordGuessStage2").classList.add("Hidden");
-            document.getElementById("recordGuessStage3").classList.remove("Hidden");
-        }
-
-        function recordWeapon(name){
-            recordGuessWeapon = name;
             document.getElementById("recordGuessStage3").classList.add("Hidden");
             document.getElementById("recordGuessStage4").classList.remove("Hidden");
         }
 
-        function recordRoom(name){
-            recordGuessRoom = name;
+        function recordWeapon(name){
+            recordGuessWeapon = name;
             document.getElementById("recordGuessStage4").classList.add("Hidden");
             document.getElementById("recordGuessStage5").classList.remove("Hidden");
+        }
+
+        function recordRoom(name){
+            recordGuessRoom = name;
+            document.getElementById("recordGuessStage2").classList.add("Hidden");
+            document.getElementById("recordGuessStage3").classList.remove("Hidden");
         }
 
 
@@ -1336,9 +1389,9 @@
                     }else{
                         let current = parseInt(dataBoxes[mouseStartCard][mouseStartIndex].innerText);
 
-                        for(let i = 0; i < playerCount; i++){
-                            dataBoxes[mouseStartCard][i].innerText = -1;
-                        }
+                        //for(let i = 0; i < playerCount; i++){
+                        //    dataBoxes[mouseStartCard][i].innerText = -1;
+                        //}
 
                         
                         switch(current){
@@ -1352,7 +1405,7 @@
                                 dataBoxes[mouseStartCard][mouseStartIndex].innerText = -1;
                                 break;
                             case -1:
-                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = 1;
+                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = 0;
                                 break;
                         }
                     }
@@ -1413,9 +1466,9 @@
                     }else{
                         let current = parseInt(dataBoxes[mouseStartCard][mouseStartIndex].innerText);
 
-                        for(let i = 0; i < playerCount; i++){
-                            dataBoxes[mouseStartCard][i].innerText = -1;
-                        }
+                        //for(let i = 0; i < playerCount; i++){
+                        //    dataBoxes[mouseStartCard][i].innerText = -1;
+                        //}
 
                         
                         switch(current){
@@ -1429,7 +1482,7 @@
                                 dataBoxes[mouseStartCard][mouseStartIndex].innerText = -1;
                                 break;
                             case -1:
-                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = 1;
+                                dataBoxes[mouseStartCard][mouseStartIndex].innerText = 0;
                                 break;
                         }
                     }
@@ -1508,6 +1561,10 @@
                 div.appendChild(innerDiv);
                 div.appendChild(progressDiv);
                 div.appendChild(progressDiv2);
+
+                div.onclick = ()=>{
+                    setAllCard(person, -1);
+                };
                 dataSheetLabels.appendChild(div);
 
 
@@ -1564,6 +1621,9 @@
                 div.appendChild(innerDiv);
                 div.appendChild(progressDiv);
                 div.appendChild(progressDiv2);
+                div.onclick = ()=>{
+                    setAllCard(weapon, -1);
+                };
                 dataSheetLabels.appendChild(div);
 
 
@@ -1620,6 +1680,9 @@
                 div.appendChild(innerDiv);
                 div.appendChild(progressDiv);
                 div.appendChild(progressDiv2);
+                div.onclick = ()=>{
+                    setAllCard(room, -1);
+                };
                 dataSheetLabels.appendChild(div);
 
                 let div2 =  document.createElement("div");
