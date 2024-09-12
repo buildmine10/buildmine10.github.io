@@ -769,6 +769,8 @@
                     })
                 }
                 onDataChange();
+            }else{
+                newGame();
             }
         }
 
@@ -1861,6 +1863,9 @@
 
         function newGame(){
             player1Cards = new Set();
+            document.querySelectorAll("#newGameMenuStage2 button").forEach(button=>{
+                button.style.backgroundColor = "";
+            })
             document.getElementById("newGame").style.display = "contents";
             document.getElementById("existingGame").style.display = "none"; 
         }
