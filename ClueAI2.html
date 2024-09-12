@@ -21,7 +21,7 @@
             top: 0px;
             left: 0px;
             width: 100vw;
-            height: 100vh;
+            height: 100dvh;
 
 
             background-color: grey;
@@ -82,7 +82,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: row;
-            margin: 0.5vh;
+            margin: 0.5dvh;
             /*background-color: lightgrey;*/
         }
 
@@ -94,22 +94,22 @@
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
-            padding-right: 0.5vh;
-            margin-right: 0.5vh;
-            border-right: 0.5vh solid black;
+            padding-right: 0.5dvh;
+            margin-right: 0.5dvh;
+            border-right: 0.5dvh solid black;
         }
 
         #dataSheetLabels>div{
-            height: 3.5vh;
+            height: 3.5dvh;
             background-color: lightgray;
-            font-size: min(2vh);
-            padding: 0px 1vh;
+            font-size: min(2dvh);
+            padding: 0px 1dvh;
             display: flex;
             align-items: center;
             position: relative;
         }
         #dataSheetLabels>span{
-            height: 1vh;
+            height: 1dvh;
         }
 
 
@@ -125,21 +125,21 @@
         }
 
         #dataSheetBoxes>div{
-            height: 3.5vh;
+            height: 3.5dvh;
             width: 100%;
             font-size: 2vw;
             display: flex;
             flex-direction: row;
-            gap: 0.5vh;
+            gap: 0.5dvh;
             justify-content: space-evenly;
             
         }
 
         #dataSheetBoxes>div>div{
             height: 100%;
-            max-width: 3.5vh;
+            max-width: 3.5dvh;
             background-color: lightgray;
-            font-size: 2vh;
+            font-size: 2dvh;
             flex-grow: 1;
             display: flex;
             justify-content: center;
@@ -148,14 +148,14 @@
         }
 
         #dataSheetBoxes>span{
-            height: 1vh;
+            height: 1dvh;
         }
 
 
 
         button{
-            height: 10vh;
-            font-size: 5vh;
+            height: 10dvh;
+            font-size: 5dvh;
             box-shadow: none;
             border: none;
             background-color: lightgrey;
@@ -201,7 +201,7 @@
 
         .BottomScreenMenu{
             position: absolute;
-            top: 100vh;
+            top: 100dvh;
             left: 0px;
             width: 100%;
             height: 100%;
@@ -215,12 +215,12 @@
             transition-timing-function: ease;
 
             z-index: 2;
-            gap: 1vh;
+            gap: 1dvh;
         }
 
         .TopScreenMenu{
             position: absolute;
-            top: -100vh;
+            top: -100dvh;
             left: 0px;
             width: 100%;
             height: 100%;
@@ -234,12 +234,12 @@
             transition-timing-function: ease;
 
             z-index: 2;
-            gap: 1vh;
+            gap: 1dvh;
         }
 
         .LeftScreenMenu{
             position: absolute;
-            top: 0vh;
+            top: 0dvh;
             left: -100vw;
             width: 100%;
             height: 100%;
@@ -253,12 +253,12 @@
             transition-timing-function: ease;
 
             z-index: 2;
-            gap: 1vh;
+            gap: 1dvh;
         }
 
         .RightScreenMenu{
             position: absolute;
-            top: 0vh;
+            top: 0dvh;
             left: 100vw;
             width: 100%;
             height: 100%;
@@ -272,13 +272,13 @@
             transition-timing-function: ease;
 
             z-index: 2;
-            gap: 1vh;
+            gap: 1dvh;
         }
 
         #closeButton{
             position: absolute;
-            bottom: -10vh;
-            height: 10vh;
+            bottom: -10dvh;
+            height: 10dvh;
             width: 100vw;
 
 
@@ -287,13 +287,13 @@
         }
 
         #closeButton.OffScreenShown{
-            bottom: 0vh !important;
+            bottom: 0dvh !important;
             top: unset !important;
         }
 
         #screen2Area{
             width: 100vw;
-            height: 89vh;
+            height: 89dvh;
             position:absolute;
             top: 0px;
             left: 0px;
@@ -303,9 +303,9 @@
         }
 
         .TextPrompt{
-            height: 10vh;
+            height: 10dvh;
             width: 100%;
-            font-size: clamp(4vh, 5vw, 5vh);
+            font-size: clamp(4dvh, 5vw, 5dvh);
             background-color: lightgrey;
             display: flex;
             align-items: center;
@@ -323,8 +323,8 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 2vh;
-            margin: 2vh;
+            gap: 2dvh;
+            margin: 2dvh;
         }
 
         .CardSelect>div{
@@ -339,10 +339,10 @@
         }
 
         .CardSelect button{
-            padding: 0px 2vh;
-            font-size: 2vh;
-            height: 5vh;
-            margin: 1vh;
+            padding: 0px 2dvh;
+            font-size: 2dvh;
+            height: 5dvh;
+            margin: 1dvh;
         }
         
 
@@ -350,17 +350,17 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 1vh;
+            gap: 1dvh;
             justify-content: space-evenly;
         }
 
         .CardSelect2 button{
-            margin: 0px 1vh;
+            margin: 0px 1dvh;
         }
 
         #recordGuessStage2 button{
-            height: 7vh;
-            font-size: 3vh;
+            height: 7dvh;
+            font-size: 3dvh;
         }
 
     </style>
@@ -397,9 +397,9 @@
 
         .Text{
             flex-grow: 1;
-            font-size: 2vh;
-            margin: 1vh 1vh 0vh 1vh;
-            padding: 1vh;
+            font-size: 2dvh;
+            margin: 1dvh 1dvh 0dvh 1dvh;
+            padding: 1dvh;
             background-color: lightgrey;
             /*display: flex;*/
             align-items: flex-start;
@@ -417,12 +417,12 @@
             flex-direction: column;
             align-items: stretch;
             justify-content: center;
-            padding: 0vh 4vh;
-            gap: 1vh;
+            padding: 0dvh 4dvh;
+            gap: 1dvh;
             text-align: center;
 
-            height: 15vh;
-            font-size: 5vh;
+            height: 15dvh;
+            font-size: 5dvh;
             box-shadow: none;
             border: none;
             background-color: lightgrey;
@@ -442,18 +442,18 @@
         input[type="range"]::-webkit-slider-runnable-track {
             -webkit-appearance: none;
             background: darkgrey;
-            height: 2vh;
-            border-radius: 1vh;
+            height: 2dvh;
+            border-radius: 1dvh;
         }
 
         /* Style the thumb (the slider button) */
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none; /* Override default look */
             appearance: none;
-            margin-top: -0.5vh; /* Centers thumb on the track */
+            margin-top: -0.5dvh; /* Centers thumb on the track */
             background-color: grey;
-            height: 3vh;
-            width: 3vh; 
+            height: 3dvh;
+            width: 3dvh; 
             border-radius: 50%;
         }
     </style>
@@ -461,8 +461,8 @@
     <style>
         #screen1Bottom{
             display: flex;
-            gap: 1vh;
-            margin: 0.5vh;
+            gap: 1dvh;
+            margin: 0.5dvh;
         }
 
         #openMenu{
@@ -471,7 +471,7 @@
         }
 
         #undo{
-            width: 10vh;
+            width: 10dvh;
         }
 
         #recordGuessButton{
@@ -479,7 +479,7 @@
         }
         
         #helpButton{
-            width: 10vh;
+            width: 10dvh;
         }
 
         #existingGame{
@@ -491,11 +491,11 @@
         #newGameMenu{
             display: flex;
             flex-direction: column-reverse;
-            gap: 1vh;
+            gap: 1dvh;
         }
 
         #newGameMenuStage1 button{
-            margin: 0px 1vh;
+            margin: 0px 1dvh;
         }
 
         .Spacer{
@@ -840,11 +840,11 @@
             let bottom = document.createElement("div");
             bottom.style.display = "flex";
             bottom.style.alignItems = "center";
-            bottom.style.fontSize = "5vh";
+            bottom.style.fontSize = "5dvh";
             bottom.style.color = "lightgrey";
             bottom.style.justifyContent = "center";
             bottom.innerText = "You";
-            bottom.style.margin = "2vh";
+            bottom.style.margin = "2dvh";
             
 
             let top2 = document.createElement("div");
@@ -856,14 +856,14 @@
             
             top2.appendChild(top);
             //top.style.flexGrow = 1;
-            top.style.height = "min(100vw, 60vh)";
-            top.style.width = "min(100vw, 60vh)";
+            top.style.height = "min(100vw, 60dvh)";
+            top.style.width = "min(100vw, 60dvh)";
             top.style.position = "relative";
             
             for(let i = 0; i < playerCount; i++){
                 let box = document.createElement("button");
-                box.style.width = "5vh";
-                box.style.height = "5vh";
+                box.style.width = "5dvh";
+                box.style.height = "5dvh";
                 box.style.padding = "0px";
                 box.style.borderRadius ="50%";
                 box.style.translate = "-50% 50%";
@@ -894,8 +894,8 @@
             arrow.style.position = "absolute";
             arrow.style.top = "70%";
             arrow.style.left = "50%";
-            arrow.style.width = "6vh";
-            arrow.style.height = "6vh";
+            arrow.style.width = "6dvh";
+            arrow.style.height = "6dvh";
             arrow.style.padding = "0px";
             arrow.style.borderRadius = "50%";
             arrow.style.translate = "-50% -50%";
@@ -914,7 +914,7 @@
                     arrow.innerText = counterClockwiseArrow;
                 }
             }
-            //arrow.style.fontSize = "5vh";
+            //arrow.style.fontSize = "5dvh";
             //arrow.style.color = "lightgrey";
 
 
