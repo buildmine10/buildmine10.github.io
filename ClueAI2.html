@@ -467,157 +467,184 @@
         #undo{
             width: 10vh;
         }
+
+        #existingGame{
+            display: contents;
+        }
+        #newGame{
+            display: contents;
+        }
+        #newGameMenu{
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 1vh;
+        }
+
+        .Spacer{
+            flex-grow: 1;
+        }
+
+
+        .CardSelect button:hover{
+            background-color: lightblue;
+        }
     </style>
     <body>
-        <div id="protector"></div>
-        <div id="darkener"></div>
-
-        <div id="screen1">
-            <div id="dataSheet">
-                <div id="dataSheetLabels">
-
+        <div id="newGame">
+            <div id="newGameMenu" class="FullContainer">
+                <div id="newGameMenuStage1" class="FullContainer">
+                    <div class="TextPrompt">How many players?</div>
+                    <div class="Spacer"></div>
+                    <div class="Spacer"></div>
+                    <button onclick="setPlayerCount(2)">2</button>
+                    <button onclick="setPlayerCount(3)">3</button>
+                    <button onclick="setPlayerCount(4)">4</button>
+                    <button onclick="setPlayerCount(5)">5</button>
+                    <button onclick="setPlayerCount(6)">6</button>
+                    <div class="Spacer"></div>
                 </div>
-                <div id="dataSheetBoxes">
-                    
+                <div id="newGameMenuStage2" class="FullContainer Hidden">
+                    <div class="TextPrompt">Select your cards</div>
+                    <div class="CardSelect">
+                        <div>
+                            <button onclick="toggleCard(event, 'Miss Scarlet')">Scarlet</button>
+                            <button onclick="toggleCard(event, 'Colonel Mustard')">Mustard</button>
+                            <button onclick="toggleCard(event, 'Mrs. White')">White</button>
+                            <button onclick="toggleCard(event, 'Mr. Green')">Green</button>
+                            <button onclick="toggleCard(event, 'Mrs. Peacock')">Peacock</button>
+                            <button onclick="toggleCard(event, 'Prof. Plum')">Plum</button>
+                        </div>
+                        <div>
+                            <button onclick="toggleCard(event, 'Candlestick')">Candlestick</button>
+                            <button onclick="toggleCard(event, 'Knife')">Knife</button>
+                            <button onclick="toggleCard(event, 'Lead Pipe')">Lead Pipe</button>
+                            <button onclick="toggleCard(event, 'Gun')">Gun</button>
+                            <button onclick="toggleCard(event, 'Rope')">Rope</button>
+                            <button onclick="toggleCard(event, 'Wrench')">Wrench</button>
+                        </div>
+                        <div>
+                            <button onclick="toggleCard(event, 'Kitchen')">Kitchen</button>
+                            <button onclick="toggleCard(event, 'Ballroom')">Ballroom</button>
+                            <button onclick="toggleCard(event, 'Conservatory')">Conservatory</button>
+                            <button onclick="toggleCard(event, 'Dining Room')">Dining Room</button>
+                            <button onclick="toggleCard(event, 'Billiard Room')">Billiard Room</button>
+                            <button onclick="toggleCard(event, 'Library')">Library</button>
+                            <button onclick="toggleCard(event, 'Lounge')">Lounge</button>
+                            <button onclick="toggleCard(event, 'Hall')">Hall</button>
+                            <button onclick="toggleCard(event, 'Study')">Study</button>
+                        </div>
+                        <button onclick="startGame()">Continue</button>
+                    </div>
                 </div>
-            </div>
-            <div id="screen1Bottom">
-                <button id="openMenu">≡</button>
-                <button id="undo" onclick=undo()>↺</button>
-            </div>
             
+            </div>
         </div>
-
-        
-        <div id="screen2" class="FullContainer">
-            <!--All other screens are in this-->
-            <button id="closeButton">X</button>
-            <div id="screen2Area">
-                <div id="mainMenu" class="FullContainer LeftScreenMenu">
-                    <button id="revealCardButton">Reveal Card</button>
-                    <button id="recordGuessButton">Record Guess</button>
-<<<<<<< HEAD
-=======
-                    <button onclick=undo()>Undo</button>
-                    <div id="playerCounterDiv">
-                        <input id="playerCounter" type="range" placeholder="Player Count" max="6" min="1" step="1" value="6">
-                        <label id="playerCounterLabel" for="playerCounter">Player Count: 6</label>
+        <div id="existingGame">
+            <div id="protector"></div>
+            <div id="darkener"></div>
+    
+            <div id="screen1">
+                <div id="dataSheet">
+                    <div id="dataSheetLabels">
+    
                     </div>
-                    
->>>>>>> fcbcd3c92bde6dc4538a5dc4d7e3a79b5e5b2baf
-                    <button id="helpButton">Help</button>
+                    <div id="dataSheetBoxes">
+                        
+                    </div>
                 </div>
-                <div id="revealCardMenu" class="FullContainer LeftScreenMenu">
-                    <div id="revealCardStage1" class="FullContainer">
-                        <div class="TextPrompt">Who has the card?</div>
-                        <div class="PlayerSelect"></div>
-                    </div>
-                    <div id="revealCardStage2" class="FullContainer Hidden">
-                        <div class="TextPrompt">Which card?</div>
-                        <div class="CardSelect">
-                            <div>
-                                <button onclick="revealCard('Miss Scarlet')">Scarlet</button>
-                                <button onclick="revealCard('Colonel Mustard')">Mustard</button>
-                                <button onclick="revealCard('Mrs. White')">White</button>
-                                <button onclick="revealCard('Mr. Green')">Green</button>
-                                <button onclick="revealCard('Mrs. Peacock')">Peacock</button>
-                                <button onclick="revealCard('Prof. Plum')">Plum</button>
-                            </div>
-                            <div>
-                                <button onclick="revealCard('Candlestick')">Candlestick</button>
-                                <button onclick="revealCard('Knife')">Knife</button>
-                                <button onclick="revealCard('Lead Pipe')">Lead Pipe</button>
-                                <button onclick="revealCard('Gun')">Gun</button>
-                                <button onclick="revealCard('Rope')">Rope</button>
-                                <button onclick="revealCard('Wrench')">Wrench</button>
-                            </div>
-                            <div>
-                                <button onclick="revealCard('Kitchen')">Kitchen</button>
-                                <button onclick="revealCard('Ballroom')">Ballroom</button>
-                                <button onclick="revealCard('Conservatory')">Conservatory</button>
-                                <button onclick="revealCard('Dining Room')">Dining Room</button>
-                                <button onclick="revealCard('Billiard Room')">Billiard Room</button>
-                                <button onclick="revealCard('Library')">Library</button>
-                                <button onclick="revealCard('Lounge')">Lounge</button>
-                                <button onclick="revealCard('Hall')">Hall</button>
-                                <button onclick="revealCard('Study')">Study</button>
-                            </div>
-                        </div>
-                    </div>
+                <div id="screen1Bottom">
+                    <button id="openMenu">≡</button>
+                    <button id="undo" onclick=undo()>↺</button>
+                </div>
                 
-                </div>
-                <div id="recordGuessMenu" class="FullContainer LeftScreenMenu">
-                    <div id="recordGuessStage1" class="FullContainer">
-                        <div class="TextPrompt">Who asked?</div>
-                        <div class="PlayerSelect"></div>
+            </div>
+    
+            
+            <div id="screen2" class="FullContainer">
+                <!--All other screens are in this-->
+                <button id="closeButton">X</button>
+                <div id="screen2Area">
+                    <div id="mainMenu" class="FullContainer LeftScreenMenu">
+                        <button id="recordGuessButton">Record Guess</button>
+                        
+                        <button id="helpButton">Help</button>
                     </div>
-                    <div id="recordGuessStage2" class="FullContainer Hidden">
-                        <div class="TextPrompt">What Person?</div>
-                        <div class="CardSelect2">
-                            <button onclick="recordPerson('Miss Scarlet')">Scarlet</button>
-                            <button onclick="recordPerson('Colonel Mustard')">Mustard</button>
-                            <button onclick="recordPerson('Mrs. White')">White</button>
-                            <button onclick="recordPerson('Mr. Green')">Green</button>
-                            <button onclick="recordPerson('Mrs. Peacock')">Peacock</button>
-                            <button onclick="recordPerson('Prof. Plum')">Plum</button>
+
+
+                    <div id="recordGuessMenu" class="FullContainer LeftScreenMenu">
+                        <div id="recordGuessStage1" class="FullContainer">
+                            <div class="TextPrompt">Who asked?</div>
+                            <div class="PlayerSelect"></div>
+                        </div>
+                        <div id="recordGuessStage2" class="FullContainer Hidden">
+                            <div class="TextPrompt">What Person?</div>
+                            <div class="CardSelect2">
+                                <button onclick="recordPerson('Miss Scarlet')">Scarlet</button>
+                                <button onclick="recordPerson('Colonel Mustard')">Mustard</button>
+                                <button onclick="recordPerson('Mrs. White')">White</button>
+                                <button onclick="recordPerson('Mr. Green')">Green</button>
+                                <button onclick="recordPerson('Mrs. Peacock')">Peacock</button>
+                                <button onclick="recordPerson('Prof. Plum')">Plum</button>
+                            </div>
+                        </div>
+                        <div id="recordGuessStage3" class="FullContainer  Hidden">
+                            <div class="TextPrompt">What Weapon</div>
+                            <div class="CardSelect2">
+                                <button onclick="recordWeapon('Candlestick')">Candlestick</button>
+                                <button onclick="recordWeapon('Knife')">Knife</button>
+                                <button onclick="recordWeapon('Lead Pipe')">Lead Pipe</button>
+                                <button onclick="recordWeapon('Gun')">Gun</button>
+                                <button onclick="recordWeapon('Rope')">Rope</button>
+                                <button onclick="recordWeapon('Wrench')">Wrench</button>
+                            </div>
+                        </div>
+                        <div id="recordGuessStage4" class="FullContainer  Hidden">
+                            <div class="TextPrompt">What Room?</div>
+                            <div class="CardSelect2">
+                                    <button onclick="recordRoom('Kitchen')">Kitchen</button>
+                                    <button onclick="recordRoom('Ballroom')">Ballroom</button>
+                                    <button onclick="recordRoom('Conservatory')">Conservatory</button>
+                                    <button onclick="recordRoom('Dining Room')">Dining Room</button>
+                                    <button onclick="recordRoom('Billiard Room')">Billiard Room</button>
+                                    <button onclick="recordRoom('Library')">Library</button>
+                                    <button onclick="recordRoom('Lounge')">Lounge</button>
+                                    <button onclick="recordRoom('Hall')">Hall</button>
+                                    <button onclick="recordRoom('Study')">Study</button>
+                            </div>
+                        </div>
+                        <div id="recordGuessStage5" class="FullContainer  Hidden">
+                            <div class="TextPrompt">Who answered?</div>
+                            <div class="PlayerSelect"></div>
+                        </div>
+                        <div id="recordGuessStage6" class="FullContainer  Hidden">
+                            <div class="TextPrompt">Which Card?</div>
+                            <div class="CardSelect2"></div>
                         </div>
                     </div>
-                    <div id="recordGuessStage3" class="FullContainer  Hidden">
-                        <div class="TextPrompt">What Weapon</div>
-                        <div class="CardSelect2">
-                            <button onclick="recordWeapon('Candlestick')">Candlestick</button>
-                            <button onclick="recordWeapon('Knife')">Knife</button>
-                            <button onclick="recordWeapon('Lead Pipe')">Lead Pipe</button>
-                            <button onclick="recordWeapon('Gun')">Gun</button>
-                            <button onclick="recordWeapon('Rope')">Rope</button>
-                            <button onclick="recordWeapon('Wrench')">Wrench</button>
+                    <div id="helpMenu" class="FullContainer LeftScreenMenu">
+                        <div class="Text">
+                            -1 = They don't have this card<br>
+                            0 = No information<br>
+                            1 = They might have this card<br>
+                            2 = They have this card<br>
+                            <br>
+                            You are the first column. The players are listed in turn order from left to right.<br>
+                            <br>
+                            Click and drag to select who asked and who answered.<br>
+                            <br>
+                            Click the asker if no one answered.<br>
+                            <br>
+                            Click a player twice if they showed you their card.<br>
+                            <br>
+                            Click a player three times if you believe nobody has that card.<br>
+                            <br>
+                            Alternatively you can use the other buttons in the menu.
                         </div>
-                    </div>
-                    <div id="recordGuessStage4" class="FullContainer  Hidden">
-                        <div class="TextPrompt">What Room?</div>
-                        <div class="CardSelect2">
-                                <button onclick="recordRoom('Kitchen')">Kitchen</button>
-                                <button onclick="recordRoom('Ballroom')">Ballroom</button>
-                                <button onclick="recordRoom('Conservatory')">Conservatory</button>
-                                <button onclick="recordRoom('Dining Room')">Dining Room</button>
-                                <button onclick="recordRoom('Billiard Room')">Billiard Room</button>
-                                <button onclick="recordRoom('Library')">Library</button>
-                                <button onclick="recordRoom('Lounge')">Lounge</button>
-                                <button onclick="recordRoom('Hall')">Hall</button>
-                                <button onclick="recordRoom('Study')">Study</button>
-                        </div>
-                    </div>
-                    <div id="recordGuessStage5" class="FullContainer  Hidden">
-                        <div class="TextPrompt">Who answered?</div>
-                        <div class="PlayerSelect"></div>
-                    </div>
-                    <div id="recordGuessStage6" class="FullContainer  Hidden">
-                        <div class="TextPrompt">Which Card?</div>
-                        <div class="CardSelect2"></div>
-                    </div>
-                </div>
-                <div id="helpMenu" class="FullContainer LeftScreenMenu">
-                    <div class="Text">
-                        -1 = They don't have this card<br>
-                        0 = No information<br>
-                        1 = They might have this card<br>
-                        2 = They have this card<br>
-                        <br>
-                        You are the first column. The players are listed in turn order from left to right.<br>
-                        <br>
-                        Click and drag to select who asked and who answered.<br>
-                        <br>
-                        Click the asker if no one answered.<br>
-                        <br>
-                        Click a player twice if they showed you their card.<br>
-                        <br>
-                        Click a player three times if you believe nobody has that card.<br>
-                        <br>
-                        Alternatively you can use the other buttons in the menu.
                     </div>
                 </div>
             </div>
         </div>
+        
 
     </body>
 
@@ -653,6 +680,8 @@
     </script>
 
     <script>
+        
+
 
         let dataBoxes = {};
 
@@ -766,7 +795,7 @@
                     //Then all but one of there cards is known
                 }
             }
-            console.log(playerCardCounts)
+            //console.log(playerCardCounts)
         }
         
 
@@ -906,11 +935,6 @@
 
                 document.getElementById("openMenu").onclick = ()=>{this.openMainMenu()};
              
-
-                document.getElementById("revealCardButton").onclick = ()=>{
-                    this.openRevealCard();
-                }
-
                 document.getElementById("recordGuessButton").onclick = ()=>{
                     this.openRecordGuess();
                 }
@@ -923,22 +947,7 @@
             setPlayerCount(number){
                 playerCount = number;
                 makeDataSheet(playerCount);
-                this.generateRevealCardPlayerSelector();
                 this.generateRecordGuessPlayerSelectors();
-            }
-
-            generateRevealCardPlayerSelector(){
-                let element = document.getElementById("revealCardStage1").getElementsByClassName("PlayerSelect")[0];
-                element.innerHTML = "";
-                element.appendChild(makePlayerSelectMenu(playerCount, (playerIndex)=>{
-                    if(turnDirection == 0){
-                        playerIndex = (playerCount - playerIndex) % playerCount;
-                    }
-
-                    revealCardPlayer = playerIndex;
-                    document.getElementById("revealCardStage1").classList.add("Hidden");
-                    document.getElementById("revealCardStage2").classList.remove("Hidden");
-                }));
             }
 
             generateRecordGuessPlayerSelectors(){
@@ -1106,20 +1115,19 @@
         let menuState = new MenuState();
         
 
-        function revealCard(cardName){
-            if(revealCardPlayer < 0 || revealCardPlayer >= playerCount) return;
+        function revealCard(cardName, player){
+            if(player < 0 || player >= playerCount) return;
 
             recordData();
 
-            //console.log(revealCardPlayer, cardName)
+            //console.log(player, cardName)
             menuState.closeRevealCard();
 
             for(let i = 0; i < playerCount; i++){
                 dataBoxes[cardName][i].innerText = -1; 
             }
 
-            dataBoxes[cardName][revealCardPlayer].innerText = 2;
-            revealCardPlayer = -1;
+            dataBoxes[cardName][player].innerText = 2;
             menuState.closeMainMenu();
             onDataChange();
         }
@@ -1758,11 +1766,13 @@
 
         menuState.setPlayerCount(6)
 
-
+        
+        /*
         document.getElementById("playerCounter").onchange = ()=>{
             menuState.setPlayerCount(parseInt(document.getElementById("playerCounter").value))
             document.getElementById("playerCounterLabel").innerText = `Player Count: ${playerCount}`;
         }
+        */
 
         function preventIosScrolling() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -1772,6 +1782,51 @@
         }
 
         preventIosScrolling();
+
+
+        let player1Cards = new Set();
+
+        function newGame(){
+            player1Cards = new Set();
+            document.getElementById("newGame").style.display = "contents";
+            document.getElementById("existingGame").style.display = "none"; 
+        }
+        
+        function setPlayerCount(number){
+            menuState.setPlayerCount(number)
+
+            document.getElementById("newGameMenuStage1").classList.add("Hidden");
+            document.getElementById("newGameMenuStage2").classList.remove("Hidden");
+        }
+
+        function toggleCard(event, name){
+            if(player1Cards.has(name)){
+                player1Cards.delete(name);
+                event.target.style.backgroundColor = ""
+            }else{
+                player1Cards.add(name);
+                event.target.style.backgroundColor = "aqua"
+            }
+        }
+
+        function startGame(){
+            
+            player1Cards.forEach(card=>{
+                revealCard(card, 0);
+            })
+            //console.log(player1Cards)
+
+            document.getElementById("newGameMenuStage1").classList.remove("Hidden");
+            document.getElementById("newGameMenuStage2").classList.add("Hidden");
+
+            document.getElementById("newGame").style.display = "none";
+            document.getElementById("existingGame").style.display = "contents"; 
+            dataRecord = [];
+        }
+
+        newGame();
+
+
     </script>
 
 
