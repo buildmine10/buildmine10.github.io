@@ -401,6 +401,55 @@
             justify-content: flex-start;
 
         }
+
+        #playerCounter{
+           
+        }
+
+        #playerCounterDiv{
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            padding: 0vh 4vh;
+            gap: 1vh;
+            text-align: center;
+
+            height: 15vh;
+            font-size: 5vh;
+            box-shadow: none;
+            border: none;
+            background-color: lightgrey;
+            z-index: inherit;
+        }
+
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+
+        /* Style the track (the bar itself) */
+        input[type="range"]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            background: darkgrey;
+            height: 2vh;
+            border-radius: 1vh;
+        }
+
+        /* Style the thumb (the slider button) */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            margin-top: -0.5vh; /* Centers thumb on the track */
+            background-color: grey;
+            height: 3vh;
+            width: 3vh; 
+            border-radius: 50%;
+        }
     </style>
 
     <style>
@@ -447,6 +496,15 @@
                 <div id="mainMenu" class="FullContainer LeftScreenMenu">
                     <button id="revealCardButton">Reveal Card</button>
                     <button id="recordGuessButton">Record Guess</button>
+<<<<<<< HEAD
+=======
+                    <button onclick=undo()>Undo</button>
+                    <div id="playerCounterDiv">
+                        <input id="playerCounter" type="range" placeholder="Player Count" max="6" min="1" step="1" value="6">
+                        <label id="playerCounterLabel" for="playerCounter">Player Count: 6</label>
+                    </div>
+                    
+>>>>>>> fcbcd3c92bde6dc4538a5dc4d7e3a79b5e5b2baf
                     <button id="helpButton">Help</button>
                 </div>
                 <div id="revealCardMenu" class="FullContainer LeftScreenMenu">
@@ -777,7 +835,7 @@
             arrow.style.width = "6vh";
             arrow.style.height = "6vh";
             arrow.style.padding = "0px";
-            //arrow.style.borderRadius = "50%";
+            arrow.style.borderRadius = "50%";
             arrow.style.translate = "-50% -50%";
             if(turnDirection == 0){
                 arrow.innerText = clockwiseArrow;
@@ -1085,10 +1143,15 @@
             //This is where we determine who does not have specific cards
             //It starts just after the asking player and ends just before the answering player
             for (var i = recordGuessAsker + 1; i < recordGuessAnswerer; i++) {
-
-                dataBoxes[recordGuessPerson][i % playerCount].innerText = -1;
-                dataBoxes[recordGuessWeapon][i % playerCount].innerText = -1;
-                dataBoxes[recordGuessRoom][i % playerCount].innerText = -1;
+                if(dataBoxes[recordGuessPerson][i % playerCount].innerText != 2){
+                    dataBoxes[recordGuessPerson][i % playerCount].innerText = -1;
+                }
+                if(dataBoxes[recordGuessWeapon][i % playerCount].innerText != 2){
+                    dataBoxes[recordGuessWeapon][i % playerCount].innerText = -1;
+                }
+                if(dataBoxes[recordGuessRoom][i % playerCount].innerText != 2){
+                    dataBoxes[recordGuessRoom][i % playerCount].innerText = -1;
+                }
             }
 
 
@@ -1228,11 +1291,13 @@
 
         
 
-        document.onmouseup = ()=>{
-            if(!isMouseDown){
-                return;
-            }
+        document.onmouseup = (event)=>{
+            
             (()=>{
+                if(!isMouseDown){
+                    return;
+                }
+
                 isMouseDown = false;
 
                 if(mouseStartCard == "") return;
@@ -1304,11 +1369,12 @@
             })();
         }
 
-        document.ontouchend = ()=>{
-            if(!isMouseDown){
-                return;
-            }
+        document.ontouchend = (event)=>{
+            
             (()=>{
+                if(!isMouseDown){
+                    return;
+                }
                 isMouseDown = false;
 
                 if(mouseStartCard == "") return;
@@ -1369,8 +1435,8 @@
             
             (()=>{
                 if(startLocation == null) return;
-
-                if(event.clientX - startLocation > window.innerWidth / 4 && isUndoGesture){
+                //console.log(pastLocation[0] - startLocation, window.innerWidth / 4, isUndoGesture)
+                if(pastLocation[0] - startLocation > window.innerWidth / 4 && isUndoGesture){
                     console.log("undo")
                     undo();
                 }
@@ -1589,30 +1655,12 @@
         let isUndoGesture = false;
         let pastLocation = null;
         let startLocation = null;
-        document.getElementById("dataSheetLabels").onpointerdown = (event)=>{
+        document.getElementById("dataSheetLabels").ontouchstart = (event)=>{
             isUndoGesture = true;
-            startLocation = event.clientX;
-            pastLocation = [event.clientX, event.clientY];
+            startLocation = event.touches[0].clientX;
+            pastLocation = [event.touches[0].clientX, event.touches[0].clientY];
         }
         
-        document.onpointermove = (event)=>{
-            if(pastLocation != null){
-                let diff = [event.clientX - pastLocation[0], event.clientY - pastLocation[1]];
-                let mag = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
-
-                if(mag > 3){
-                    diff[0] /= mag;
-                    diff[1] /= mag;
-
-                    //Allow 20 degrees of variance from horizontal
-                    if(diff[0] < 0.939692620786){
-                        isUndoGesture = false;
-                    }
-
-                    pastLocation = [event.clientX, event.clientY];
-                }
-            }
-        }
 
 
         function isInBounds(bounds, touch){
@@ -1632,20 +1680,46 @@
         }
 
         document.ontouchmove = (event)=>{
-            const touch = event.touches[0];
-            
-            //console.log(event.clientX, event.clientY)
-            for(let card in dataBoxes){
-                dataBoxes[card].forEach((element, index)=>{
-                    if(isInBounds(element.getBoundingClientRect(), touch)){
-                        if(!(mouseCardOver == card && mouseIndexOver == index)){
-                            mouseCardOver = card;
-                            mouseIndexOver = index;
-                            onMouseOverDataBox();
+            (()=>{
+                if(pastLocation != null){
+                    
+                    let diff = [event.touches[0].clientX - pastLocation[0], event.touches[0].clientY - pastLocation[1]];
+                    let mag = Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+
+                    if(mag > 50){
+                        
+                        diff[0] /= mag;
+                        diff[1] /= mag;
+
+                        
+                        //Allow 20 degrees of variance from horizontal
+                        if(diff[0] < 0.9){
+                            isUndoGesture = false;
                         }
+
+                        pastLocation = [event.touches[0].clientX, event.touches[0].clientY];
                     }
-                });
-            }
+                }
+            })();
+
+
+            (()=>{
+                const touch = event.touches[0];
+            
+                //console.log(event.clientX, event.clientY)
+                for(let card in dataBoxes){
+                    dataBoxes[card].forEach((element, index)=>{
+                        if(isInBounds(element.getBoundingClientRect(), touch)){
+                            if(!(mouseCardOver == card && mouseIndexOver == index)){
+                                mouseCardOver = card;
+                                mouseIndexOver = index;
+                                onMouseOverDataBox();
+                            }
+                        }
+                    });
+                }
+            })();
+            
         }
 
         document.onmousemove = (event)=>{
@@ -1683,6 +1757,12 @@
         //}
 
         menuState.setPlayerCount(6)
+
+
+        document.getElementById("playerCounter").onchange = ()=>{
+            menuState.setPlayerCount(parseInt(document.getElementById("playerCounter").value))
+            document.getElementById("playerCounterLabel").innerText = `Player Count: ${playerCount}`;
+        }
 
         function preventIosScrolling() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
