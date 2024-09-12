@@ -403,6 +403,22 @@
         }
     </style>
 
+    <style>
+        #screen1Bottom{
+            display: flex;
+            gap: 1vh;
+            margin: 0.5vh;
+        }
+
+        #openMenu{
+            flex-grow: 1;
+            
+        }
+
+        #undo{
+            width: 10vh;
+        }
+    </style>
     <body>
         <div id="protector"></div>
         <div id="darkener"></div>
@@ -416,7 +432,11 @@
                     
                 </div>
             </div>
-            <button id="openMenu">≡</button>
+            <div id="screen1Bottom">
+                <button id="openMenu">≡</button>
+                <button id="undo" onclick=undo()>↺</button>
+            </div>
+            
         </div>
 
         
@@ -427,7 +447,6 @@
                 <div id="mainMenu" class="FullContainer LeftScreenMenu">
                     <button id="revealCardButton">Reveal Card</button>
                     <button id="recordGuessButton">Record Guess</button>
-                    <button onclick=undo()>Undo</button>
                     <button id="helpButton">Help</button>
                 </div>
                 <div id="revealCardMenu" class="FullContainer LeftScreenMenu">
