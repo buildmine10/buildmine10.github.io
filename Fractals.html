@@ -843,7 +843,7 @@
             }else if(event.targetTouches.length == 1 && touches.length == event.targetTouches.length){
                 //A drag has occurred
                 let deltaX = event.targetTouches[0].clientX - touches[0].clientX;
-                let deltaY = event.targetTouches[0].clientY - touches[0].clientY;
+                let deltaY = touches[0].clientY - event.targetTouches[0].clientY;//The y-axis is inverted so the subtraction needs to be flipped
                 
                 deltaX /= document.documentElement.clientWidth;
                 deltaY /= document.documentElement.clientWidth;
@@ -863,6 +863,7 @@
                         moveRoot(selectedRoot, deltaX, deltaY);
                     }
                 }
+                iterations = 0;
             }
 
             touches = event.targetTouches;
