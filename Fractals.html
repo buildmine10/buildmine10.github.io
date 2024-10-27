@@ -115,7 +115,7 @@
     <div id="alternateFractalCheckbox" class="clickable">🞜</div>
     <div id="helpButton" class="clickable">?</div>
     <div id="helpMenu">
-        <p>The first button switches between input modes. It changes what left and right click and drags do. On mobile a left click is a one finger touch, and a right click is a two finger touch. By default, left click changes the view mode, right click changes the fractal type, drag moves the camera, and scroll zooms. In alternate mode, left click sets a point, left drag moves a point, right click deletes a point, and scroll changes the number of fractal iterations before stopping.</p>
+        <p>The first button switches between input modes. It changes what left, right, and middle click and drags do. On mobile a left click is a one finger touch, right click is a two finger touch, and middle click is a three finger touch. By default, left click changes the view mode, right click changes the fractal type, drag moves the camera, and scroll zooms. In alternate mode, left click sets a point, left drag moves a point, right click deletes a point, and scroll changes the number of fractal iterations before stopping. Middle click switches the input mode.</p>
         <p>The second button switches between the view modes. For Mandelbrot fractals this switches between the Mandelbrot set and the Julia set. For Newton fractals this switches what the colors mean: which root was found, iterations until stable. </p>
         <p>The third button switches between Mandelbrot fractals and Newton fractals.</p>
     </div>
@@ -812,7 +812,7 @@
                 
             }       
             if(event.button == 1){
-                
+                setDragMode((dragMode + 1) % 2)
             }     
         }
 
