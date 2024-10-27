@@ -1078,6 +1078,10 @@
                             setFractalType(!isMandelbrotType)
                         }
                     }
+
+                    if(touchCount == 3){
+                        setDragMode((dragMode + 1) % 2)
+                    }
                 }
 
                 
