@@ -854,63 +854,67 @@
                 ctx.fill();
             }
 
-            if(event.targetTouches.length == 2 && touches.length == event.targetTouches.length){
-                //Then the user is trying to zoom
-                let oldDist = Math.sqrt((touches[0].clientX - touches[1].clientX) * (touches[0].clientX - touches[1].clientX) + (touches[0].clientY - touches[1].clientY) * (touches[0].clientY - touches[1].clientY))
-                let newDist = Math.sqrt((event.targetTouches[0].clientX - event.targetTouches[1].clientX) * (event.targetTouches[0].clientX - event.targetTouches[1].clientX) + (event.targetTouches[0].clientY - event.targetTouches[1].clientY) * (event.targetTouches[0].clientY - event.targetTouches[1].clientY))
-                let scale = oldDist / newDist;
+            if(performance.now() - touchStart > 100){
+                //It takes a tenth of a second to determine if the drag is single only multi
+                if(event.targetTouches.length == 2 && touches.length == event.targetTouches.length){
+                    //Then the user is trying to zoom
+                    let oldDist = Math.sqrt((touches[0].clientX - touches[1].clientX) * (touches[0].clientX - touches[1].clientX) + (touches[0].clientY - touches[1].clientY) * (touches[0].clientY - touches[1].clientY))
+                    let newDist = Math.sqrt((event.targetTouches[0].clientX - event.targetTouches[1].clientX) * (event.targetTouches[0].clientX - event.targetTouches[1].clientX) + (event.targetTouches[0].clientY - event.targetTouches[1].clientY) * (event.targetTouches[0].clientY - event.targetTouches[1].clientY))
+                    let scale = oldDist / newDist;
 
-                let touchCenterOld = [(touches[0].clientX + touches[1].clientX) * 0.5, document.documentElement.clientHeight - (touches[0].clientY + touches[1].clientY) * 0.5 - 1]
-                let touchCenterNew = [(event.targetTouches[0].clientX + event.targetTouches[1].clientX) * 0.5, document.documentElement.clientHeight - (event.targetTouches[0].clientY + event.targetTouches[1].clientY) * 0.5 - 1]
+                    let touchCenterOld = [(touches[0].clientX + touches[1].clientX) * 0.5, document.documentElement.clientHeight - (touches[0].clientY + touches[1].clientY) * 0.5 - 1]
+                    let touchCenterNew = [(event.targetTouches[0].clientX + event.targetTouches[1].clientX) * 0.5, document.documentElement.clientHeight - (event.targetTouches[0].clientY + event.targetTouches[1].clientY) * 0.5 - 1]
 
-                touchCenterOld[0] = touchCenterOld[0] / document.documentElement.clientWidth - 0.5;
-                touchCenterOld[1] = (touchCenterOld[1] / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
+                    touchCenterOld[0] = touchCenterOld[0] / document.documentElement.clientWidth - 0.5;
+                    touchCenterOld[1] = (touchCenterOld[1] / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
 
-                touchCenterNew[0] = touchCenterNew[0] / document.documentElement.clientWidth - 0.5;
-                touchCenterNew[1] = (touchCenterNew[1] / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
+                    touchCenterNew[0] = touchCenterNew[0] / document.documentElement.clientWidth - 0.5;
+                    touchCenterNew[1] = (touchCenterNew[1] / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
 
-                let x = touchCenterOld[0] * camSize();
-                let y = touchCenterOld[1] * camSize();
+                    let x = touchCenterOld[0] * camSize();
+                    let y = touchCenterOld[1] * camSize();
 
-                x += camPosition[0];
-                y += camPosition[1];
+                    x += camPosition[0];
+                    y += camPosition[1];
 
-                sizeMultiplier *= scale;
-                iterations = 0;
+                    sizeMultiplier *= scale;
+                    iterations = 0;
 
-                let newX = touchCenterNew[0] * camSize();
-                let newY = touchCenterNew[1] * camSize();
-                newX += camPosition[0];
-                newY += camPosition[1];
+                    let newX = touchCenterNew[0] * camSize();
+                    let newY = touchCenterNew[1] * camSize();
+                    newX += camPosition[0];
+                    newY += camPosition[1];
 
-                camPosition[0] -= newX - x;
-                camPosition[1] -= newY - y;
+                    camPosition[0] -= newX - x;
+                    camPosition[1] -= newY - y;
 
-            }else if(event.targetTouches.length == 1 && touches.length == event.targetTouches.length){
-                //A drag has occurred
-                let deltaX = event.targetTouches[0].clientX - touches[0].clientX;
-                let deltaY = touches[0].clientY - event.targetTouches[0].clientY;//The y-axis is inverted so the subtraction needs to be flipped
-                
-                deltaX /= document.documentElement.clientWidth;
-                deltaY /= document.documentElement.clientWidth;
+                }else if(event.targetTouches.length == 1 && touches.length == event.targetTouches.length){
+                    //A drag has occurred
+                    let deltaX = event.targetTouches[0].clientX - touches[0].clientX;
+                    let deltaY = touches[0].clientY - event.targetTouches[0].clientY;//The y-axis is inverted so the subtraction needs to be flipped
+                    
+                    deltaX /= document.documentElement.clientWidth;
+                    deltaY /= document.documentElement.clientWidth;
 
-                deltaX *= camSize();
-                deltaY *= camSize();
+                    deltaX *= camSize();
+                    deltaY *= camSize();
 
-                if(dragMode == 0){
-                    camPosition[0] -= deltaX;
-                    camPosition[1] -= deltaY;
-                }else if(dragMode == 1){
-                    if(isMandelbrotType){
-                        mandelbrotConstPoint[0] += deltaX;
-                        mandelbrotConstPoint[1] += deltaY;
-                    }else{
-                        //One of the roots for the newton fractal needs to be moved
-                        moveRoot(selectedRoot, deltaX, deltaY);
+                    if(dragMode == 0){
+                        camPosition[0] -= deltaX;
+                        camPosition[1] -= deltaY;
+                    }else if(dragMode == 1){
+                        if(isMandelbrotType){
+                            mandelbrotConstPoint[0] += deltaX;
+                            mandelbrotConstPoint[1] += deltaY;
+                        }else{
+                            //One of the roots for the newton fractal needs to be moved
+                            moveRoot(selectedRoot, deltaX, deltaY);
+                        }
                     }
+                    iterations = 0;
                 }
-                iterations = 0;
             }
+            
 
             touches = event.targetTouches;
             //The amount that the points move away from each other is the amount to scale by
