@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <title>WebGL Mandelbrot/Julia Shader</title>
     <style>
         html,
@@ -537,8 +538,8 @@
         const mainContext = canvas.getContext("2d");
 
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.width = document.documentElement.clientWidth;
+            canvas.height = document.documentElement.clientHeight;
             iterations = 0;
         }
         resizeCanvas();
@@ -548,10 +549,10 @@
             if(iterations >= 100){
                 return;
             }
-            //canvas.width = window.innerWidth;
-            //canvas.height = window.innerHeight;
-            gl.canvas.width = window.innerWidth;
-            gl.canvas.height = window.innerHeight;
+            //canvas.width = document.documentElement.clientWidth;
+            //canvas.height = document.documentElement.clientHeight;
+            gl.canvas.width = document.documentElement.clientWidth;
+            gl.canvas.height = document.documentElement.clientHeight;
             
 
             gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -638,10 +639,10 @@
 
             if(event.button == 0){
                 let mouseX = event.clientX
-                let mouseY = window.innerHeight - event.clientY - 1;
+                let mouseY = document.documentElement.clientHeight - event.clientY - 1;
 
-                mouseX = mouseX / window.innerWidth - 0.5;
-                mouseY = (mouseY / window.innerHeight - 0.5) * (window.innerHeight / window.innerWidth);
+                mouseX = mouseX / document.documentElement.clientWidth - 0.5;
+                mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
 
                 let x = mouseX * camSize();
                 let y = mouseY * camSize();
@@ -656,8 +657,11 @@
                     selectedRoot = nearestRoot(x, y);
                     
                 }else{
-                    mandelbrotConstPoint = [x, y];
-                    iterations = 0;
+                    if(dragMode == 2){
+                        mandelbrotConstPoint = [x, y];
+                        iterations = 0;
+                    }
+                    
                 }
 
                 
@@ -665,10 +669,10 @@
             if(event.button == 2){
                 if(dragMode == 2){
                     let mouseX = event.clientX
-                    let mouseY = window.innerHeight - event.clientY - 1;
+                    let mouseY = document.documentElement.clientHeight - event.clientY - 1;
 
-                    mouseX = mouseX / window.innerWidth - 0.5;
-                    mouseY = (mouseY / window.innerHeight - 0.5) * (window.innerHeight / window.innerWidth);
+                    mouseX = mouseX / document.documentElement.clientWidth - 0.5;
+                    mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
 
                     let x = mouseX * camSize();
                     let y = mouseY * camSize();
@@ -693,8 +697,8 @@
                 let deltaX = event.movementX;
                 let deltaY = -event.movementY;
                 
-                deltaX /= window.innerWidth;
-                deltaY /= window.innerWidth;
+                deltaX /= document.documentElement.clientWidth;
+                deltaY /= document.documentElement.clientWidth;
 
                 deltaX *= camSize();
                 deltaY *= camSize();
@@ -728,10 +732,10 @@
         onwheel = (event) => {
             if(dragMode != 1){
                 let mouseX = event.clientX
-                let mouseY = window.innerHeight - event.clientY - 1;
+                let mouseY = document.documentElement.clientHeight - event.clientY - 1;
 
-                mouseX = mouseX / window.innerWidth - 0.5;
-                mouseY = (mouseY / window.innerHeight - 0.5) * (window.innerHeight / window.innerWidth);
+                mouseX = mouseX / document.documentElement.clientWidth - 0.5;
+                mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
 
                 let x = mouseX * camSize();
                 let y = mouseY * camSize();
