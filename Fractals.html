@@ -951,7 +951,7 @@
                 if(touchEnd - touchStart < 100){
                     if(isSingleTouchValid){
                         let mouseX = touchCenter[0];
-                        let mouseY = document.documentElement.clientHeight - touchCenter[0] - 1;
+                        let mouseY = document.documentElement.clientHeight - touchCenter[1] - 1;
 
                         mouseX = mouseX / document.documentElement.clientWidth - 0.5;
                         mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
@@ -981,7 +981,7 @@
                     if(isDoubleTouchValid){
                         if(dragMode == 2){
                             let mouseX = touchCenter[0]
-                            let mouseY = document.documentElement.clientHeight - touchCenter[0] - 1;
+                            let mouseY = document.documentElement.clientHeight - touchCenter[1] - 1;
 
                             mouseX = mouseX / document.documentElement.clientWidth - 0.5;
                             mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
