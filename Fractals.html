@@ -840,6 +840,29 @@
                 let scale = oldDist / newDist;
                 sizeMultiplier *= scale;
                 iterations = 0;
+            }else if(event.targetTouches.length == 1 && touches.length == event.targetTouches.length){
+                //A drag has occurred
+                let deltaX = event.targetTouches[0].clientX - touches[0].clientX;
+                let deltaY = event.targetTouches[0].clientY - touches[0].clientY;
+                
+                deltaX /= document.documentElement.clientWidth;
+                deltaY /= document.documentElement.clientWidth;
+
+                deltaX *= camSize();
+                deltaY *= camSize();
+                
+                if(dragMode == 0){
+                    camPosition[0] -= deltaX;
+                    camPosition[1] -= deltaY;
+                }else if(dragMode == 1){
+                    if(isMandelbrotType){
+                        mandelbrotConstPoint[0] += deltaX;
+                        mandelbrotConstPoint[1] += deltaY;
+                    }else{
+                        //One of the roots for the newton fractal needs to be moved
+                        moveRoot(selectedRoot, deltaX, deltaY);
+                    }
+                }
             }
 
             touches = event.targetTouches;
