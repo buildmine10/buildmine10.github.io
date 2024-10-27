@@ -821,7 +821,7 @@
         var touches = [];
         canvas.ontouchmove = (event)=>{
             wasMultitouch = event.targetTouches.length > 1;
-            console.log(event.targetTouches)
+            
             let ctx = debugCanvas.getContext("2d");
             ctx.clearRect(0, 0, debugCanvas.width, debugCanvas.height);
 
@@ -837,7 +837,7 @@
                 //Then the user is trying to zoom
                 let oldDist = Math.sqrt((touches[0].clientX - touches[1].clientX) * (touches[0].clientX - touches[1].clientX) + (touches[0].clientY - touches[1].clientY) * (touches[0].clientY - touches[1].clientY))
                 let newDist = Math.sqrt((event.targetTouches[0].clientX - event.targetTouches[1].clientX) * (event.targetTouches[0].clientX - event.targetTouches[1].clientX) + (event.targetTouches[0].clientY - event.targetTouches[1].clientY) * (event.targetTouches[0].clientY - event.targetTouches[1].clientY))
-                let scale = newDist / oldDist;
+                let scale = oldDist / newDist;
                 sizeMultiplier *= scale;
                 iterations = 0;
             }
