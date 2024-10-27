@@ -821,7 +821,7 @@
         var touches = [];
         canvas.ontouchmove = (event)=>{
             wasMultitouch = event.targetTouches.length > 1;
-            
+            console.log("HI")
             let ctx = debugCanvas.getContext("2d");
             ctx.clearRect(0, 0, debugCanvas.width, debugCanvas.height);
 
@@ -850,7 +850,7 @@
 
                 deltaX *= camSize();
                 deltaY *= camSize();
-                
+
                 if(dragMode == 0){
                     camPosition[0] -= deltaX;
                     camPosition[1] -= deltaY;
