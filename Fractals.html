@@ -115,8 +115,8 @@
     <div id="alternateFractalCheckbox" class="clickable">🞜</div>
     <div id="helpButton" class="clickable">?</div>
     <div id="helpMenu">
-        <p>The first button switches between input modes. It changes what left and right click and drags do. On mobile a left click is a one finger touch, and a right click is a two finger touch.</p>
-        <p>The second button switches between the view types. For Mandelbrot fractals this switches between the Mandelbrot set and the Julia set. For Newton fractals this switches what the colors mean: which root was found, iterations until stable. </p>
+        <p>The first button switches between input modes. It changes what left and right click and drags do. On mobile a left click is a one finger touch, and a right click is a two finger touch. By default, left click changes the view mode, left drag moves the camera, . In alternate mode, left click sets a point, left drag moves a point, and right click deletes a point.</p>
+        <p>The second button switches between the view modes. For Mandelbrot fractals this switches between the Mandelbrot set and the Julia set. For Newton fractals this switches what the colors mean: which root was found, iterations until stable. </p>
         <p>The third button switches between Mandelbrot fractals and Newton fractals.</p>
     </div>
 
@@ -736,7 +736,7 @@
 
         canvas.onmousemove = (event)=>{
             if(!isMouseDown) return;
-            if(performance.now() - mouseStart <= 100) return;//It has not been long enough to be a drag
+            
             let deltaX = event.movementX;
             let deltaY = -event.movementY;
             
@@ -764,7 +764,7 @@
 
         canvas.onmouseup = (event)=>{
             isMouseDown = false;
-            if(performance.now() - mouseStart > 100) return;//It was not a click but a drag
+            if(performance.now() - mouseStart > 200) return;//It was not a click but a drag
             if(event.button == 0){
                 let mouseX = event.clientX
                 let mouseY = document.documentElement.clientHeight - event.clientY - 1;
@@ -780,6 +780,8 @@
                 if(!isMandelbrotType){
                     if(dragMode == 1){
                         addRoot(x, y);
+                    }else{
+                        setViewMode(!alternateViewToggle);
                     }
 
                     selectedRoot = nearestRoot(x, y);
@@ -788,6 +790,8 @@
                     if(dragMode == 1){
                         mandelbrotConstPoint = [x, y];
                         iterations = 0;
+                    }else{
+                        setViewMode(!alternateViewToggle);
                     }
                     
                 }
@@ -810,12 +814,12 @@
                     removeRoot(x, y);
                     
                 }else{
-                    setViewMode(!alternateViewToggle);
+                    setFractalType(!isMandelbrotType)
                 }
                 
             }       
             if(event.button == 1){
-                setFractalType(!isMandelbrotType)
+                
             }     
         }
 
@@ -1037,6 +1041,8 @@
                         if(!isMandelbrotType){
                             if(dragMode == 1){
                                 addRoot(x, y);
+                            }else{
+                                setViewMode(!alternateViewToggle);
                             }
 
                             selectedRoot = nearestRoot(x, y);
@@ -1045,6 +1051,8 @@
                             if(dragMode == 1){
                                 mandelbrotConstPoint = [x, y];
                                 iterations = 0;
+                            }else{
+                                setViewMode(!alternateViewToggle);
                             }
                             
                         }
@@ -1067,7 +1075,7 @@
                             removeRoot(x, y);
                             
                         }else{
-                            setViewMode(!alternateViewToggle);
+                            setFractalType(!isMandelbrotType)
                         }
                     }
                 }
