@@ -925,7 +925,7 @@
                 ctx.fill();
             }
 
-            if(performance.now() - touchStart > 100){
+            if(performance.now() - touchStart >= 100){
                 //It takes a tenth of a second to determine if the drag is single only multi
                 if(event.targetTouches.length == 2 && touches.length == event.targetTouches.length){
                     //Then the user is trying to zoom
@@ -1017,14 +1017,14 @@
                         y += camPosition[1];
 
                         if(!isMandelbrotType){
-                            if(dragMode == 2){
+                            if(dragMode == 1){
                                 addRoot(x, y);
                             }
 
                             selectedRoot = nearestRoot(x, y);
                             
                         }else{
-                            if(dragMode == 2){
+                            if(dragMode == 1){
                                 mandelbrotConstPoint = [x, y];
                                 iterations = 0;
                             }
@@ -1033,7 +1033,7 @@
                     }
 
                     if(touchCount == 2){
-                        if(dragMode == 2){
+                        if(dragMode == 1){
                             let mouseX = touchCenter[0]
                             let mouseY = document.documentElement.clientHeight - touchCenter[1] - 1;
 
