@@ -190,28 +190,6 @@
         }
 
 
-        const frameBufferVertexShader = `#version 330 core
-
-        layout(location = 0) in vec2 a_position; // Vertex position
-        layout(location = 1) in vec2 a_texCoord; // Texture coordinates
-
-        out vec2 v_texCoord; // Passing texture coordinates to the fragment shader
-
-        void main() {
-            gl_Position = vec4(a_position, 0.0, 1.0); // Set the vertex position
-            v_texCoord = a_texCoord; // Pass the texture coordinates to the fragment shader
-        }`
-        const frameBufferFragmentShader = `#version 330 core
-
-        in vec2 v_texCoord; // Input from vertex shader
-        out vec4 FragColor; // Output color
-
-        uniform sampler2D u_texture; // The framebuffer texture
-
-        void main() {
-            FragColor = texture(u_texture, v_texCoord); // Sample the texture
-        }`
-
         // Vertex Shader
         const vertexShaderSource = `#version 300 es
         in vec4 a_position;
@@ -271,10 +249,15 @@
 
             float speed = 0.2;
 
-            if (length(pos - constPoint) / camSize < 0.002) {
+            float largeSide = camSize;
+            if(u_resolution.y / u_resolution.x > 1.0){
+                largeSide *= u_resolution.y / u_resolution.x;
+            }
+
+            if (length(pos - constPoint) / largeSide < 0.002) {
                 FragColor = vec4(1.0, 1.0, 0.0, opacity);
             } else {
-                if (length(pos - vec2(0.0)) / camSize < 0.001) {
+                if (length(pos - vec2(0.0)) / largeSide < 0.001) {
                     FragColor = vec4(vec3(1.0), opacity);
                 } else {
                     if (iters == iterations) {
@@ -415,9 +398,13 @@
                 FragColor = vec4(amp * toRGB(angle), opacity);
             }
 
+            float largeSide = camSize;
+            if(u_resolution.y / u_resolution.x > 1.0){
+                largeSide *= u_resolution.y / u_resolution.x;
+            }
 
             for(int i = 0; i < numberOfCoefficients - 1; i++){
-                if(length(roots[i] - pos) / camSize < 0.002){
+                if(length(roots[i] - pos) / largeSide < 0.002){
 
                     FragColor = vec4(vec3(0), opacity);
                 }
