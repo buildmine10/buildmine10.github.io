@@ -638,12 +638,10 @@
             setFractalType(!isMandelbrotType)
         }
 
-        var pointersDown = 0;
+        var isMouseDown = false;
 
-        canvas.onpointerdown = (event)=>{
-            pointersDown++;
-            //console.log(event)
-
+        canvas.onmousedown = (event)=>{
+            isMouseDown = true;
             if(event.button == 0){
                 let mouseX = event.clientX
                 let mouseY = document.documentElement.clientHeight - event.clientY - 1;
@@ -673,15 +671,7 @@
 
                 let oldDist = 0;
                 let newDist = 0;
-                let center = [(pointer1[0] + pointer2[0]) / 2, (pointer1[1] + pointer2[1]) / 2];
-
-                if(event.pointerId == 1){
-                    pointer1 = [x, y];
-                }else if(event.pointerId == 2){
-                    pointer2 = [x, y];
-                }
-
-                
+                let center = [(pointer1[0] + pointer2[0]) / 2, (pointer1[1] + pointer2[1]) / 2];                
             }
             if(event.button == 2){
                 if(dragMode == 2){
@@ -712,89 +702,37 @@
         let pointer1 = [];
         let pointer2 = [];
 
-        canvas.onpointermove = (event)=>{
-            if(pointersDown == 1){
-                let deltaX = event.movementX;
-                let deltaY = -event.movementY;
-                
-                deltaX /= document.documentElement.clientWidth;
-                deltaY /= document.documentElement.clientWidth;
+        canvas.onmousemove = (event)=>{
+            if(!isMouseDown) return;
 
-                deltaX *= camSize();
-                deltaY *= camSize();
+            let deltaX = event.movementX;
+            let deltaY = -event.movementY;
+            
+            deltaX /= document.documentElement.clientWidth;
+            deltaY /= document.documentElement.clientWidth;
 
-                if(dragMode == 0){
-                    camPosition[0] -= deltaX;
-                    camPosition[1] -= deltaY;
-                }else if(dragMode == 1){
-                    if(isMandelbrotType){
-                        mandelbrotConstPoint[0] += deltaX;
-                        mandelbrotConstPoint[1] += deltaY;
-                    }else{
-                        //One of the roots for the newton fractal needs to be moved
-                        moveRoot(selectedRoot, deltaX, deltaY);
-                    }
+            deltaX *= camSize();
+            deltaY *= camSize();
+
+            if(dragMode == 0){
+                camPosition[0] -= deltaX;
+                camPosition[1] -= deltaY;
+            }else if(dragMode == 1){
+                if(isMandelbrotType){
+                    mandelbrotConstPoint[0] += deltaX;
+                    mandelbrotConstPoint[1] += deltaY;
+                }else{
+                    //One of the roots for the newton fractal needs to be moved
+                    moveRoot(selectedRoot, deltaX, deltaY);
                 }
-                
-                iterations = 0;
-                console.log(event)
-                //console.log(deltaX, deltaY);
-            }else if(pointersDown == 2){
-
-                let mouseX = event.clientX
-                let mouseY = document.documentElement.clientHeight - event.clientY - 1;
-
-                mouseX = mouseX / document.documentElement.clientWidth - 0.5;
-                mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
-
-                let x = mouseX * camSize();
-                let y = mouseY * camSize();
-
-                x += camPosition[0];
-                y += camPosition[1];
-
-                let oldDist = 0;
-                let newDist = 0;
-                let oldCenter = [(pointer1[0] + pointer2[0]) / 2, (pointer1[1] + pointer2[1]) / 2];
-                let center = [0, 0];
-
-                center[0] = oldCenter[0] - camPosition[0];
-                center[1] = oldCenter[1] - camPosition[1];
-
-                center[0] /= camSize();
-                center[1] /= camSize();
-
-                if(event.pointerId == 1){
-                    oldDist = Math.sqrt((pointer1[0] - pointer2[0]) * (pointer1[0] - pointer2[0]) + (pointer1[1] - pointer2[1]) * (pointer1[1] - pointer2[1]));
-                    newDist = Math.sqrt((pointer2[0] - x) * (pointer2[0] - x) + (pointer2[1] - y) * (pointer2[1] - y));
-
-                    pointer1 = [x, y];
-                }else if(event.pointerId == 2){
-                    oldDist = Math.sqrt((pointer1[0] - pointer2[0]) * (pointer1[0] - pointer2[0]) + (pointer1[1] - pointer2[1]) * (pointer1[1] - pointer2[1]));
-                    newDist = Math.sqrt((pointer1[0] - x) * (pointer1[0] - x) + (pointer1[1] - y) * (pointer1[1] - y));
-
-                    pointer2 = [x, y];
-                }
-
-                let scale = newDist / oldDist;
-                scrollMultiplier *= scale;
-
-                center[0] *= camSize();
-                center[1] *= camSize();
-
-                center[0] += camPosition[0];
-                center[1] += camPosition[1];
-
-                camPosition[0] -= center[0] - oldCenter[0];
-                camPosition[1] -= center[1] - oldCenter[1];
-                iterations = 0;
             }
             
+            iterations = 0;
+            console.log(event)
         }
 
-        canvas.onpointerup = (event)=>{
-            pointersDown--;
-            //console.log(event)
+        canvas.onmouseup = (event)=>{
+            isMouseDown = false;
             
         }
 
