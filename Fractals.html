@@ -660,6 +660,7 @@
 
         canvas.onmousedown = (event)=>{
             isMouseDown = true;
+            console.log("J")
             if(event.button == 0){
                 let mouseX = event.clientX
                 let mouseY = document.documentElement.clientHeight - event.clientY - 1;
@@ -822,6 +823,7 @@
         var isDoubleTouchValid = false;
 
         canvas.ontouchstart = (event)=>{
+            event.preventDefault()
             if(touches.length == 0 && event.targetTouches.length > 0){
                 touchStart = performance.now();
             }
