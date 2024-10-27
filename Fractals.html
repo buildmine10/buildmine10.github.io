@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Mandelbrot/Julia Shader</title>
+    <style>
+        html,
+        body {
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 0;
+        overflow: hidden;
+        /*  Disable scrollbars */
+        display: block;
+        /* No floating content on sides */
+        }
+
+        .clickable{
+            width: min(10vw, 10vh);
+            height: min(10vw, 10vh);
+            margin: 10px;
+            filter: drop-shadow(min(0.5vw, 0.5vh) min(0.5vw, 0.5vh) min(0.5vw, 0.5vh) #000a);
+            background-color: grey;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 100%;
+            font-size: min(8vw, 8vh);
+            user-select: none;
+        }
+
+        .active{
+            background-color: aqua;
+        }
+
+        .doubleActive{
+            background-color: lime;
+        }
+
+        #alternateDragCheckbox{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            
+        }
+
+        #alternateViewCheckbox{
+            position: fixed;
+            top: 0px;
+            left: min(11vw, 11vh);
+            
+        }
+
+        #alternateFractalCheckbox{
+            position: fixed;
+            top: 0px;
+            left: min(22vw, 22vh);
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="webglCanvas"></canvas>
+    <div id="alternateDragCheckbox" class="clickable">🖑</div>
+    <div id="alternateViewCheckbox" class="clickable">👁</div>
+    <div id="alternateFractalCheckbox" class="clickable">🞜</div>
+
+    <script type="text/javascript">
+        const canvas = document.getElementById("webglCanvas");
+        const offscreenCanvas = document.createElement("canvas");
+        const gl = offscreenCanvas.getContext("webgl2", { preserveDrawingBuffer: true });
+        
+        const scrollRate = 0.1;
+        var isMandelbrotType = true;
+        var camPosition = [0, 0];
+        var camSize = ()=>{return 3 * Math.pow(2, scrollCounter * scrollRate)};
+        var iterations = 0;
+        var fractalIterations = 200;
+        var scrollCounter = 0; 
+
+        var alternateViewToggle = false;
+        var dragMode = 0;
+
+        var mandelbrotConstPoint = [0, 0];
+
+        //max length is 19
+        //min length is 2
+        const newtonRootsDefault = [[1, 0], [-0.5, 0.866025403784], [-0.5, -0.866025403784]];
+        var newtonRoots = structuredClone(newtonRootsDefault);
+        var selectedRoot = 0;
+
+        function addRoot(x, y){
+            if(newtonRoots.length < 19){
+                newtonRoots.push([x, y]);
+                iterations = 0;
+            }
+        }
+
+        function removeRoot(x, y){
+            if(newtonRoots.length > 2){
+                let closestIndex = nearestRoot(x, y);
+
+                newtonRoots.splice(closestIndex, 1);
+                iterations = 0;
+            }
+        }
+        
+        function nearestRoot(x, y){
+            let closestDist = Infinity;
+            return newtonRoots.reduce((closest, current, index)=>{
+                let dist = Math.sqrt((current[0] - x) * (current[0] - x) + (current[1] - y) * (current[1] - y));
+                if(dist < closestDist){
+                    closestDist = dist;
+                    return index;
+                }
+                return closest;
+            }, 0);
+        }
+
+        function moveRoot(selectedRoot, dx, dy){
+            newtonRoots[selectedRoot][0] += dx;
+            newtonRoots[selectedRoot][1] += dy;
+            iterations = 0;
+        }
+
+
+        if (!gl) {
+            alert("WebGL2 is not supported in this browser.");
+        }
+
+
+        const frameBufferVertexShader = `#version 330 core
+
+        layout(location = 0) in vec2 a_position; // Vertex position
+        layout(location = 1) in vec2 a_texCoord; // Texture coordinates
+
+        out vec2 v_texCoord; // Passing texture coordinates to the fragment shader
+
+        void main() {
+            gl_Position = vec4(a_position, 0.0, 1.0); // Set the vertex position
+            v_texCoord = a_texCoord; // Pass the texture coordinates to the fragment shader
+        }`
+        const frameBufferFragmentShader = `#version 330 core
+
+        in vec2 v_texCoord; // Input from vertex shader
+        out vec4 FragColor; // Output color
+
+        uniform sampler2D u_texture; // The framebuffer texture
+
+        void main() {
+            FragColor = texture(u_texture, v_texCoord); // Sample the texture
+        }`
+
+        // Vertex Shader
+        const vertexShaderSource = `#version 300 es
+        in vec4 a_position;
+        void main() {
+            gl_Position = a_position;
+        }
+        `;
+
+        // Fragment Shader (The shader you provided)
+        const fragmentShaderSourceMandelbrot = `#version 300 es
+        precision highp float;
+
+        uniform vec2 u_resolution;
+        uniform vec2 camPos;
+        uniform float camSize;
+        uniform vec2 randomness;
+        uniform float opacity;
+        uniform vec2 constPoint;
+        uniform bool isJulia;
+        uniform int iterations;
+
+        out vec4 FragColor;
+
+        vec3 toRGB(float hue) {
+            hue *= 0.75;
+            float r = cos(hue);
+            float r2 = cos(hue - 4.71238898038);
+            if (r2 > r) {
+                r = r2;
+            }
+            return vec3(r, cos(hue - 1.57079632679), cos(hue - 3.1415926589));
+        }
+
+        void main() {
+            vec2 pos = (((gl_FragCoord.xy + randomness) / u_resolution) - vec2(0.5, 0.5)) * vec2(1, u_resolution.y / u_resolution.x);
+            pos *= camSize;
+            pos += camPos;
+
+            vec2 c;
+            vec2 complex;
+            if (isJulia) {
+                c = constPoint;
+                complex = pos;
+            } else {
+                c = pos;
+                complex = constPoint;
+            }
+
+            int iters = 0;
+            for (int i = 0; i < iterations; i++) {
+                complex = vec2(complex.x * complex.x - complex.y * complex.y,  2.0 * complex.x * complex.y) + c;
+                if (length(complex) >= 2.0) {
+                    break;
+                }
+                iters++;
+            }
+
+            float speed = 0.2;
+
+            if (length(pos - constPoint) / camSize < 0.002) {
+                FragColor = vec4(1.0, 1.0, 0.0, opacity);
+            } else {
+                if (length(pos - vec2(0.0)) / camSize < 0.001) {
+                    FragColor = vec4(vec3(1.0), opacity);
+                } else {
+                    if (iters == iterations) {
+                        FragColor = vec4(vec3(0.0), opacity);
+                    } else {
+                        FragColor = vec4(toRGB(speed * float(iters)), opacity);
+                    }
+                }
+            }
+        }
+        `;
+
+        const fragmentShaderSourceNewton = `#version 300 es
+        precision highp float;
+        
+        uniform vec2 u_resolution; // Screen resolution
+
+        uniform vec2 camPos;
+        uniform float camSize;
+
+        uniform vec2 coefficients[20];//20 complex coefficients
+        uniform int numberOfCoefficients;//The number of coefficients to use
+        uniform bool isIterations;
+
+        uniform vec2 randomness;//0 to 1
+        uniform float opacity;
+
+        uniform int iterations;
+
+        uniform vec2 roots[20];//20 complex roots
+
+        // Output color
+        out vec4 FragColor;
+
+
+        vec2 polynomial(vec2 x){
+            if(numberOfCoefficients < 1){
+                return vec2(0);
+            }
+
+            vec2 result = coefficients[0];
+            vec2 z = x;
+
+            for(int i = 1; i < numberOfCoefficients; i++){
+                result += vec2(coefficients[i].x * z.x - coefficients[i].y * z.y, coefficients[i].x * z.y + coefficients[i].y * z.x);
+                z = vec2(z.x * x.x - z.y * x.y, z.x * x.y + z.y * x.x);
+            }
+
+            return result;
+        }
+
+        vec2 polynomialDerivative(vec2 x){
+            if(numberOfCoefficients < 2){
+                return vec2(0);
+            }
+
+            vec2 result = coefficients[1];
+            vec2 z = x;
+
+            for(int i = 2; i < numberOfCoefficients; i++){
+                result += float(i) * vec2(coefficients[i].x * z.x - coefficients[i].y * z.y, coefficients[i].x * z.y + coefficients[i].y * z.x);
+                z = vec2(z.x * x.x - z.y * x.y, z.x * x.y + z.y * x.x);
+            }
+
+            return result;
+        }
+
+        vec3 toRGB(float hue){
+            hue *= 0.75;
+            float r = cos(hue);
+            float r2 = cos(hue - 4.71238898038);
+            if(r2 > r){
+                r = r2;
+            }
+
+            return vec3(r, cos(hue - 1.57079632679), cos(hue - 3.1415926589));
+        }
+
+        void main() {
+            if(numberOfCoefficients > 20 || numberOfCoefficients < 0){
+                FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+                return;
+            }
+
+
+            // Get the normalized device coordinates
+            vec2 pos = (((gl_FragCoord.xy + randomness) / u_resolution) - vec2(0.5, 0.5)) * vec2(1, u_resolution.y / u_resolution.x);
+            pos *= camSize;
+            pos += camPos;
+
+            vec2 complex = pos;
+            int iters = 1;
+            for(int i = 0; i < iterations; i++){
+                vec2 numerator = polynomial(complex);
+                vec2 denominator = polynomialDerivative(complex);
+                vec2 quotient = vec2(numerator.x * denominator.x + numerator.y * denominator.y, numerator.y * denominator.x - numerator.x * denominator.y) / (denominator.x * denominator.x + denominator.y * denominator.y);
+                vec2 change = -quotient;
+                complex += change;
+
+                if(length(change) < 0.01){
+                    break;
+                }
+                
+                iters++;
+            }
+
+
+            if(isIterations){
+                float speed = 0.2;
+                float amp = float(100 - iters) / 100.0;
+                
+                //FragColor = vec4(amp * vec3(cos(speed * iters), cos(speed * iters + 2.09439510239), cos(speed * iters + 4.18879020479)), opacity);
+                FragColor = vec4(amp * toRGB(speed * float(iters)), opacity);
+            }else{
+                //Color based on nearest root
+                int nearest = 0;
+                float nearestDist = -1.0;
+
+                for(int i = 0; i < numberOfCoefficients - 1; i++){
+                    float dist = length(roots[i] - complex);
+                    if(dist < nearestDist || nearestDist < 0.0){
+                        nearestDist = dist;
+                        nearest = i;
+                    }
+                }
+
+                float angle = 2.0 * 3.141592658 * float(nearest) / float(numberOfCoefficients - 1);
+                float r = cos(angle);
+                float r2 = cos(angle - 4.71238898038);
+                if(r2 > r){
+                    r = r2;
+                }
+
+
+                float amp = (float(nearest % 2) + 1.0) / 2.0;
+
+
+                FragColor = vec4(amp * toRGB(angle), opacity);
+            }
+
+
+            for(int i = 0; i < numberOfCoefficients - 1; i++){
+                if(length(roots[i] - pos) / camSize < 0.002){
+
+                    FragColor = vec4(vec3(0), opacity);
+                }
+            }
+            
+        }
+        `;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error("Error compiling shader:", gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                console.error("Error linking program:", gl.getProgramInfoLog(program));
+                gl.deleteProgram(program);
+                return null;
+            }
+            return program;
+        }
+
+        // Create shaders and program
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+        const fragmentShaderMandelbrot = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSourceMandelbrot);
+        const fragmentShaderNewton = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSourceNewton);
+        const programMandelbrot = createProgram(gl, vertexShader, fragmentShaderMandelbrot);
+        const programNewton = createProgram(gl, vertexShader, fragmentShaderNewton);
+
+        // Look up locations for attributes and uniforms
+        
+
+        
+
+        function selectProgram(){
+            if(isMandelbrotType){
+                gl.useProgram(programMandelbrot);
+            }else{
+                gl.useProgram(programNewton);
+            }
+        }
+
+        selectProgram();
+        const positionLocationMandelbrot = gl.getAttribLocation(programMandelbrot, "a_position");
+        const resolutionLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "u_resolution");
+        const camPosLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "camPos");
+        const camSizeLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "camSize");
+        const randomnessLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "randomness");
+        const opacityLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "opacity");
+        const constPointLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "constPoint");
+        const isJuliaLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "isJulia");
+        const iterationsLocationMandelbrot = gl.getUniformLocation(programMandelbrot, "iterations");
+
+        
+        const positionLocationNewton = gl.getAttribLocation(programNewton, "a_position");
+        const resolutionLocationNewton = gl.getUniformLocation(programNewton, "u_resolution");
+        const camPosLocationNewton = gl.getUniformLocation(programNewton, "camPos");
+        const camSizeLocationNewton = gl.getUniformLocation(programNewton, "camSize");
+        const coefficientsLocationNewton = gl.getUniformLocation(programNewton, "coefficients");
+        const numberOfCoefficientsLocationNewton = gl.getUniformLocation(programNewton, "numberOfCoefficients");
+        const isIterationsLocationNewton = gl.getUniformLocation(programNewton, "isIterations");
+        const randomnessLocationNewton = gl.getUniformLocation(programNewton, "randomness");
+        const opacityLocationNewton = gl.getUniformLocation(programNewton, "opacity");
+        const iterationsLocationNewton = gl.getUniformLocation(programNewton, "iterations");
+        const rootsLocationNewton = gl.getUniformLocation(programNewton, "roots");
+
+        
+
+        // Setup fullscreen quad
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            -1, -1,   1, -1,   -1, 1,
+            -1,  1,   1, -1,    1, 1,
+        ]), gl.STATIC_DRAW);
+
+        
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        
+        function setParametersMandelbrot(){
+            gl.vertexAttribPointer(positionLocationMandelbrot, 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(positionLocationMandelbrot);
+
+            gl.uniform2f(resolutionLocationMandelbrot, gl.canvas.width, gl.canvas.height);
+            gl.uniform2f(camPosLocationMandelbrot, camPosition[0], camPosition[1]); // Center of the canvas
+            gl.uniform1f(camSizeLocationMandelbrot, camSize());
+            gl.uniform2f(randomnessLocationMandelbrot, Math.random(), Math.random());
+            gl.uniform1f(opacityLocationMandelbrot, 1);
+            gl.uniform2f(constPointLocationMandelbrot, mandelbrotConstPoint[0], mandelbrotConstPoint[1]); // Julia set constant
+            gl.uniform1i(isJuliaLocationMandelbrot, alternateViewToggle);
+            gl.uniform1i(iterationsLocationMandelbrot, fractalIterations);
+            iterations++;
+        }
+
+        function getCoefficients(){
+            let coefficients = [[1, 0]]
+
+            for(let i = 0; i < newtonRoots.length; i++){
+                let temp = structuredClone(coefficients);
+                for(let j = 0; j < coefficients.length; j++){
+                    let x = coefficients[j][0] * newtonRoots[i][0] - coefficients[j][1] * newtonRoots[i][1];
+                    let y = coefficients[j][0] * newtonRoots[i][1] + coefficients[j][1] * newtonRoots[i][0];
+                    coefficients[j][0] = -x;
+                    coefficients[j][1] = -y;
+                }
+
+                for(let j = 0; j < coefficients.length - 1; j++){
+                    coefficients[j + 1][0] += temp[j][0];
+                    coefficients[j + 1][1] += temp[j][1];
+                }
+
+                coefficients.push(temp[temp.length - 1]);
+            }
+
+            return coefficients;
+        }
+
+
+        function setParametersNewton(){
+            gl.vertexAttribPointer(positionLocationNewton, 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(positionLocationNewton);
+
+            gl.uniform2f(resolutionLocationNewton, gl.canvas.width, gl.canvas.height);
+            gl.uniform2f(camPosLocationNewton, camPosition[0], camPosition[1]);
+            gl.uniform1f(camSizeLocationNewton, camSize());
+            let tempCoefficients = getCoefficients();
+            
+
+            // Randomize and set uniform values for coefficients and roots
+            let coefficients = new Float32Array(40); // 20 vec2's
+            let roots = new Float32Array(40); // 20 vec2's
+            for (let i = 0; i < 20; i++) {
+                if(i < tempCoefficients.length){
+                    coefficients[i * 2] = tempCoefficients[i][0];
+                    coefficients[i * 2 + 1] = tempCoefficients[i][1];
+                }else{
+                    coefficients[i * 2] = 0;
+                    coefficients[i * 2 + 1] = 0;
+                }
+                
+
+                if(i < newtonRoots.length){
+                    roots[i * 2] = newtonRoots[i][0];
+                    roots[i * 2 + 1] = newtonRoots[i][1];
+                }else{
+                    roots[i * 2] = 0;
+                    roots[i * 2 + 1] = 0;
+                }
+                
+            }
+
+            gl.uniform2fv(coefficientsLocationNewton, coefficients);
+            gl.uniform2fv(rootsLocationNewton, roots);
+            gl.uniform1i(numberOfCoefficientsLocationNewton, tempCoefficients.length);
+            gl.uniform1i(isIterationsLocationNewton, alternateViewToggle);
+            gl.uniform2f(randomnessLocationNewton, Math.random(), Math.random());
+            gl.uniform1f(opacityLocationNewton, 1.0);
+            gl.uniform1i(iterationsLocationNewton, fractalIterations);
+            iterations++;
+        }
+
+
+        const mainContext = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            iterations = 0;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, false);
+
+        function draw() {
+            if(iterations >= 100){
+                return;
+            }
+            //canvas.width = window.innerWidth;
+            //canvas.height = window.innerHeight;
+            gl.canvas.width = window.innerWidth;
+            gl.canvas.height = window.innerHeight;
+            
+
+            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+            selectProgram();
+            // Set uniform values
+            if(isMandelbrotType){
+                setParametersMandelbrot();
+            }else{
+                setParametersNewton();
+            }
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+            mainContext.globalAlpha = 1 / iterations;
+            //mainContext.clearRect(0, 0, canvas.width, canvas.height);
+            mainContext.drawImage(offscreenCanvas, 0, 0);
+        }
+
+        
+        function render() {
+            draw();
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+        
+
+        function setViewMode(value){
+            alternateViewToggle = value;
+            if(alternateViewToggle){
+                document.getElementById("alternateViewCheckbox").classList.add("active");
+            }else{
+                document.getElementById("alternateViewCheckbox").classList.remove("active");
+            }
+            iterations = 0;
+        }
+
+        function setDragMode(value){
+            dragMode = value;
+            if(dragMode == 0){
+                document.getElementById("alternateDragCheckbox").classList.remove("active");
+                document.getElementById("alternateDragCheckbox").classList.remove("doubleActive");
+            }else if(dragMode == 1){
+                document.getElementById("alternateDragCheckbox").classList.add("active");
+                document.getElementById("alternateDragCheckbox").classList.remove("doubleActive");
+            }else{
+                document.getElementById("alternateDragCheckbox").classList.remove("active");
+                document.getElementById("alternateDragCheckbox").classList.add("doubleActive");
+            }
+            iterations = 0;
+        }
+
+        function setFractalType(value){
+            isMandelbrotType = value;
+            if(isMandelbrotType){
+                mandelbrotConstPoint = [0, 0];
+                document.getElementById("alternateFractalCheckbox").classList.remove("active");
+            }else{
+                newtonRoots = structuredClone(newtonRootsDefault);
+                document.getElementById("alternateFractalCheckbox").classList.add("active");
+            }
+            iterations = 0;
+        }
+
+        document.getElementById("alternateViewCheckbox").onclick = ()=>{
+            setViewMode(!alternateViewToggle)
+        }
+
+        document.getElementById("alternateDragCheckbox").onclick = ()=>{
+            setDragMode((dragMode + 1) % 3)
+        }
+
+        document.getElementById("alternateFractalCheckbox").onclick = ()=>{
+            setFractalType(!isMandelbrotType)
+        }
+
+        var pointersDown = 0;
+
+        onpointerdown = (event)=>{
+            pointersDown++;
+            //console.log(event)
+
+            if(event.button == 0){
+                let mouseX = event.clientX
+                let mouseY = window.innerHeight - event.clientY - 1;
+
+                mouseX = mouseX / window.innerWidth - 0.5;
+                mouseY = (mouseY / window.innerHeight - 0.5) * (window.innerHeight / window.innerWidth);
+
+                let x = mouseX * camSize();
+                let y = mouseY * camSize();
+
+                x += camPosition[0];
+                y += camPosition[1];
+                if(!isMandelbrotType){
+                    if(dragMode == 2){
+                        addRoot(x, y);
+                    }
+
+                    selectedRoot = nearestRoot(x, y);
+                    
+                }
+
+                
+            }
+            if(event.button == 2){
+                if(dragMode == 2){
+                    let mouseX = event.clientX
+                    let mouseY = window.innerHeight - event.clientY - 1;
+
+                    mouseX = mouseX / window.innerWidth - 0.5;
+                    mouseY = (mouseY / window.innerHeight - 0.5) * (window.innerHeight / window.innerWidth);
+
+                    let x = mouseX * camSize();
+                    let y = mouseY * camSize();
+
+                    x += camPosition[0];
+                    y += camPosition[1];
+                    
+                    removeRoot(x, y);
+                }else{
+                    setViewMode(!alternateViewToggle);
+                }
+                
+            }       
+            if(event.button == 1){
+                setFractalType(!isMandelbrotType)
+            }     
+        }
+
+        onpointermove = (event)=>{
+            if(pointersDown == 1){
+                let deltaX = event.movementX;
+                let deltaY = -event.movementY;
+                
+                deltaX /= window.innerWidth;
+                deltaY /= window.innerWidth;
+
+                deltaX *= camSize();
+                deltaY *= camSize();
+
+                if(dragMode == 0){
+                    camPosition[0] -= deltaX;
+                    camPosition[1] -= deltaY;
+                }else if(dragMode == 1){
+                    if(isMandelbrotType){
+                        mandelbrotConstPoint[0] += deltaX;
+                        mandelbrotConstPoint[1] += deltaY;
+                    }else{
+                        //One of the roots for the newton fractal needs to be moved
+                        moveRoot(selectedRoot, deltaX, deltaY);
+                    }
+                }
+                
+                iterations = 0;
+
+                //console.log(deltaX, deltaY);
+            }
+            
+        }
+
+        onpointerup = (event)=>{
+            pointersDown--;
+            //console.log(event)
+            
+        }
+
+        onwheel = (event) => {
+            if(dragMode != 1){
+                let mouseX = event.clientX
+                let mouseY = window.innerHeight - event.clientY - 1;
+
+                mouseX = mouseX / window.innerWidth - 0.5;
+                mouseY = (mouseY / window.innerHeight - 0.5) * (window.innerHeight / window.innerWidth);
+
+                let x = mouseX * camSize();
+                let y = mouseY * camSize();
+
+                x += camPosition[0];
+                y += camPosition[1];
+
+                //console.log(x, y)
+
+                scrollCounter += event.deltaY / 100
+                iterations = 0;
+
+
+                let newX = mouseX * camSize();
+                let newY = mouseY * camSize();
+
+                newX += camPosition[0];
+                newY += camPosition[1];
+                //console.log(newX - x, newY - y)
+
+                camPosition[0] -= newX - x;
+                camPosition[1] -= newY - y;
+            }else if(dragMode == 1){
+                fractalIterations -= event.deltaY / 100
+                if(fractalIterations < 1) fractalIterations = 1;
+                iterations = 0;
+            }
+            
+        };
+
+        onkeydown = (event)=>{
+            if(event.code == "ShiftLeft"){
+                if(dragMode != 1) setDragMode(1);
+            }
+            if(event.code == "ControlLeft"){
+                if(dragMode != 2) setDragMode(2);
+            }
+            //console.log(event)
+        }
+
+        onkeyup = (event)=>{
+            if(event.code == "ShiftLeft"){
+                if(dragMode == 1) setDragMode(0);
+            }
+            if(event.code == "ControlLeft"){
+                if(dragMode == 2) setDragMode(0);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("contextmenu", function (e) {
+                e.preventDefault();  // Prevent default context menu from showing up
+            });
+        });
+
+
+
+    </script>
+</body>
+</html>
