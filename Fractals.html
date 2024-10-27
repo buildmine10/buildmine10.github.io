@@ -67,15 +67,31 @@
             left: min(22vw, 22vh);
         }
 
+        #webglCanvas{
+            z-index: 0;
+        }
+
+        #debugCanvas{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            pointer-events: none; /* Make it non-touchable */
+            z-index: 10;
+        }
+
     </style>
 </head>
 <body>
     <canvas id="webglCanvas"></canvas>
+    <canvas id="debugCanvas"></canvas>
     <div id="alternateDragCheckbox" class="clickable">🖑</div>
     <div id="alternateViewCheckbox" class="clickable">👁</div>
     <div id="alternateFractalCheckbox" class="clickable">🞜</div>
 
     <script type="text/javascript">
+
+        const debugCanvas = document.getElementById("debugCanvas");
+
         const canvas = document.getElementById("webglCanvas");
         const offscreenCanvas = document.createElement("canvas");
         const gl = offscreenCanvas.getContext("webgl2", { preserveDrawingBuffer: true });
@@ -547,6 +563,8 @@
         function resizeCanvas() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
+            debugCanvas.width = document.documentElement.clientWidth;
+            debugCanvas.height = document.documentElement.clientHeight;
             iterations = 0;
         }
         resizeCanvas();
@@ -699,9 +717,6 @@
             }     
         }
 
-        let pointer1 = [];
-        let pointer2 = [];
-
         canvas.onmousemove = (event)=>{
             if(!isMouseDown) return;
 
@@ -800,6 +815,25 @@
         document.addEventListener('touchmove', function (event) {
             if (event.scale !== 1) { event.preventDefault(); }
         }, false);
+
+        var wasMultitouch = false;
+        
+
+        canvas.ontouchmove = (event)=>{
+            wasMultitouch = event.targetTouches.length > 1;
+            console.log(event.targetTouches)
+            console.log(wasMultitouch)
+            let ctx = debugCanvas.getContext("2d");
+            ctx.clearRect(0, 0, debugCanvas.width, debugCanvas.height);
+
+            for(let i = 0; i < event.targetTouches.length; i++){
+                let x = event.targetTouches[i].clientX;
+                let y = event.targetTouches[i].clientY;
+                ctx.beginPath();
+                ctx.arc(x, y, 10, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        }
 
     </script>
 </body>
