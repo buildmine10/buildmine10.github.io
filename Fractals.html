@@ -633,7 +633,7 @@
 
         var pointersDown = 0;
 
-        onpointerdown = (event)=>{
+        canvas.onpointerdown = (event)=>{
             pointersDown++;
             //console.log(event)
 
@@ -692,7 +692,7 @@
             }     
         }
 
-        onpointermove = (event)=>{
+        canvas.onpointermove = (event)=>{
             if(pointersDown == 1){
                 let deltaX = event.movementX;
                 let deltaY = -event.movementY;
@@ -723,13 +723,13 @@
             
         }
 
-        onpointerup = (event)=>{
+        canvas.onpointerup = (event)=>{
             pointersDown--;
             //console.log(event)
             
         }
 
-        onwheel = (event) => {
+        canvas.onwheel = (event) => {
             if(dragMode != 1){
                 let mouseX = event.clientX
                 let mouseY = document.documentElement.clientHeight - event.clientY - 1;
@@ -766,7 +766,7 @@
             
         };
 
-        onkeydown = (event)=>{
+        canvas.onkeydown = (event)=>{
             if(event.code == "ShiftLeft"){
                 if(dragMode != 1) setDragMode(1);
             }
@@ -776,7 +776,7 @@
             //console.log(event)
         }
 
-        onkeyup = (event)=>{
+        canvas.onkeyup = (event)=>{
             if(event.code == "ShiftLeft"){
                 if(dragMode == 1) setDragMode(0);
             }
