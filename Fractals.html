@@ -821,7 +821,7 @@
         var touches = [];
         canvas.ontouchmove = (event)=>{
             wasMultitouch = event.targetTouches.length > 1;
-            console.log("H")
+            
             let ctx = debugCanvas.getContext("2d");
             ctx.clearRect(0, 0, debugCanvas.width, debugCanvas.height);
 
@@ -839,7 +839,7 @@
                 let newDist = Math.sqrt((event.targetTouches[0].clientX - event.targetTouches[1].clientX) * (event.targetTouches[0].clientX - event.targetTouches[1].clientX) + (event.targetTouches[0].clientY - event.targetTouches[1].clientY) * (event.targetTouches[0].clientY - event.targetTouches[1].clientY))
                 let scale = oldDist / newDist;
 
-                let touchCenter = [(event.targetTouches[0].clientX + event.targetTouches[1].clientX) * 0.5, (event.targetTouches[0].clientY + event.targetTouches[1].clientY) * 0.5]
+                let touchCenter = [(event.targetTouches[0].clientX + event.targetTouches[1].clientX) * 0.5, document.documentElement.clientHeight - (event.targetTouches[0].clientY + event.targetTouches[1].clientY) * 0.5 - 1]
 
                 touchCenter[0] = touchCenter[0] / document.documentElement.clientWidth - 0.5;
                 touchCenter[1] = (touchCenter[1] / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
