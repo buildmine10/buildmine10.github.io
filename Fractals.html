@@ -822,7 +822,6 @@
         var isDoubleTouchValid = false;
 
         canvas.ontouchstart = (event)=>{
-            console.log("Bye")
             if(touches.length == 0 && event.targetTouches.length > 0){
                 touchStart = performance.now();
             }
@@ -924,7 +923,24 @@
 
                 if(isDoubleTouchValid){
                     if(touchEnd - touchStart < 100){
-                        alert("HI");
+                        if(dragMode == 2){
+                            let mouseX = event.clientX
+                            let mouseY = document.documentElement.clientHeight - event.clientY - 1;
+
+                            mouseX = mouseX / document.documentElement.clientWidth - 0.5;
+                            mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
+
+                            let x = mouseX * camSize();
+                            let y = mouseY * camSize();
+
+                            x += camPosition[0];
+                            y += camPosition[1];
+                            
+                            removeRoot(x, y);
+                            
+                        }else{
+                            setViewMode(!alternateViewToggle);
+                        }
                     }
                 }
 
