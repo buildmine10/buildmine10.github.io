@@ -99,11 +99,11 @@
         const scrollRate = 0.1;
         var isMandelbrotType = true;
         var camPosition = [0, 0];
-        var camSize = ()=>{return scrollMultiplier * 3 * Math.pow(2, scrollCounter * scrollRate)};
+        var camSize = ()=>{return sizeMultiplier * 3 * Math.pow(2, scrollCounter * scrollRate)};
         var iterations = 0;
         var fractalIterations = 200;
         var scrollCounter = 0; 
-        var scrollMultiplier = 1;
+        var sizeMultiplier = 1;
 
         var alternateViewToggle = false;
         var dragMode = 0;
@@ -818,7 +818,7 @@
 
         var wasMultitouch = false;
         
-
+        var touches = [];
         canvas.ontouchmove = (event)=>{
             wasMultitouch = event.targetTouches.length > 1;
             console.log(event.targetTouches)
@@ -833,6 +833,18 @@
                 ctx.arc(x, y, 10, 0, 2 * Math.PI);
                 ctx.fill();
             }
+
+            if(event.targetTouches.length == 2 && touches.length == event.targetTouches.length){
+                //Then the user is trying to zoom
+                let oldDist = Math.sqrt((touches[0].clientX - touches[1].clientX) * (touches[0].clientX - touches[1].clientX) + (touches[0].clientY - touches[1].clientY) * (touches[0].clientY - touches[1].clientY))
+                let newDist = Math.sqrt((event.targetTouches[0].clientX - event.targetTouches[1].clientX) * (event.targetTouches[0].clientX - event.targetTouches[1].clientX) + (event.targetTouches[0].clientY - event.targetTouches[1].clientY) * (event.targetTouches[0].clientY - event.targetTouches[1].clientY))
+                let scale = newDist / oldDist;
+                sizeMultiplier *= scale;
+            }
+
+            touches = event.targetTouches;
+            //The amount that the points move away from each other is the amount to scale by
+
         }
 
     </script>
