@@ -829,6 +829,7 @@
 
         canvas.ontouchstart = (event)=>{
             event.preventDefault()
+            console.log("HI")
             if(touches.length == 0 && event.targetTouches.length > 0){
                 touchStart = performance.now();
                 touchCenter = [0, 0]
