@@ -765,7 +765,7 @@
             
         };
 
-        canvas.onkeydown = (event)=>{
+        onkeydown = (event)=>{
             if(event.code == "ShiftLeft"){
                 if(dragMode != 1) setDragMode(1);
             }
@@ -775,7 +775,7 @@
             //console.log(event)
         }
 
-        canvas.onkeyup = (event)=>{
+        onkeyup = (event)=>{
             if(event.code == "ShiftLeft"){
                 if(dragMode == 1) setDragMode(0);
             }
