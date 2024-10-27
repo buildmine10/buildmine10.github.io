@@ -655,6 +655,9 @@
 
                     selectedRoot = nearestRoot(x, y);
                     
+                }else{
+                    mandelbrotConstPoint = [x, y];
+                    iterations = 0;
                 }
 
                 
@@ -674,6 +677,7 @@
                     y += camPosition[1];
                     
                     removeRoot(x, y);
+                    
                 }else{
                     setViewMode(!alternateViewToggle);
                 }
