@@ -821,11 +821,6 @@
         var touchCenter = [];
         var touchCount = 0;
         var touchStart = 0;
-        var isDoubleTouch = false;
-        var isDoubleTouchValid = false;
-
-        var isSingleTouch = false;
-        var isSingleTouchValid = false;
 
         canvas.ontouchstart = (event)=>{
             event.preventDefault()
@@ -842,27 +837,6 @@
                 touchCenter[0] = touchCenter[0] + (event.changedTouches[i].clientX  - touchCenter[0]) / touchCount;
                 touchCenter[1] = touchCenter[1] + (event.changedTouches[i].clientY  - touchCenter[1]) / touchCount;
             }
-            
-
-            if(touches.length == 1 && !isSingleTouch){
-                isSingleTouch = true;
-                isSingleTouchValid = true;
-            }
-
-            if(touches.length > 1){
-                isSingleTouchValid = false;
-            }
-
-            if(touches.length == 2 && !isDoubleTouch){
-                isDoubleTouch = true;
-                isDoubleTouchValid = true;
-            }
-
-            if(touches.length > 2){
-                isDoubleTouchValid = false;
-            }
-
-            
 
         } 
 
@@ -948,7 +922,7 @@
                 let touchEnd = performance.now();
 
                 if(touchEnd - touchStart < 100){
-                    if(isSingleTouchValid){
+                    if(touchCount == 1){
                         let mouseX = touchCenter[0];
                         let mouseY = document.documentElement.clientHeight - touchCenter[1] - 1;
 
@@ -977,7 +951,7 @@
                         }
                     }
 
-                    if(isDoubleTouchValid){
+                    if(touchCount == 2){
                         if(dragMode == 2){
                             let mouseX = touchCenter[0]
                             let mouseY = document.documentElement.clientHeight - touchCenter[1] - 1;
