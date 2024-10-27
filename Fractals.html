@@ -818,17 +818,36 @@
         
         var touches = [];
 
+        var touchCenter = [];
+        var touchCount = 0;
         var touchStart = 0;
         var isDoubleTouch = false;
         var isDoubleTouchValid = false;
+
+        var isSingleTouch = false;
+        var isSingleTouchValid = false;
 
         canvas.ontouchstart = (event)=>{
             event.preventDefault()
             if(touches.length == 0 && event.targetTouches.length > 0){
                 touchStart = performance.now();
+                touchCenter = [0, 0]
+                touchCount = 0;
             }
 
             touches = event.targetTouches;
+            touchCount++;
+            touchCenter[0] = touchCenter[0] + (event.clientX  - touchCenter[0]) / touchCount;
+            touchCenter[1] = touchCenter[1] + (event.clientY  - touchCenter[1]) / touchCount;
+
+            if(touches.length == 1 && !isSingleTouch){
+                isSingleTouch = true;
+                isSingleTouchValid = true;
+            }
+
+            if(touches.length > 1){
+                isSingleTouchValid = false;
+            }
 
             if(touches.length == 2 && !isDoubleTouch){
                 isDoubleTouch = true;
@@ -838,6 +857,8 @@
             if(touches.length > 2){
                 isDoubleTouchValid = false;
             }
+
+            
 
         } 
 
@@ -919,15 +940,42 @@
         }
 
         canvas.ontouchend = (event)=>{
-            touches = event.targetTouches;
-            if(touches.length == 0){
+            if(event.targetTouches.length == 0){
                 let touchEnd = performance.now();
 
-                if(isDoubleTouchValid){
-                    if(touchEnd - touchStart < 100){
+                if(touchEnd - touchStart < 100){
+                    if(isSingleTouchValid){
+                        let mouseX = touchCenter[0];
+                        let mouseY = document.documentElement.clientHeight - touchCenter[0] - 1;
+
+                        mouseX = mouseX / document.documentElement.clientWidth - 0.5;
+                        mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
+
+                        let x = mouseX * camSize();
+                        let y = mouseY * camSize();
+
+                        x += camPosition[0];
+                        y += camPosition[1];
+                        if(!isMandelbrotType){
+                            if(dragMode == 2){
+                                addRoot(x, y);
+                            }
+
+                            selectedRoot = nearestRoot(x, y);
+                            
+                        }else{
+                            if(dragMode == 2){
+                                mandelbrotConstPoint = [x, y];
+                                iterations = 0;
+                            }
+                            
+                        }
+                    }
+
+                    if(isDoubleTouchValid){
                         if(dragMode == 2){
-                            let mouseX = event.clientX
-                            let mouseY = document.documentElement.clientHeight - event.clientY - 1;
+                            let mouseX = touchCenter[0]
+                            let mouseY = document.documentElement.clientHeight - touchCenter[0] - 1;
 
                             mouseX = mouseX / document.documentElement.clientWidth - 0.5;
                             mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
@@ -946,9 +994,12 @@
                     }
                 }
 
+                
+
                 isDoubleTouch = false;
                 isDoubleTouchValid = false;
             }
+            touches = event.targetTouches;
         }
 
     </script>
