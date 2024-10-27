@@ -909,6 +909,24 @@
                 touchCenter[1] = touchCenter[1] + (event.changedTouches[i].clientY  - touchCenter[1]) / touchCount;
             }
 
+            if(touchCount == 1){
+                let mouseX = touchCenter[0];
+                let mouseY = document.documentElement.clientHeight - touchCenter[1] - 1;
+
+                mouseX = mouseX / document.documentElement.clientWidth - 0.5;
+                mouseY = (mouseY / document.documentElement.clientHeight - 0.5) * (document.documentElement.clientHeight / document.documentElement.clientWidth);
+
+                let x = mouseX * camSize();
+                let y = mouseY * camSize();
+
+                x += camPosition[0];
+                y += camPosition[1];
+
+                if(!isMandelbrotType){
+                    selectedRoot = nearestRoot(x, y);
+                }
+            }
+
         } 
 
         canvas.ontouchmove = (event)=>{
