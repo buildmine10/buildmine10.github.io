@@ -819,9 +819,33 @@
         var wasMultitouch = false;
         
         var touches = [];
+
+        var touchStart = 0;
+        var isDoubleTouch = false;
+        var isDoubleTouchValid = false;
+
+        canvas.ontouchstart = (event)=>{
+            console.log("Bye")
+            if(touches.length == 0 && event.targetTouches.length > 0){
+                touchStart = performance.now();
+            }
+
+            touches = event.targetTouches;
+
+            if(touches.length == 2 && !isDoubleTouch){
+                isDoubleTouch = true;
+                isDoubleTouchValid = true;
+            }
+
+            if(touches.length > 2){
+                isDoubleTouchValid = false;
+            }
+
+        } 
+
         canvas.ontouchmove = (event)=>{
             wasMultitouch = event.targetTouches.length > 1;
-            console.log("HI")
+
             let ctx = debugCanvas.getContext("2d");
             ctx.clearRect(0, 0, debugCanvas.width, debugCanvas.height);
 
@@ -898,6 +922,18 @@
 
         canvas.ontouchend = (event)=>{
             touches = event.targetTouches;
+            if(touches.length == 0){
+                let touchEnd = performance.now();
+
+                if(isDoubleTouchValid){
+                    if(touchEnd - touchStart < 100){
+                        alert("HI");
+                    }
+                }
+
+                isDoubleTouch = false;
+                isDoubleTouchValid = false;
+            }
         }
 
     </script>
