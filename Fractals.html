@@ -101,7 +101,7 @@
         var camPosition = [0, 0];
         var camSize = ()=>{return sizeMultiplier * 3 * Math.pow(2, scrollCounter * scrollRate)};
         var iterations = 0;
-        var fractalIterations = 200;
+        var fractalIterations = 100;
         var scrollCounter = 0; 
         var sizeMultiplier = 1;
 
@@ -486,7 +486,7 @@
             gl.uniform1f(opacityLocationMandelbrot, 1);
             gl.uniform2f(constPointLocationMandelbrot, mandelbrotConstPoint[0], mandelbrotConstPoint[1]); // Julia set constant
             gl.uniform1i(isJuliaLocationMandelbrot, alternateViewToggle);
-            gl.uniform1i(iterationsLocationMandelbrot, fractalIterations);
+            gl.uniform1i(iterationsLocationMandelbrot, Math.floor(fractalIterations));
             iterations++;
         }
 
@@ -553,7 +553,7 @@
             gl.uniform1i(isIterationsLocationNewton, alternateViewToggle);
             gl.uniform2f(randomnessLocationNewton, Math.random(), Math.random());
             gl.uniform1f(opacityLocationNewton, 1.0);
-            gl.uniform1i(iterationsLocationNewton, fractalIterations);
+            gl.uniform1i(iterationsLocationNewton, Math.floor(fractalIterations));
             iterations++;
         }
 
@@ -877,8 +877,13 @@
                     x += camPosition[0];
                     y += camPosition[1];
 
-                    sizeMultiplier *= scale;
-                    iterations = 0;
+                    if(dragMode != 1){
+                        sizeMultiplier *= scale;
+                    }else{
+                        fractalIterations *= scale;
+                    }
+                    
+                    
 
                     let newX = touchCenterNew[0] * camSize();
                     let newY = touchCenterNew[1] * camSize();
@@ -887,6 +892,7 @@
 
                     camPosition[0] -= newX - x;
                     camPosition[1] -= newY - y;
+                    iterations = 0;
 
                 }else if(event.targetTouches.length == 1 && touches.length == event.targetTouches.length){
                     //A drag has occurred
