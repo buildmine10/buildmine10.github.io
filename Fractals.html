@@ -83,10 +83,11 @@
         const scrollRate = 0.1;
         var isMandelbrotType = true;
         var camPosition = [0, 0];
-        var camSize = ()=>{return 3 * Math.pow(2, scrollCounter * scrollRate)};
+        var camSize = ()=>{return scrollMultiplier * 3 * Math.pow(2, scrollCounter * scrollRate)};
         var iterations = 0;
         var fractalIterations = 200;
         var scrollCounter = 0; 
+        var scrollMultiplier = 1;
 
         var alternateViewToggle = false;
         var dragMode = 0;
@@ -776,7 +777,7 @@
                 }
 
                 let scale = newDist / oldDist;
-                scrollCounter += Math.log2(scale) / scrollRate;
+                scrollMultiplier *= scale;
 
                 center[0] *= camSize();
                 center[1] *= camSize();
