@@ -829,7 +829,6 @@
 
         canvas.ontouchstart = (event)=>{
             event.preventDefault()
-            console.log(event)
             if(touches.length == 0 && event.targetTouches.length > 0){
                 touchStart = performance.now();
                 touchCenter = [0, 0]
@@ -844,7 +843,7 @@
                 touchCenter[1] = touchCenter[1] + (event.changedTouches[i].clientY  - touchCenter[1]) / touchCount;
             }
             
-            console.log(touchCenter[0], touchCenter[1])
+
             if(touches.length == 1 && !isSingleTouch){
                 isSingleTouch = true;
                 isSingleTouchValid = true;
@@ -961,7 +960,7 @@
 
                         x += camPosition[0];
                         y += camPosition[1];
-                        console.log(touchCenter[0], touchCenter[1])
+
                         if(!isMandelbrotType){
                             if(dragMode == 2){
                                 addRoot(x, y);
