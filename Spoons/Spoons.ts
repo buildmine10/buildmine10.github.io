@@ -2,6 +2,10 @@
 import { vec2 } from 'gl-matrix';
 import * as THREE from 'three';
 
+//TODO: implement this cache
+//When a mesh is requested it only generates it new if it needs to
+var meshCache = new Map<string, THREE.BufferGeometry>();
+
 export class SpoonHead {
     
     readonly cornerCount : 0 | 1 | 2; //Number of hard corners
@@ -15,12 +19,37 @@ export class SpoonHead {
     }
 
 
+    
     //These vertices are shared among all heads
-    headBaseVertices(): number[]{
+    //It is a list of lists so that the disconnected vertex lists can be concatenated later
+    headBaseVertices(): number[][]{
+        //There are two parts of this output, the top and bottom half.
+        //These halves are connected by the head end
 
+        //TODO
         return [];
     }
 
+    //These vertices change based on the 
+    //It is only one vertex list because there are not disconnected sections
+    headEndVertices(): number[]{
+        //TODO
+        return [];
+    }
+
+    //These are the vertices that define the holes
+    //It is a list of list because there can be multiple holes
+    headHoleVertices(): number[][]{
+        //TODO
+        return [];
+    }
+
+    //To generate the head, the head base and head end need to get generated and have their vertices combined correctly into one list
+    //Then the holes must be generated
+    //Then the head should be generated without holes
+    //Then the holes should be cut out based on intersection with the edges of the otherwise holeless head.
+
+    
 
     createGeometry(): THREE.BufferGeometry{
         const geometry = new THREE.BufferGeometry();
