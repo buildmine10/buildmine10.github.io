@@ -2,5 +2,8 @@
   "dependencies": {
     "gl-matrix": "^3.4.3",
     "three": "^0.177.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.177.0"
   }
 }

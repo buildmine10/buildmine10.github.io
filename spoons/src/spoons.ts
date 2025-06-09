@@ -189,6 +189,3 @@ export class Spoon {
 }
 
 
-let hi = new SpoonHead(0, 0, 0);
-
-console.log(hi.headBaseVertices());
