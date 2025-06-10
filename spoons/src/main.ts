@@ -7,13 +7,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 
-
-const material = new THREE.MeshBasicMaterial({
-  color: 0x00ff00,
-  wireframe: true, // good for debugging the triangulation
-});
-
-
 const scene = new THREE.Scene();
 
 const viewPortSize = [400, 400]
@@ -24,7 +17,14 @@ const camera = new THREE.PerspectiveCamera(
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(viewPortSize[0], viewPortSize[1]);
-document.getElementById("app").appendChild(renderer.domElement);
+{
+  let temp = document.getElementById("app");
+  if(temp == null){
+    throw new Error("No DOM element with the id app exists. This is supposed to exist.");
+  }
+  temp.appendChild(renderer.domElement);
+}
+
 
 
 

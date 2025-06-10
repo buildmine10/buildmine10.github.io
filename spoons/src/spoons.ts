@@ -245,7 +245,11 @@ export class SpoonHead {
     createGeometry(): THREE.BufferGeometry{
         let tempString = JSON.stringify(this);
         if(headGeometryCache.has(tempString)){
-            return headGeometryCache.get(tempString)
+            let temp = headGeometryCache.get(tempString);
+            if(temp == undefined){
+                throw new Error("Should be impossible: oiubsvbfv")
+            }
+            return temp; 
         }
 
         let head = this.headOutsideVertices();
@@ -419,7 +423,11 @@ export class SpoonHandle {
     createGeometry(): THREE.BufferGeometry{
         let tempString = JSON.stringify(this);
         if(handleGeometryCache.has(tempString)){
-            return handleGeometryCache.get(tempString)
+            let temp = handleGeometryCache.get(tempString);
+            if(temp == undefined){
+                throw new Error("Should be impossible: oiubsvbfv")
+            }
+            return temp; 
         }
 
 
