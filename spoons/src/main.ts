@@ -1,33 +1,52 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
 
-import { SpoonHead } from './spoons.ts'
+import { SpoonHandle, SpoonHead, Spoon } from './spoons.ts'
 
-let hi = new SpoonHead(0, 0, 0);
+import * as THREE from 'three';
 
-
-let temp = hi.headBaseVertices();
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const material = new THREE.MeshBasicMaterial({
+  color: 0x00ff00,
+  wireframe: true, // good for debugging the triangulation
+});
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+
+const scene = new THREE.Scene();
+
+const viewPortSize = [400, 400]
+
+const camera = new THREE.PerspectiveCamera(
+  75, viewPortSize[0] / viewPortSize[1], 0.1, 1000
+);
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(viewPortSize[0], viewPortSize[1]);
+document.getElementById("app").appendChild(renderer.domElement);
+
+
+
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+animate();
+
+
+
+let hi = new SpoonHead(1, 3);
+let bye = new SpoonHandle(2, 1);
+let spoon = new Spoon(hi, bye);
+
+
+const spoonMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+const spoonMesh = new THREE.Mesh(spoon.model, spoonMaterial);
+
+scene.add(spoonMesh);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(-2, 0, 0); // point to spin around
+controls.update();
