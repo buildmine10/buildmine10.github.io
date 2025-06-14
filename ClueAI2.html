@@ -1239,7 +1239,8 @@
             //This will alter the state of the data in a way that increases the informaion available
 
             //If I am the asker, I know exactly which card was shown, so marking this as a 1 doesn't make sense to do
-            if(recordGuessAsker != 0){
+            if(recordGuessAsker % playerCount != 0){
+                //If we get here then we did not answer
                 let answerPlayerCharacter = parseInt(dataBoxes[recordGuessPerson][recordGuessAnswerer % playerCount].innerText);//characterCards[answeringPlayer % numberOfPlayers].get(guess.character);
                 if (answerPlayerCharacter != -1 && answerPlayerCharacter != 2) {
                     dataBoxes[recordGuessPerson][recordGuessAnswerer % playerCount].innerText = 1;
@@ -1257,15 +1258,17 @@
                 }
             }
             
-            if(recordGuessAnswerer == playerCount){
-                dataBoxes[recordGuessPerson][0].innerText = -1;
-                dataBoxes[recordGuessWeapon][0].innerText = -1;
-                dataBoxes[recordGuessRoom][0].innerText = -1;
-            }
+            //I dont know why this is here
+            //it causes a bug
+            //if(recordGuessAnswerer == playerCount){
+            //    dataBoxes[recordGuessPerson][0].innerText = -1;
+            //    dataBoxes[recordGuessWeapon][0].innerText = -1;
+            //    dataBoxes[recordGuessRoom][0].innerText = -1;
+            //}
 
             onDataChange();
             
-
+            //If you ask and someone answered
             if(recordGuessAsker == 0 && recordGuessAnswerer != playerCount){
                 revealCardPlayer = recordGuessAnswerer % playerCount;
                 let element = document.getElementById("recordGuessStage6").getElementsByClassName("CardSelect2")[0];
