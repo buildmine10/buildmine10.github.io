@@ -1239,7 +1239,9 @@
             //This will alter the state of the data in a way that increases the informaion available
 
             //If I am the asker, I know exactly which card was shown, so marking this as a 1 doesn't make sense to do
-            if(recordGuessAsker % playerCount != 0){
+            //If I am the answerer, I know exactly which cards I have
+            //This updates knowledge of who might have specific cards
+            if(recordGuessAsker % playerCount != 0 && recordGuessAnswerer % playerCount != 0){
                 //If we get here then we did not answer
                 let answerPlayerCharacter = parseInt(dataBoxes[recordGuessPerson][recordGuessAnswerer % playerCount].innerText);//characterCards[answeringPlayer % numberOfPlayers].get(guess.character);
                 if (answerPlayerCharacter != -1 && answerPlayerCharacter != 2) {
