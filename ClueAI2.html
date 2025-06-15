@@ -1279,7 +1279,7 @@
                 let person = document.createElement("button");
                 person.innerText = recordGuessPerson;
                 person.onclick = ()=>{
-                    revealCard(person.innerText);
+                    revealCard(person.innerText, revealCardPlayer);
                     menuState.closeRecordGuess();
                     menuState.closeMainMenu();
                     revealCardPlayer = -1;
@@ -1288,7 +1288,7 @@
                 let weapon = document.createElement("button");
                 weapon.innerText = recordGuessWeapon;
                 weapon.onclick = ()=>{
-                    revealCard(weapon.innerText);
+                    revealCard(weapon.innerText, revealCardPlayer);
                     menuState.closeRecordGuess();
                     menuState.closeMainMenu();
                     revealCardPlayer = -1;
@@ -1297,7 +1297,7 @@
                 let room = document.createElement("button");
                 room.innerText = recordGuessRoom;
                 room.onclick = ()=>{
-                    revealCard(room.innerText);
+                    revealCard(room.innerText, revealCardPlayer);
                     menuState.closeRecordGuess();
                     menuState.closeMainMenu();
                     revealCardPlayer = -1;
